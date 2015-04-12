@@ -14,6 +14,8 @@ public class DatabaseCleaner extends DBConnection {
     private List<String> getTableNames() {
         List<String> tableNames = new ArrayList<String>();
         tableNames.add("agreement");
+        tableNames.add("users");
+        tableNames.add("user_roles");
         return tableNames;
     }
 
