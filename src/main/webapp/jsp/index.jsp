@@ -16,10 +16,11 @@
 <body>
 <div align="center"><img src="Images/logo.jpg"/></div>
 <%--<div align="left"><a href="jsp/Contact.jsp"> Contacts </a> </div>--%>
-<div align="left"><a href="Contact"> Contacts </a> </div>
+<div align="left"><a href="<%=request.getContextPath()%>/Contact"> Contacts </a> </div>
 <br>
 <div align="left"><a href="protected/Test"> Protected </a> </div>
 <br>
+<div align="left"><a href="logout"> Logout </a></div>
 <div align="center">
     <form method="post" action="Transport">
         <span style="color: azure" > Name </span> &nbsp; <input type="text" name="Name"> <br>

@@ -9,8 +9,12 @@
 <html>
 <head>
     <title>Test Spring Security</title>
+    <link rel="stylesheet" href="../Style.css" type="text/css">
 </head>
 <body>
-<div> SUCCESS </div>
+<div>
+    <span style="color: azure"> SUCCESS </span>
+</div>
+<div align="left"><a href="<%=request.getContextPath()%>/index"> BACK </a></div>
 </body>
 </html>
