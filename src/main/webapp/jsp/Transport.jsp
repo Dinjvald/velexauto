@@ -21,6 +21,6 @@
     Hello Mr. <%=result.get(0) + " " + result.get(1)%> <br>
     <%=result.get(2)%>
 </span><br>
-<div align="rigth"> <a href="index.jsp"> BACK </a> </div>
+<div align="rigth"> <a href="/velex/index"> BACK </a> </div>
 </body>
 </html>

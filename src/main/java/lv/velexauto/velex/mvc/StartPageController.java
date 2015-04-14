@@ -9,15 +9,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Created by Dinjvald on 07/04/15.
+ * Created by Dinjvald on 14/04/15.
  */
-
 @Controller
-public class LoginController {
+public class StartPageController {
 
-    @RequestMapping(value = "Login", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = {"/", "/index", "/homepage"}, method = {RequestMethod.GET})
     public ModelAndView processRequest(HttpServletRequest request,
                                        HttpServletResponse response) {
-        return new ModelAndView("Login");
+        return new ModelAndView("index");
     }
 }

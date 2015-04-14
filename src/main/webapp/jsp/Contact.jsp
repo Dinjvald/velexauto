@@ -15,7 +15,7 @@
 </head>
 <body>
 <div align="center"> <img src="Images/logo.jpg"/> </div>
-<div align="right"> <a href="index.jsp"> BACK </a> </div>
+<div align="right"> <a href="/velex/index"> BACK </a> </div>
 <div align="left">
     <img src="Images/Vladimir.jpg">
       <span style="color: azure"> <br>

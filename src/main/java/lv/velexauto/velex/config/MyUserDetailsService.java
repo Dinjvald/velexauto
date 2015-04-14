@@ -35,7 +35,6 @@ public class MyUserDetailsService implements UserDetailsService {
         try {
             user = userDAO.getByLogin(login);
         } catch (DBException e) {
-            System.out.println("Exception in MyUserDetailsService.class");
             e.printStackTrace();
         }
         List<GrantedAuthority> authorities = buildUserAuthority(user.getUserRoles());
