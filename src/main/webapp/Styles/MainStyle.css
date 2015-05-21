@@ -4,8 +4,8 @@
 }
 
 body {
+    background-image: url("../Images/binding_dark.png");
     background-color: #151515;
-    background-image: url("Images/binding_dark.png");
     color: white;
     width: 1000px;
     margin: auto;

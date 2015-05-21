@@ -57,7 +57,7 @@
     <li id="first_li"><a href="index"> Начало </a></li>
     <li><a href="aboutus"> О нас </a></li>
     <li><a href="contacts"> Контакты </a></li>
-    <li><a href=""> Login </a></li>
+    <li><a href="protected/home"> Login </a></li>
 </ul>
 <div class="global_main_text">
     <span class="popup_text">
@@ -68,7 +68,7 @@
     <span class="popup_text">Телефоны:</span><br>
     Владимир<br>
     <br>
-    Денис<br>
+    <%--Денис<br>--%>
     <br>
     <span class="popup_text">Е-почта:</span><br>
 </div>
@@ -80,7 +80,7 @@
     <span class="numbers">
         +371 26338745<br>
         +375 298409229<br>
-        +371 26936982<br>
+        <%--+371 26936982<br>--%>
     </span>
     <br>
     <a class="email" href="mailto:velexvladimir@gmail.com">velexvladimir@gmail.com</a><br>
