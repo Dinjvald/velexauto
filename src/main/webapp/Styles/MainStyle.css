@@ -25,8 +25,12 @@ ul#menu li {
     float: left;
 }
 
-li#first_li {
+ul#menu li#first_li {
     margin-left: 480px;
+}
+
+ul#menu li#protected_first_li {
+    margin-left: 0;
 }
 
 ul#menu li a:link, ul#menu li a:visited {
@@ -43,9 +47,21 @@ ul#menu li a:hover, ul#menu li a:active {
     color: #dc7700;
 }
 
+ul#menu li ul {
+    position: absolute;
+    background-color: rgba(66, 66, 66, 0.65);
+    border-top: solid 1px #dc7700;
+    display: none;
+}
+
+ul#menu li ul li {
+    float: none;
+    list-style-type: none;
+}
+
 /* --------------------------------Menu END-------------------------------------- */
 
-#logo {
+img#logo {
     width: 435px;
     height: 100px;
     margin: 20px 0 20px 20px;

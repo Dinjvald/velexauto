@@ -76,11 +76,6 @@
             bottom: -150px;
         }
 
-        input {
-            position: relative;
-            bottom: -130px;
-        }
-
     </style>
 </head>
 <body>
