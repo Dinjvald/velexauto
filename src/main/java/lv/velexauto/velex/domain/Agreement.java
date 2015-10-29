@@ -149,23 +149,6 @@ public class Agreement {
         }
     }
 
-    public Agreement(String agreementNr, String invoiceNr, String clientName, String loadingDate, String loadingAddress,
-                     String unloadingDate, String unloadingAddress, double price, double valueAddedTax,
-                     String invoiceSendDate, String estimatedDateOfPayment, String onBehalfOf) {
-        this.agreementNr = agreementNr;
-        this.invoiceNr = invoiceNr;
-        this.clientName = clientName;
-        this.loadingDate = loadingDate;
-        this.loadingAddress = loadingAddress;
-        this.unloadingDate = unloadingDate;
-        this.unloadingAddress = unloadingAddress;
-        this.price = price;
-        this.valueAddedTax = valueAddedTax;
-        this.invoiceSendDate = invoiceSendDate;
-        this.estimatedDateOfPayment = estimatedDateOfPayment;
-        this.onBehalfOf = onBehalfOf;
-    }
-
     public long getAgreementId() {
         return agreementId;
     }
