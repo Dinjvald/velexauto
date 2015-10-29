@@ -33,12 +33,27 @@
     <script>
         $(document).ready(function () {
 
-            $("#orders").hover(function () {
+            $("#orders").hover(
+                    function () {
                         $(".submenu").slideDown(150);
                     },
                     function () {
                         $(".submenu").slideUp(150);
                     });
+
+            function doAjax() {
+                $.ajax({
+                    url : 'testAjax',
+                    type : 'GET',
+
+                    success : function(response) {
+                        $("#typeAjaxHere").html(response);
+                    }
+                });
+            }
+
+            setTimeout(doAjax, 1500);
+
         });
     </script>
 </head>
@@ -58,5 +73,6 @@
     <li><a href=""> Что-то там </a></li>
     <li><a href="../logout"> Logout </a></li>
 </ul>
+<div id="typeAjaxHere"></div>
 </body>
 </html>

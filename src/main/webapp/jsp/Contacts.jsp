@@ -70,6 +70,7 @@
     <br>
     <%--Денис<br>--%>
     <br>
+
     <span class="popup_text">Е-почта:</span><br>
 </div>
 <div class="global_main_text">

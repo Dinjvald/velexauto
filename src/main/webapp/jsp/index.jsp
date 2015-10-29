@@ -32,6 +32,19 @@
 
             popupMainWord();
 
+            function doAjax() {
+                $.ajax({
+                    url : 'testAjax',
+                    type : 'GET',
+
+                    success : function(response) {
+                        $("#typeAjaxHere").html(response);
+                    }
+                })
+            }
+
+            setTimeout(doAjax, 1500);
+
         });
     </script>
     <style>
@@ -56,6 +69,16 @@
             width: 420px;
             height: 506px;
             margin: 0 20px 0 0;
+        }
+
+        #typeAjaxHere {
+            position: relative;
+            bottom: -150px;
+        }
+
+        input {
+            position: relative;
+            bottom: -130px;
         }
 
     </style>
@@ -88,5 +111,6 @@
 <div class="global_main_text third_part"> В реалиях современной бизнес среды каждая минута времени критически важна для
     успешной работы предприятия. Мы это понимаем и осуществляем доставку груза в максимально сжатые сроки.
 </div>
+<div id="typeAjaxHere"></div>
 </body>
 </html>
