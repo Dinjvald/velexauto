@@ -1,4 +1,4 @@
-package lv.velexauto.velex.domain;
+package lv.velexauto.velex.ForTestsPurposes;
 
 /**
  * Created by Dinjvald on 20/10/15.
