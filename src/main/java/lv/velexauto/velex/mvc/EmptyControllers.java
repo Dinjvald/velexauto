@@ -47,6 +47,6 @@ public class EmptyControllers {
     @RequestMapping(value = {"protected/home"}, method = {RequestMethod.GET})
     public ModelAndView home(HttpServletRequest request,
                              HttpServletResponse response) {
-        return new ModelAndView("HomeProtected");
+        return new ModelAndView("Protected/HomeProtected");
     }
 }
