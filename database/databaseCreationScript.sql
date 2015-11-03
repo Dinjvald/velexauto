@@ -17,20 +17,24 @@ USE velexauto;
 DROP TABLE IF EXISTS velexauto.agreement;
 
 CREATE TABLE agreement (
-  agreement_id               INTEGER(11) NOT NULL AUTO_INCREMENT,
-  agreement_nr               CHAR(15),
-  invoice_nr                 CHAR(15),
-  client_name                CHAR(50),
-  loading_date               CHAR(10),
-  loading_address            CHAR(100),
-  unloading_date             CHAR(10),
-  unloading_address          CHAR(100),
-  price                      FLOAT(6, 2),
-  value_added_tax            FLOAT(6, 2),
-  invoice_send_date          CHAR(10),
-  estimated_date_of_payment CHAR(10),
-  on_behalf_of               CHAR(100),
-  PRIMARY KEY (agreement_id)
+  agreement_id              INTEGER(11) NOT NULL AUTO_INCREMENT,
+  agreement_nr              CHAR(15),
+  invoice_nr                CHAR(15),
+  client_name               CHAR(50),
+  loading_date              DATE,
+  loading_address           CHAR(100),
+  unloading_date            DATE,
+  unloading_address         CHAR(100),
+  price                     FLOAT(6, 2),
+  value_added_tax           FLOAT(6, 2),
+  payment_term              INT(3),
+  invoice_send_date         DATE,
+  estimated_date_of_payment DATE,
+  on_behalf_of              CHAR(100),
+  file_link_agreement       TEXT,
+  file_link_invoice         TEXT,
+  notes                     TEXT,
+    PRIMARY KEY (agreement_id)
 );
 
 -- -----------------------------------------------------

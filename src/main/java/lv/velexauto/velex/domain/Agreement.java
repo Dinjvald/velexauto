@@ -24,14 +24,16 @@ public class Agreement {
     @Column(name = "client_name", columnDefinition = "char(50)")
     private String clientName;
 
-    @Column(name = "loading_date", columnDefinition = "char(10)")
-    private String loadingDate;
+    @Column(name = "loading_date", columnDefinition = "date")
+    @Temporal(TemporalType.DATE)
+    private java.util.Date loadingDate;
 
     @Column(name = "loading_address", columnDefinition = "char(100)")
     private String loadingAddress;
 
-    @Column(name = "unloading_date", columnDefinition = "char(10)")
-    private String unloadingDate;
+    @Column(name = "unloading_date", columnDefinition = "date")
+    @Temporal(TemporalType.DATE)
+    private java.util.Date unloadingDate;
 
     @Column(name = "unloading_address", columnDefinition = "char(100)")
     private String unloadingAddress;
@@ -42,14 +44,28 @@ public class Agreement {
     @Column(name = "value_added_tax", columnDefinition = "float(6,2)")
     private double valueAddedTax;
 
-    @Column(name = "invoice_send_date", columnDefinition = "char(10)")
-    private String invoiceSendDate;
+    @Column(name = "payment_term", columnDefinition = "int(3)")
+    private int paymentTerm;
 
-    @Column(name = "estimated_date_of_payment", columnDefinition = "char(10)")
-    private String estimatedDateOfPayment;
+    @Column(name = "invoice_send_date", columnDefinition = "date")
+    @Temporal(TemporalType.DATE)
+    private java.util.Date invoiceSendDate;
+
+    @Column(name = "estimated_date_of_payment", columnDefinition = "date")
+    @Temporal(TemporalType.DATE)
+    private java.util.Date estimatedDateOfPayment;
 
     @Column(name = "on_behalf_of", columnDefinition = "char(100)")
     private String onBehalfOf;
+
+    @Column(name = "file_link_agreement", columnDefinition = "text")
+    private String fileLinkAgreement;
+
+    @Column(name = "file_link_invoice", columnDefinition = "text")
+    private String fileLinkInvoice;
+
+    @Column(name = "notes", columnDefinition = "text")
+    private String notes;
 
     public Agreement() {
 
@@ -65,24 +81,32 @@ public class Agreement {
         this.unloadingAddress = ab.unloadingAddressBuilder;
         this.price = ab.priceBuilder;
         this.valueAddedTax = ab.valueAddedTaxBuilder;
+        this.paymentTerm = ab.paymentTermBuilder;
         this.invoiceSendDate = ab.invoiceSendDateBuilder;
         this.estimatedDateOfPayment = ab.estimatedDateOfPaymentBuilder;
         this.onBehalfOf = ab.onBehalfOfBuilder;
+        this.fileLinkAgreement = ab.fileLinkAgreementBuilder;
+        this.fileLinkInvoice = ab.fileLinkInvoiceBuilder;
+        this.notes = ab.notesBuilder;
     }
 
     public static class AgreementBuilder {
         private String agreementNrBuilder;
         private String invoiceNrBuilder;
         private String clientNameBuilder;
-        private String loadingDateBuilder;
+        private java.util.Date loadingDateBuilder;
         private String loadingAddressBuilder;
-        private String unloadingDateBuilder;
+        private java.util.Date unloadingDateBuilder;
         private String unloadingAddressBuilder;
         private double priceBuilder;
         private double valueAddedTaxBuilder;
-        private String invoiceSendDateBuilder;
-        private String estimatedDateOfPaymentBuilder;
+        private int paymentTermBuilder;
+        private java.util.Date invoiceSendDateBuilder;
+        private java.util.Date estimatedDateOfPaymentBuilder;
         private String onBehalfOfBuilder;
+        private String fileLinkAgreementBuilder;
+        private String fileLinkInvoiceBuilder;
+        private String notesBuilder;
 
         public AgreementBuilder agreementNr(String newAgreementNr) {
             this.agreementNrBuilder = newAgreementNr;
@@ -99,7 +123,7 @@ public class Agreement {
             return this;
         }
 
-        public AgreementBuilder loadingDate(String newLoadingDate) {
+        public AgreementBuilder loadingDate(java.util.Date newLoadingDate) {
             this.loadingDateBuilder = newLoadingDate;
             return this;
         }
@@ -109,7 +133,7 @@ public class Agreement {
             return this;
         }
 
-        public AgreementBuilder unloadingDate(String newUnloadingDate) {
+        public AgreementBuilder unloadingDate(java.util.Date newUnloadingDate) {
             this.unloadingDateBuilder = newUnloadingDate;
             return this;
         }
@@ -129,18 +153,38 @@ public class Agreement {
             return this;
         }
 
-        public AgreementBuilder invoiceSendDate(String newInvoiceSendDate) {
+        public AgreementBuilder paymentTerm(int newPaymentTerm) {
+            this.paymentTermBuilder = newPaymentTerm;
+            return this;
+        }
+
+        public AgreementBuilder invoiceSendDate(java.util.Date newInvoiceSendDate) {
             this.invoiceSendDateBuilder = newInvoiceSendDate;
             return this;
         }
 
-        public AgreementBuilder estimatedDateOfPayment(String newEstimatedDateOfPayment) {
+        public AgreementBuilder estimatedDateOfPayment(java.util.Date newEstimatedDateOfPayment) {
             this.estimatedDateOfPaymentBuilder = newEstimatedDateOfPayment;
             return this;
         }
 
         public AgreementBuilder onBehalfOf(String newOnBehalfOf) {
             this.onBehalfOfBuilder = newOnBehalfOf;
+            return this;
+        }
+
+        public AgreementBuilder fileLinkAgreement(String newFileLinkAgreement) {
+            this.fileLinkAgreementBuilder = newFileLinkAgreement;
+            return this;
+        }
+
+        public AgreementBuilder fileLinkInvoice(String newFileLinkInvoice) {
+            this.fileLinkInvoiceBuilder = newFileLinkInvoice;
+            return this;
+        }
+
+        public AgreementBuilder notes(String newNotes) {
+            this.notesBuilder = newNotes;
             return this;
         }
 
@@ -161,11 +205,11 @@ public class Agreement {
         this.agreementNr = agreementNr;
     }
 
-    public String getLoadingDate() {
+    public java.util.Date getLoadingDate() {
         return loadingDate;
     }
 
-    public void setLoadingDate(String loadingDate) {
+    public void setLoadingDate(java.util.Date loadingDate) {
         this.loadingDate = loadingDate;
     }
 
@@ -177,11 +221,11 @@ public class Agreement {
         this.loadingAddress = loadingAddress;
     }
 
-    public String getUnloadingDate() {
+    public java.util.Date getUnloadingDate() {
         return unloadingDate;
     }
 
-    public void setUnloadingDate(String unloadingDate) {
+    public void setUnloadingDate(java.util.Date unloadingDate) {
         this.unloadingDate = unloadingDate;
     }
 
@@ -209,6 +253,14 @@ public class Agreement {
         this.valueAddedTax = valueAddedTax;
     }
 
+    public int getPaymentTerm() {
+        return paymentTerm;
+    }
+
+    public void setPaymentTerm(int paymentTerm) {
+        this.paymentTerm = paymentTerm;
+    }
+
     public String getInvoiceNr() {
         return invoiceNr;
     }
@@ -225,19 +277,19 @@ public class Agreement {
         this.clientName = clientName;
     }
 
-    public String getInvoiceSendDate() {
+    public java.util.Date getInvoiceSendDate() {
         return invoiceSendDate;
     }
 
-    public void setInvoiceSendDate(String invoiceSendDate) {
+    public void setInvoiceSendDate(java.util.Date invoiceSendDate) {
         this.invoiceSendDate = invoiceSendDate;
     }
 
-    public String getEstimatedDateOfPayment() {
+    public java.util.Date getEstimatedDateOfPayment() {
         return estimatedDateOfPayment;
     }
 
-    public void setEstimatedDateOfPayment(String estimatedDateOfPayment) {
+    public void setEstimatedDateOfPayment(java.util.Date estimatedDateOfPayment) {
         this.estimatedDateOfPayment = estimatedDateOfPayment;
     }
 
@@ -247,5 +299,29 @@ public class Agreement {
 
     public void setOnBehalfOf(String onBehalfOf) {
         this.onBehalfOf = onBehalfOf;
+    }
+
+    public String getFileLinkAgreement() {
+        return fileLinkAgreement;
+    }
+
+    public void setFileLinkAgreement(String fileLinkAgreement) {
+        this.fileLinkAgreement = fileLinkAgreement;
+    }
+
+    public String getFileLinkInvoice() {
+        return fileLinkInvoice;
+    }
+
+    public void setFileLinkInvoice(String fileLinkInvoice) {
+        this.fileLinkInvoice = fileLinkInvoice;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 }

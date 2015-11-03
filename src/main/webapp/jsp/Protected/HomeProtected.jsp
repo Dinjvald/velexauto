@@ -19,12 +19,12 @@
     <script>
         $(document).ready(function () {
 
-            $("#orders").hover(
+            $("ul#menu li#orders").hover(
                     function () {
-                        $("ul#menu li ul").slideDown(150);
+                        $("ul#menu li ul#orders_submenu").slideDown(150);
                     },
                     function () {
-                        $("ul#menu li ul").slideUp(150);
+                        $("ul#menu li ul#orders_submenu").slideUp(150);
                     });
 
             function doAjax() {
@@ -50,7 +50,7 @@
     <li id="protected_first_li"><a href="../index"> Домой </a></li>
     <li id="orders">
         <a id="test" href=""> Заявки </a>
-        <ul>
+        <ul id="orders_submenu">
             <li><a href="">Что-то там</a></li>
             <li><a href="">Что-то там</a></li>
             <li><a href="">Что-то там</a></li>

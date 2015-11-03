@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * Created by Dinjvald on 12/04/15.
  */
-@Service("userDetailsService")
+@Service("MyUserDetailsService")
 public class MyUserDetailsService implements UserDetailsService {
 
     @Autowired
