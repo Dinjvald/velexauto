@@ -40,7 +40,7 @@
                     success : function(response) {
                         $("#typeAjaxHere").html(response);
                     }
-                })
+                });
             }
 
             setTimeout(doAjax, 1500);

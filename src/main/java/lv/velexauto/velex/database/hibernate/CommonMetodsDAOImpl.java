@@ -37,6 +37,7 @@ public abstract class CommonMetodsDAOImpl <T> extends DBConnection implements Co
         getCurrentSession().persist(type);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void delete(Long id) throws DBException {
         Session session = getCurrentSession();
@@ -44,6 +45,7 @@ public abstract class CommonMetodsDAOImpl <T> extends DBConnection implements Co
         session.delete(type);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public T getById(Long id) throws DBException {
         return (T) getCurrentSession().get(persistentClass, id);
@@ -54,6 +56,7 @@ public abstract class CommonMetodsDAOImpl <T> extends DBConnection implements Co
         getCurrentSession().update(type);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<T> getAll() throws DBException {
         return getCurrentSession().createCriteria(persistentClass).list();

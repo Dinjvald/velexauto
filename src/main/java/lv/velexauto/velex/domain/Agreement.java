@@ -15,28 +15,48 @@ public class Agreement {
     @Column(name = "agreement_id", columnDefinition = "int(11)")
     private long agreementId;
 
-    @Column(name = "agreement_nr", columnDefinition = "char(15)")
+    @Transient
+    private long employeeId;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "employee_id", nullable = false)
+    private Employee employee;
+
+    @Transient
+    private long company_id;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "company_id", nullable = false)
+    private Company company;
+
+    @Column(name = "agreement_nr", columnDefinition = "char(100)")
     private String agreementNr;
 
-    @Column(name = "invoice_nr", columnDefinition = "char(15)")
+    @Column(name = "invoice_nr", columnDefinition = "char(100)")
     private String invoiceNr;
 
-    @Column(name = "client_name", columnDefinition = "char(50)")
+    @Column(name = "client_name", columnDefinition = "char(100)")
     private String clientName;
 
     @Column(name = "loading_date", columnDefinition = "date")
     @Temporal(TemporalType.DATE)
     private java.util.Date loadingDate;
 
-    @Column(name = "loading_address", columnDefinition = "char(100)")
+    @Column(name = "loading_address", columnDefinition = "char(200)")
     private String loadingAddress;
 
     @Column(name = "unloading_date", columnDefinition = "date")
     @Temporal(TemporalType.DATE)
     private java.util.Date unloadingDate;
 
-    @Column(name = "unloading_address", columnDefinition = "char(100)")
+    @Column(name = "unloading_address", columnDefinition = "char(200)")
     private String unloadingAddress;
+
+    @Column(name = "driver", columnDefinition = "char(100)")
+    private String driver;
+
+    @Column(name = "plate_nr", columnDefinition = "char(100)")
+    private String plateNr;
 
     @Column(name = "price", columnDefinition = "float(6,2)")
     private double price;
@@ -44,7 +64,7 @@ public class Agreement {
     @Column(name = "value_added_tax", columnDefinition = "float(6,2)")
     private double valueAddedTax;
 
-    @Column(name = "payment_term", columnDefinition = "int(3)")
+    @Column(name = "payment_term", columnDefinition = "int(4)")
     private int paymentTerm;
 
     @Column(name = "invoice_send_date", columnDefinition = "date")
@@ -55,7 +75,7 @@ public class Agreement {
     @Temporal(TemporalType.DATE)
     private java.util.Date estimatedDateOfPayment;
 
-    @Column(name = "on_behalf_of", columnDefinition = "char(100)")
+    @Column(name = "on_behalf_of", columnDefinition = "char(200)")
     private String onBehalfOf;
 
     @Column(name = "file_link_agreement", columnDefinition = "text")
@@ -72,6 +92,8 @@ public class Agreement {
     }
 
     private Agreement(AgreementBuilder ab) {
+        this.employee = ab.employeeBuilder;
+        this.company = ab.companyBuilder;
         this.agreementNr = ab.agreementNrBuilder;
         this.invoiceNr = ab.invoiceNrBuilder;
         this.clientName = ab.clientNameBuilder;
@@ -79,6 +101,8 @@ public class Agreement {
         this.loadingAddress = ab.loadingAddressBuilder;
         this.unloadingDate = ab.unloadingDateBuilder;
         this.unloadingAddress = ab.unloadingAddressBuilder;
+        this.driver = ab.driverBuilder;
+        this.plateNr = ab.plateNrBuilder;
         this.price = ab.priceBuilder;
         this.valueAddedTax = ab.valueAddedTaxBuilder;
         this.paymentTerm = ab.paymentTermBuilder;
@@ -91,6 +115,8 @@ public class Agreement {
     }
 
     public static class AgreementBuilder {
+        private Employee employeeBuilder;
+        private Company companyBuilder;
         private String agreementNrBuilder;
         private String invoiceNrBuilder;
         private String clientNameBuilder;
@@ -98,6 +124,8 @@ public class Agreement {
         private String loadingAddressBuilder;
         private java.util.Date unloadingDateBuilder;
         private String unloadingAddressBuilder;
+        private String driverBuilder;
+        private String plateNrBuilder;
         private double priceBuilder;
         private double valueAddedTaxBuilder;
         private int paymentTermBuilder;
@@ -107,6 +135,16 @@ public class Agreement {
         private String fileLinkAgreementBuilder;
         private String fileLinkInvoiceBuilder;
         private String notesBuilder;
+
+        public AgreementBuilder employee(Employee newEmployee) {
+            this.employeeBuilder = newEmployee;
+            return this;
+        }
+
+        public AgreementBuilder company(Company newCompany) {
+            this.companyBuilder = newCompany;
+            return this;
+        }
 
         public AgreementBuilder agreementNr(String newAgreementNr) {
             this.agreementNrBuilder = newAgreementNr;
@@ -140,6 +178,16 @@ public class Agreement {
 
         public AgreementBuilder unloadingAddress(String newUnloadingAddress) {
             this.unloadingAddressBuilder = newUnloadingAddress;
+            return this;
+        }
+
+        public AgreementBuilder driver(String newDriver) {
+            this.driverBuilder = newDriver;
+            return this;
+        }
+
+        public AgreementBuilder plateNr(String newPlateNr) {
+            this.plateNrBuilder = newPlateNr;
             return this;
         }
 
@@ -193,6 +241,22 @@ public class Agreement {
         }
     }
 
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
     public long getAgreementId() {
         return agreementId;
     }
@@ -235,6 +299,22 @@ public class Agreement {
 
     public void setUnloadingAddress(String unloadingAddress) {
         this.unloadingAddress = unloadingAddress;
+    }
+
+    public String getDriver() {
+        return driver;
+    }
+
+    public void setDriver(String driver) {
+        this.driver = driver;
+    }
+
+    public String getPlateNr() {
+        return plateNr;
+    }
+
+    public void setPlateNr(String plateNr) {
+        this.plateNr = plateNr;
     }
 
     public double getPrice() {

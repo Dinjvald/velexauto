@@ -15,10 +15,10 @@ public class UserRole {
     private String role;
 
     @Transient
-    private int userId;
+    private long userId;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     public UserRole() {
@@ -33,10 +33,6 @@ public class UserRole {
         return userRoleId;
     }
 
-    public void setUserRoleId(long userRoleId) {
-        this.userRoleId = userRoleId;
-    }
-
     public String getRole() {
         return role;
     }
@@ -47,5 +43,9 @@ public class UserRole {
 
     public User getUser() {
         return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

@@ -16,39 +16,43 @@ public class User {
     @Column(name = "user_id", columnDefinition = "int(11)")
     private long userId;
 
+    @Transient
+    private long employeeId;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "employee_id", nullable = false)
+    private Employee employee;
+
     @Column(name = "login", columnDefinition = "char(255)")
     private String login;
 
     @Column(name = "password", columnDefinition = "char(255")
     private String password;
 
-    @Column(name = "name", columnDefinition = "char(255)")
-    private String name;
-
-    @Column(name = "surname", columnDefinition = "char(255)")
-    private String surname;
-
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(mappedBy = "user")
-    private List<UserRole> userRoles = new ArrayList<UserRole>();
+    private List<UserRole> userRoles;
 
     public User() {
 
     }
 
-    public User(String login, String password, String name, String surname) {
+    public User(Employee employee, String login, String password) {
+        this.employee = employee;
         this.login = login;
         this.password = password;
-        this.name = name;
-        this.surname = surname;
     }
 
     public long getUserId() {
         return userId;
     }
 
-    public void setUserId(long userId) {
-        this.userId = userId;
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 
     public String getLogin() {
@@ -65,22 +69,6 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
     }
 
     public List<UserRole> getUserRoles() {

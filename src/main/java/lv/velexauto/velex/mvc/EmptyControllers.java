@@ -32,12 +32,6 @@ public class EmptyControllers {
         return new ModelAndView("Contacts");
     }
 
-    @RequestMapping(value = {"protected/test"}, method = {RequestMethod.GET})
-    public ModelAndView test(HttpServletRequest request,
-                                 HttpServletResponse response) {
-        return new ModelAndView("test");
-    }
-
     @RequestMapping(value = {"login"}, method = {RequestMethod.GET})
     public ModelAndView login(HttpServletRequest request,
                              HttpServletResponse response) {

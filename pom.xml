@@ -170,6 +170,16 @@
 
         <!-- JQuery END -->
 
+        <!-- Json library google GSON START -->
+
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.4</version>
+        </dependency>
+
+        <!-- Json library google GSON END -->
+
     </dependencies>
 
     <build>
