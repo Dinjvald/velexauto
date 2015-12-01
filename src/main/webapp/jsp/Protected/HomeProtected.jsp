@@ -38,8 +38,7 @@
     </script>
 </head>
 <body>
-<a href="../index">
-    <img id="logo" src="../Images/Velex.png"></a>
+<mytag:logo/>
 <ul id="menu">
     <li id="protected_first_li"><a href="../index"> Домой </a></li>
     <li id="orders">

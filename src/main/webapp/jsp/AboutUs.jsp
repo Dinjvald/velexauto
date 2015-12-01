@@ -39,8 +39,7 @@
     </style>
 </head>
 <body>
-<a href="index">
-    <img id="logo" src="Images/Velex.png"></a>
+<mytag:logo/>
 <ul id="menu">
     <li id="first_li"><a href="index"> Начало </a></li>
     <li><a href="aboutus"> О нас </a></li>
