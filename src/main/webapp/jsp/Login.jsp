@@ -6,14 +6,10 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="mytag" tagdir="/WEB-INF/tags" %>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="description" content="Transport WebSite from Latvia">
-    <meta name="keywords" content="Latvia, transport, truck">
-    <meta name="author" content="Deniss Beskorovainijs">
-    <title>SIA VelexAuto</title>
-    <link rel="stylesheet" type="text/css" href="Styles/MainStyle.css">
+    <mytag:head lang="en, ru, lv"/>
     <style>
         #account_form {
             margin: auto;

@@ -6,20 +6,11 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="mytag" tagdir="/WEB-INF/tags" %>
 <!DOCTYPE html>
 <html>
-<head lang="en, ru, lv">
-    <meta charset="UTF-8">
-    <meta name="description" content="Transport WebSite from Latvia">
-    <meta name="keywords" content="Latvia, transport, truck">
-    <meta name="author" content="Deniss Beskorovainijs">
-    <title>SIA VelexAuto</title>
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
-    <!-- Change for jsp START -->
-    <link rel="stylesheet" type="text/css" href="Styles/MainStyle.css">
-    <!-- Change for jsp END -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+<head>
+    <mytag:head lang="en, ru, lv"/>
     <script>
         $(document).ready(function () {
 
