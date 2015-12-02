@@ -43,12 +43,7 @@
 </head>
 <body>
 <mytag:logo/>
-<ul id="menu">
-    <li id="first_li"><a href="index"> Начало </a></li>
-    <li><a href="aboutus"> О нас </a></li>
-    <li><a href="contacts"> Контакты </a></li>
-    <li><a href="protected/home"> Login </a></li>
-</ul>
+<mytag:menuBar/>
 <div class="global_main_text">
     <span class="popup_text">
         Юридический адрес:<br>

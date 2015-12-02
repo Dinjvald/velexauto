@@ -73,12 +73,13 @@
 <%--<a href="index">
     <img id="logo" src="Images/Velex.png"></a>--%>
 <mytag:logo/>
-<ul id="menu">
+<%--<ul id="menu">
     <li id="first_li"><a href="index"> Начало </a></li>
     <li><a href="aboutus"> О нас </a></li>
     <li><a href="contacts"> Контакты </a></li>
     <li><a href="protected/home"> Login </a></li>
-</ul>
+</ul>--%>
+<mytag:menuBar/>
 <img id="daf"
      src="Images/truck000.png">
 

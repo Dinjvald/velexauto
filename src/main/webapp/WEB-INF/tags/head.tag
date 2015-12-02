@@ -1,4 +1,4 @@
-<%@tag%>
+<%@tag pageEncoding="utf-8"%>
 <%@attribute name="lang"%>
 <meta charset="UTF-8">
 <meta name="description" content="Transport WebSite from Latvia">
