@@ -43,4 +43,9 @@ public class EmptyControllers {
                              HttpServletResponse response) {
         return new ModelAndView("Protected/HomeProtected");
     }
+
+    @RequestMapping(value = {"testlocale"}, method = {RequestMethod.GET})
+    public ModelAndView testLocale(HttpServletRequest request, HttpServletResponse response) {
+        return new ModelAndView("ForTests/TestLocale");
+    }
 }
