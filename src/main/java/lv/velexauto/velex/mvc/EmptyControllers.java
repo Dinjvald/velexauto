@@ -16,25 +16,25 @@ public class EmptyControllers {
 
     @RequestMapping(value = {"/", "index", "homepage"}, method = {RequestMethod.GET})
     public ModelAndView index(HttpServletRequest request,
-                                       HttpServletResponse response) {
+                              HttpServletResponse response) {
         return new ModelAndView("index");
     }
 
-    @RequestMapping(value = {"aboutus"}, method = {RequestMethod.GET})
+    @RequestMapping(value = {"aboutUs"}, method = {RequestMethod.GET})
     public ModelAndView aboutUs(HttpServletRequest request,
-                                       HttpServletResponse response) {
+                                HttpServletResponse response) {
         return new ModelAndView("AboutUs");
     }
 
     @RequestMapping(value = {"contacts"}, method = {RequestMethod.GET})
     public ModelAndView contacts(HttpServletRequest request,
-                                HttpServletResponse response) {
+                                 HttpServletResponse response) {
         return new ModelAndView("Contacts");
     }
 
     @RequestMapping(value = {"login"}, method = {RequestMethod.GET})
     public ModelAndView login(HttpServletRequest request,
-                             HttpServletResponse response) {
+                              HttpServletResponse response) {
         return new ModelAndView("Login");
     }
 

@@ -13,13 +13,14 @@
     <script>
         $(document).ready(function () {
 
-            $("ul#menu li#orders").hover(
+            /*$("ul#menu li#orders").hover(
                     function () {
                         $("ul#menu li ul#orders_submenu").slideDown(150);
                     },
                     function () {
                         $("ul#menu li ul#orders_submenu").slideUp(150);
-                    });
+                    });*/
+            menuHover();
 
             function doAjax() {
                 $.ajax({
