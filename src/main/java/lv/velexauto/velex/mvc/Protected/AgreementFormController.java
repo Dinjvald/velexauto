@@ -9,10 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Created by Dinjvald on 03/12/15.
+ * Created by Dinjvald on 04/12/15.
  */
+
 @Controller
-public class EmptyProtectedControllers {
+public class AgreementFormController {
 
     @RequestMapping(value = {"protected/agreementForm"}, method = RequestMethod.GET)
     public ModelAndView agreementForm(HttpServletRequest request, HttpServletResponse response) {

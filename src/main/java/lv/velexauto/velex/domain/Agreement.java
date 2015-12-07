@@ -28,45 +28,45 @@ public class Agreement {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "company_id", nullable = false)
     private Company company;
-
+//done
     @Column(name = "agreement_nr", columnDefinition = "char(100)")
     private String agreementNr;
-
+//done
     @Column(name = "invoice_nr", columnDefinition = "char(100)")
     private String invoiceNr;
-
+//done
     @Column(name = "client_name", columnDefinition = "char(100)")
     private String clientName;
-
+//done
     @Column(name = "loading_date", columnDefinition = "date")
     @Temporal(TemporalType.DATE)
     private java.util.Date loadingDate;
-
+//done
     @Column(name = "loading_address", columnDefinition = "char(200)")
     private String loadingAddress;
-
+//done
     @Column(name = "unloading_date", columnDefinition = "date")
     @Temporal(TemporalType.DATE)
     private java.util.Date unloadingDate;
-
+    //done
     @Column(name = "unloading_address", columnDefinition = "char(200)")
     private String unloadingAddress;
-
+//done
     @Column(name = "driver", columnDefinition = "char(100)")
     private String driver;
-
+//done
     @Column(name = "plate_nr", columnDefinition = "char(100)")
     private String plateNr;
-
+//done
     @Column(name = "price", columnDefinition = "float(6,2)")
     private double price;
-
+//done
     @Column(name = "value_added_tax", columnDefinition = "float(6,2)")
     private double valueAddedTax;
-
+//done
     @Column(name = "payment_term", columnDefinition = "int(4)")
     private int paymentTerm;
-
+//done
     @Column(name = "invoice_send_date", columnDefinition = "date")
     @Temporal(TemporalType.DATE)
     private java.util.Date invoiceSendDate;
@@ -74,16 +74,16 @@ public class Agreement {
     @Column(name = "estimated_date_of_payment", columnDefinition = "date")
     @Temporal(TemporalType.DATE)
     private java.util.Date estimatedDateOfPayment;
-
+//done
     @Column(name = "on_behalf_of", columnDefinition = "char(200)")
     private String onBehalfOf;
-
+//done
     @Column(name = "file_link_agreement", columnDefinition = "text")
     private String fileLinkAgreement;
-
+//done
     @Column(name = "file_link_invoice", columnDefinition = "text")
     private String fileLinkInvoice;
-
+//done
     @Column(name = "notes", columnDefinition = "text")
     private String notes;
 
@@ -404,4 +404,6 @@ public class Agreement {
     public void setNotes(String notes) {
         this.notes = notes;
     }
+
+
 }

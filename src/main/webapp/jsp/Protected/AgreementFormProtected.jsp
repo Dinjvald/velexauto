@@ -55,7 +55,7 @@
             width: 110px;
         }
 
-        a#saveAgreement:link, a#saveAgreement:visited {
+        #saveAgreement:link, #saveAgreement:visited {
             width: 200px;
             height: 40px;
             background-color: #252525;
@@ -71,29 +71,110 @@
             margin-right: 20px;
         }
 
-        a#saveAgreement:active, a#saveAgreement:hover {
+        #saveAgreement:active, #saveAgreement:hover {
             border: solid 1px #dc7700;
             color: #dc7700;
         }
 
+        .ui-datepicker {
+            background: #252525;
+            border: solid 1px #666666;
+            color: azure;
+        }
+        .ui-datepicker-calendar a.ui-state-default:hover {
+            background: #dc7700;
+            border: solid 1px #dc7700;
+        }
+
+        .ui-datepicker-calendar .ui-datepicker-today a {
+            background: #666666;
+            border: solid 1px #666666;
+        }
+
+        /*.ui-datepicker-trigger {*/
+            /*position: relative;*/
+            /*top: 6px;*/
+            /*left: 7px;*/
+        /*}*/
+
     </style>
     <script>
         $(document).ready(function () {
+
+            $.datepicker.regional["ru"] = {
+                monthNames: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август",
+                    "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"],
+                monthNamesShort: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август",
+                    "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"],
+                dayNamesMin: ["Вс", "Пн", "Вт", "Ср", "Чт", "Пн", "Сб"],
+                currentText: "Сегодня",
+                closeText: "Закрыть",
+                dateFormat: "dd.mm.yy",
+                showButtonPanel: true,
+                changeMonth: true,
+                changeYear: true
+                /*showOn: "button",
+                buttonImage: "../Images/CalendarButton.png",
+                buttonImageOnly: true*/
+            };
+
+            $.datepicker.setDefaults(
+                    $.datepicker.regional["ru"]
+            );
+
+            function datePickerInit() {
+                $("#loadingDate").datepicker();
+                $("#unloadingDate").datepicker();
+                $("#invoiceSendDate").datepicker();
+            }
+
+            function getAgreementFormData() {
+                var input = $("#agreementForm input");
+                var data = {};
+                for (var i = 0; i < input.length; i++) {
+                    var name = input.eq(i).attr("name");
+                    var id = "#" + name;
+                    data[name] = $(id).val();
+                }
+                data["notes"] = $("#notes").val();
+                return data;
+            }
+
+            function postAgreementAJAX() {
+                var dataToSend = getAgreementFormData();
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/json",
+                    url: "addagreement",
+                    data: JSON.stringify(dataToSend),
+                    dataType: "text",
+                    success: function(response) {
+                        $("#result").html(response);
+                    }
+                })
+            }
+
+            $("#saveAgreement").click(function () {
+                postAgreementAJAX();
+                return false;
+            });
+
             menuHover();
+            datePickerInit();
         });
     </script>
 </head>
 <body>
 <mytag:logo/>
 <mytag:menuBarProtected/>
-<div>
-    Result
+<div id="result">
+
 </div>
 <div id="agreementForm">
-    <form>
+    <form action="">
         <div class="input">
             <label for="loadingDate">Дата загрузки</label><br>
-            <input type="text" name="loadingDate" id="loadingDate">
+            <input type="text" name="loadingDate" readonly="readonly" id="loadingDate">
             <br>
             <label for="loadingAddress">Адрес загрузки</label><br>
             <input type="text" name="loadingAddress" id="loadingAddress">
@@ -101,7 +182,7 @@
 
         <div class="input">
             <label for="unloadingDate">Дата разгрузки</label><br>
-            <input type="text" name="unloadingDate" id="unloadingDate">
+            <input type="text" name="unloadingDate" readonly="readonly" id="unloadingDate">
             <br>
             <label for="unloadingAddress">Адрес разгрузки</label><br>
             <input type="text" name="unloadingAddress" id="unloadingAddress">
@@ -166,7 +247,7 @@
 
         <div class="input">
             <label for="invoiceSendDate">Счет отправлен</label><br>
-            <input type="text" name="invoiceSendDate" id="invoiceSendDate">
+            <input type="text" name="invoiceSendDate" readonly="readonly" id="invoiceSendDate">
         </div>
         <br>
 
@@ -177,7 +258,7 @@
         </div>
         <a href="" id="saveAgreement">Сохранить</a>
 
-    <%--<input type="submit" value="Сохранить" id="saveAgreement">--%>
+        <%--<input type="submit" value="Сохранить" id="saveAgreement">--%>
 
     </form>
 </div>
