@@ -17,7 +17,7 @@ public class testMain {
         Map<String, String> list = new HashMap();
 
         String result = "Success";
-        String message = "Form is saved";
+        String message = "Сохранено";
 
         list.put("result", result);
         list.put("message", message);

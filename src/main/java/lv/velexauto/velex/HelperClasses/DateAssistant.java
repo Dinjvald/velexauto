@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by Dinjvald on 02/11/15.
@@ -23,24 +24,31 @@ public class DateAssistant {
     public java.util.Date stringToDate(String date) throws ParseException {
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+        sdf.setLenient(false);
         return sdf.parse(date);
     }
 
-    public String checkStringDateFormat(String date) {
+    public boolean isDateValid(String date) {
 
         String[] parts = date.split("\\.");
-        if (parts.length != 3) return "The date format is incorrect";
+        if (parts.length != 3) return false;
 
         int day = Integer.parseInt(parts[0]);
-        if (day < 1 || day > 31) return "The day value is incorrect";
+        if (day < 1 || day > 31) return false;
 
         int month = Integer.parseInt(parts[1]);
-        if (month < 1 || month > 12) return "The month value is incorrect";
+        if (month < 1 || month > 12) return false;
 
         int year = Integer.parseInt(parts[2]);
-        if (year < 1000 || year > 9999) return "The year value is incorrect";
+        if (year < 1900 || year > 2100) return false;
 
-        return null;
+        try {
+            stringToDate(date);
+        } catch (ParseException pr) {
+            pr.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
 }

@@ -9,11 +9,11 @@ import java.text.ParseException;
  */
 public class DateTest {
 
-    public static void main(String[] args) throws ParseException {
+    /*public static void main(String[] args) throws ParseException {
 
         String dateFormat = "20.02.2015";
         DateAssistant dateAssistant = new DateAssistant();
-        String invalidDateMessage = dateAssistant.checkStringDateFormat(dateFormat);
+        String invalidDateMessage = dateAssistant.isDateValid(dateFormat);
         if (invalidDateMessage != null) {
             System.out.println(invalidDateMessage);
         } else {
@@ -21,6 +21,6 @@ public class DateTest {
             System.out.println(date);
             System.out.println(dateAssistant.dateToString(date));
         }
-    }
+    }*/
 
 }

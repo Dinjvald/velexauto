@@ -2,6 +2,7 @@ package lv.velexauto.velex.mvc.Protected;
 
 import com.google.gson.Gson;
 import lv.velexauto.velex.HelperClasses.AgreementRequestBody;
+import lv.velexauto.velex.HelperClasses.DataValidateAssistant;
 import lv.velexauto.velex.HelperClasses.DateAssistant;
 import lv.velexauto.velex.HelperClasses.SecurityAssistant;
 import lv.velexauto.velex.database.AgreementDAO;
@@ -9,7 +10,6 @@ import lv.velexauto.velex.database.DBException;
 import lv.velexauto.velex.database.UserDAO;
 import lv.velexauto.velex.domain.Agreement;
 import lv.velexauto.velex.domain.Employee;
-import lv.velexauto.velex.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -44,32 +44,45 @@ public class AddAgreementController {
     @Qualifier("DateAssistant")
     private DateAssistant dateAssistant;
 
+    @Autowired
+    @Qualifier("DataValidateAssistant")
+    private DataValidateAssistant dataVA;
+
     @RequestMapping(value = {"protected/addagreement"}, method = RequestMethod.POST)
-    public @ResponseBody String addAgreement(@RequestBody AgreementRequestBody agreementRB)
+    public
+    @ResponseBody
+    String addAgreement(@RequestBody AgreementRequestBody agreementRB)
             throws ParseException, DBException {
 
+        if (!dataVA.isAgreementRequestBodyValid(agreementRB)) {
+            List<String> response = new ArrayList<String>();
+            response.add("error");
+            response.add("rejected");
+            Gson gson = new Gson();
+            return gson.toJson(response);
+        }
         Agreement agreement = toAgreementDomain(agreementRB);
         agreementDAO.create(agreement);
 
         List<String> result = new ArrayList<String>();
-        result.add("Success");
-        result.add("Agreement is saved");
-
+        result.add("success");
+        result.add("saved");
         Gson gson = new Gson();
 
         return gson.toJson(result);
     }
 
-    private Employee getCurrentEmployee() throws DBException {
+    /*private Employee getCurrentEmployee() throws DBException {
 
         String login = securityAssistant.getCurrentUserLogin();
         User user = userDAO.getByLogin(login);
         return user.getEmployee();
-    }
+    }*/
 
-    public Agreement toAgreementDomain(AgreementRequestBody agreementRB) throws ParseException, DBException {
+    private Agreement toAgreementDomain(AgreementRequestBody agreementRB) throws ParseException, DBException {
 
-        Employee employee = getCurrentEmployee();
+        Employee employee = securityAssistant.getCurrentEmployee();
+        System.out.println(employee.getName());
         Agreement agreement = new Agreement();
 
         agreement.setEmployee(employee);

@@ -5,7 +5,7 @@
   Time: 13:42
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@taglib prefix="mytag" tagdir="/WEB-INF/tags" %>
 <!DOCTYPE html>
 <html>
@@ -145,7 +145,7 @@
             function isDataValid() {
                 var isValid = true;
                 if (!isNumbersValid()) isValid = false;
-                if(!isTextValid()) isValid = false;
+                if (!isTextValid()) isValid = false;
                 if (!isValid) $("#result").html("Проверьте данные");
                 return isValid;
             }
@@ -222,7 +222,7 @@
             }
 
             function postAgreementAJAX() {
-                if (!isDataValid()) return false;
+//                if (!isDataValid()) return false;
                 var dataToSend = getAgreementFormData();
 
                 $.ajax({
@@ -242,13 +242,18 @@
                 var result = $("#result");
                 var responseArray = JSON.parse(response);
 
-                result.css({
-                    "color": "#26a300"
-                });
-                result.html(responseArray[1]);
-                setTimeout(function () {
-                    result.html("");
-                }, 10000);
+                if (responseArray[0] == "success") {
+                    result.css({"color": "#26a300"});
+                    result.html("Заявка сохранена");
+                    setTimeout(function () {
+                        result.html("");
+                    }, 10000);
+                }
+
+                if (responseArray[0] == "error") {
+                    result.css({"color": "#C40005"});
+                    result.html("Отказ от сервера. Неправильные данные.");
+                }
             }
 
             $("#saveAgreement").click(function () {
@@ -276,7 +281,7 @@
 
         <div class="input">
             <label for="unloadingDate">Дата разгрузки</label><br>
-            <input type="text" name="unloadingDate" readonly="readonly" class="date" id="unloadingDate">
+            <input type="text" name="unloadingDate"  class="date" id="unloadingDate">
             <br>
             <label for="unloadingAddress">Адрес разгрузки</label><br>
             <input type="text" name="unloadingAddress" class="text" id="unloadingAddress">
@@ -351,9 +356,6 @@
             <textarea name="notes" id="notes"></textarea>
         </div>
         <a href="" id="saveAgreement">Сохранить</a>
-
-        <%--<input type="submit" value="Сохранить" id="saveAgreement">--%>
-
     </form>
 </div>
 <br>
