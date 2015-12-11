@@ -16,7 +16,7 @@ public class AgreementRequestBody {
     String onBehalfOf;
     String fileLinkAgreement;
     String fileLinkInvoice;
-    int price;
+    double price;
     double valueAddedTax;
     int paymentTerm;
     String driver;
@@ -64,7 +64,7 @@ public class AgreementRequestBody {
         return fileLinkInvoice;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 

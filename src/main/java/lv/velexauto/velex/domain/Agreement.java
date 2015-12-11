@@ -29,13 +29,13 @@ public class Agreement {
     @JoinColumn(name = "company_id", nullable = false)
     private Company company;
 //done
-    @Column(name = "agreement_nr", columnDefinition = "char(100)")
+    @Column(name = "agreement_nr", columnDefinition = "char(200)")
     private String agreementNr;
 //done
-    @Column(name = "invoice_nr", columnDefinition = "char(100)")
+    @Column(name = "invoice_nr", columnDefinition = "char(200)")
     private String invoiceNr;
 //done
-    @Column(name = "client_name", columnDefinition = "char(100)")
+    @Column(name = "client_name", columnDefinition = "char(200)")
     private String clientName;
 //done
     @Column(name = "loading_date", columnDefinition = "date")
@@ -52,19 +52,19 @@ public class Agreement {
     @Column(name = "unloading_address", columnDefinition = "char(200)")
     private String unloadingAddress;
 //done
-    @Column(name = "driver", columnDefinition = "char(100)")
+    @Column(name = "driver", columnDefinition = "char(200)")
     private String driver;
 //done
-    @Column(name = "plate_nr", columnDefinition = "char(100)")
+    @Column(name = "plate_nr", columnDefinition = "char(200)")
     private String plateNr;
 //done
-    @Column(name = "price", columnDefinition = "float(6,2)")
+    @Column(name = "price", columnDefinition = "float(11,2)")
     private double price;
 //done
-    @Column(name = "value_added_tax", columnDefinition = "float(6,2)")
+    @Column(name = "value_added_tax", columnDefinition = "float(11,2)")
     private double valueAddedTax;
 //done
-    @Column(name = "payment_term", columnDefinition = "int(4)")
+    @Column(name = "payment_term", columnDefinition = "int(11)")
     private int paymentTerm;
 //done
     @Column(name = "invoice_send_date", columnDefinition = "date")

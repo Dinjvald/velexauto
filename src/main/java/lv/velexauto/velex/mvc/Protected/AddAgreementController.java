@@ -1,5 +1,6 @@
 package lv.velexauto.velex.mvc.Protected;
 
+import com.google.gson.Gson;
 import lv.velexauto.velex.HelperClasses.AgreementRequestBody;
 import lv.velexauto.velex.HelperClasses.DateAssistant;
 import lv.velexauto.velex.HelperClasses.SecurityAssistant;
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Dinjvald on 03/12/15.
@@ -45,14 +48,16 @@ public class AddAgreementController {
     public @ResponseBody String addAgreement(@RequestBody AgreementRequestBody agreementRB)
             throws ParseException, DBException {
 
-        System.out.println(agreementRB);
-
         Agreement agreement = toAgreementDomain(agreementRB);
         agreementDAO.create(agreement);
-        Agreement agreementFromDB = agreementDAO.getById(agreement.getAgreementId());
-        System.out.println(agreementFromDB.getLoadingAddress());
-        System.out.println(agreementFromDB.getUnloadingAddress());
-        return "Success";
+
+        List<String> result = new ArrayList<String>();
+        result.add("Success");
+        result.add("Agreement is saved");
+
+        Gson gson = new Gson();
+
+        return gson.toJson(result);
     }
 
     private Employee getCurrentEmployee() throws DBException {

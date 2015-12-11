@@ -7,22 +7,23 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="mytag" tagdir="/WEB-INF/tags" %>
+<!DOCTYPE html>
 <html>
 <head>
     <mytag:head/>
     <style>
-        div#agreementForm {
+        div#agreement {
             margin: auto;
             width: 85%;
             /*border: solid 1px;*/
         }
 
-        div#agreementForm label, div#agreementForm input {
+        div#agreement label, div#agreement input {
             margin-bottom: 5px;
             margin-top: 5px;
         }
 
-        div#agreementForm input {
+        div#agreement input {
             border: solid 1px #666666;
             height: 25px;
             font-size: 15px;
@@ -31,7 +32,7 @@
             color: azure;
         }
 
-        div#agreementForm textarea#notes {
+        div#agreement textarea#notes {
             height: 200px;
             width: 400px;
             background-color: #252525;
@@ -81,6 +82,7 @@
             border: solid 1px #666666;
             color: azure;
         }
+
         .ui-datepicker-calendar a.ui-state-default:hover {
             background: #dc7700;
             border: solid 1px #dc7700;
@@ -91,10 +93,21 @@
             border: solid 1px #666666;
         }
 
+        #result {
+            /*border: solid 1px #666666;*/
+            height: 40px;
+            width: 83%;
+            margin: auto;
+            font-weight: bold;
+            font-size: 125%;
+            line-height: 40px;
+            text-align: right;
+        }
+
         /*.ui-datepicker-trigger {*/
-            /*position: relative;*/
-            /*top: 6px;*/
-            /*left: 7px;*/
+        /*position: relative;*/
+        /*top: 6px;*/
+        /*left: 7px;*/
         /*}*/
 
     </style>
@@ -114,13 +127,14 @@
                 changeMonth: true,
                 changeYear: true
                 /*showOn: "button",
-                buttonImage: "../Images/CalendarButton.png",
-                buttonImageOnly: true*/
+                 buttonImage: "../Images/CalendarButton.png",
+                 buttonImageOnly: true*/
             };
 
             $.datepicker.setDefaults(
                     $.datepicker.regional["ru"]
             );
+
 
             function datePickerInit() {
                 $("#loadingDate").datepicker();
@@ -128,30 +142,113 @@
                 $("#invoiceSendDate").datepicker();
             }
 
+            function isDataValid() {
+                var isValid = true;
+                if (!isNumbersValid()) isValid = false;
+                if(!isTextValid()) isValid = false;
+                if (!isValid) $("#result").html("Проверьте данные");
+                return isValid;
+            }
+
+            function setDefaultBorderColor(object) {
+                $(object).css({"border-color": "#666666"});
+            }
+
+            function isInputEmpty(object) {
+                return object.val() == "";
+            }
+
+            function isNumbersValid() {
+                var isNumbersValid = true;
+
+                $(".number").each(function () {
+                    setDefaultBorderColor($(this));
+                    if (isInputEmpty($(this))) return true;
+                    if (!$.isNumeric($(this).val())) {
+                        $(this).css({"border-color": "#920007"});
+                        isNumbersValid = false;
+                    }
+                });
+                return isNumbersValid;
+            }
+
+            function isTextValid() {
+                var isTextValid = true;
+
+                $(".text").each(function () {
+                    var attrName = $(this).attr("name");
+                    var length = $(this).val().length;
+
+                    setDefaultBorderColor($(this));
+                    if (isInputEmpty($(this))) return true;
+                    if (attrName == "fileLinkAgreement" || attrName == "fileLinkInvoice") return true;
+                    if (length > 200) {
+                        $(this).css({"border-color": "#920007"});
+                        isTextValid = false;
+                    }
+                });
+                return isTextValid;
+            }
+
+            function fillDefaultIfEmpty() {
+                var notes = $("#notes");
+                $(".number").each(function () {
+                    if (isInputEmpty($(this))) $(this).val("-1");
+                });
+                $(".text").each(function () {
+                    if (isInputEmpty($(this))) $(this).val("empty");
+                });
+                $(".date").each(function () {
+                    if (isInputEmpty($(this))) $(this).val("01.01.1971")
+                });
+                if (notes.val() == "") notes.val("empty");
+            }
+
             function getAgreementFormData() {
-                var input = $("#agreementForm input");
+                fillDefaultIfEmpty();
                 var data = {};
-                for (var i = 0; i < input.length; i++) {
-                    var name = input.eq(i).attr("name");
-                    var id = "#" + name;
-                    data[name] = $(id).val();
-                }
-                data["notes"] = $("#notes").val();
+                var agreementForm = $("#agreementForm");
+
+                agreementForm.find("input").each(function () {
+                    var name = $(this).attr("name");
+                    data[name] = $(this).val();
+                });
+                agreementForm.find("textarea").each(function () {
+                    var name = $(this).attr("name");
+                    data[name] = $(this).val();
+                });
+                console.log(data);
                 return data;
             }
 
             function postAgreementAJAX() {
+                if (!isDataValid()) return false;
                 var dataToSend = getAgreementFormData();
+
                 $.ajax({
                     type: "POST",
                     contentType: "application/json",
                     url: "addagreement",
                     data: JSON.stringify(dataToSend),
                     dataType: "text",
-                    success: function(response) {
-                        $("#result").html(response);
+                    success: function (response) {
+                        showResult(response);
+                        $("#agreementForm")[0].reset();
                     }
                 })
+            }
+
+            function showResult(response) {
+                var result = $("#result");
+                var responseArray = JSON.parse(response);
+
+                result.css({
+                    "color": "#26a300"
+                });
+                result.html(responseArray[1]);
+                setTimeout(function () {
+                    result.html("");
+                }, 10000);
             }
 
             $("#saveAgreement").click(function () {
@@ -167,87 +264,84 @@
 <body>
 <mytag:logo/>
 <mytag:menuBarProtected/>
-<div id="result">
-
-</div>
-<div id="agreementForm">
-    <form action="">
+<div id="agreement">
+    <form id="agreementForm" action="">
         <div class="input">
             <label for="loadingDate">Дата загрузки</label><br>
-            <input type="text" name="loadingDate" readonly="readonly" id="loadingDate">
+            <input type="text" name="loadingDate" readonly="readonly" class="date" id="loadingDate">
             <br>
             <label for="loadingAddress">Адрес загрузки</label><br>
-            <input type="text" name="loadingAddress" id="loadingAddress">
+            <input type="text" name="loadingAddress" class="text" id="loadingAddress">
         </div>
 
         <div class="input">
             <label for="unloadingDate">Дата разгрузки</label><br>
-            <input type="text" name="unloadingDate" readonly="readonly" id="unloadingDate">
+            <input type="text" name="unloadingDate" readonly="readonly" class="date" id="unloadingDate">
             <br>
             <label for="unloadingAddress">Адрес разгрузки</label><br>
-            <input type="text" name="unloadingAddress" id="unloadingAddress">
+            <input type="text" name="unloadingAddress" class="text" id="unloadingAddress">
         </div>
         <br>
 
         <div class="input">
             <label for="clientName">Заказчик</label><br>
-            <input type="text" name="clientName" id="clientName">
+            <input type="text" name="clientName" class="text" id="clientName">
         </div>
         <div class="input">
             <label for="agreementNr">Номер заявки</label><br>
-            <input type="text" name="agreementNr" id="agreementNr">
+            <input type="text" name="agreementNr" class="text" id="agreementNr">
         </div>
         <div class="input">
             <label for="invoiceNr">Номер счета</label><br>
-            <input type="text" name="invoiceNr" id="invoiceNr">
+            <input type="text" name="invoiceNr" class="text" id="invoiceNr">
         </div>
         <br>
 
         <div class="input">
             <label for="onBehalfOf">На основании документа</label><br>
-            <input type="text" name="onBehalfOf" id="onBehalfOf">
+            <input type="text" name="onBehalfOf" class="text" id="onBehalfOf">
         </div>
 
         <div class="input">
             <label for="fileLinkAgreement">Ссылка на заявку</label><br>
-            <input type="text" name="fileLinkAgreement" id="fileLinkAgreement">
+            <input type="text" name="fileLinkAgreement" class="text" id="fileLinkAgreement">
         </div>
 
         <div class="input">
             <label for="fileLinkInvoice">Ссылка на счет</label><br>
-            <input type="text" name="fileLinkInvoice" id="fileLinkInvoice">
+            <input type="text" name="fileLinkInvoice" class="text" id="fileLinkInvoice">
         </div>
         <br>
 
         <div class="input">
             <label for="price">Цена EUR</label><br>
-            <input type="text" name="price" id="price">
+            <input type="text" name="price" class="number" id="price">
         </div>
 
         <div class="input">
-            <label for="valueAddedTax">PVN 21%</label><br>
-            <input type="text" name="valueAddedTax" id="valueAddedTax">
+            <label for="valueAddedTax">PVN EUR</label><br>
+            <input type="text" name="valueAddedTax" class="number" id="valueAddedTax">
         </div>
 
         <div class="input">
             <label for="paymentTerm">Срок оплаты в днях</label><br>
-            <input type="text" name="paymentTerm" id="paymentTerm">
+            <input type="text" name="paymentTerm" class="number" id="paymentTerm">
         </div>
         <br>
 
         <div class="input">
             <label for="driver">Водитель</label><br>
-            <input type="text" name="driver" id="driver">
+            <input type="text" name="driver" class="text" id="driver">
         </div>
 
         <div class="input">
             <label for="plateNr">Номера сцепки</label><br>
-            <input type="text" name="plateNr" id="plateNr">
+            <input type="text" name="plateNr" class="text" id="plateNr">
         </div>
 
         <div class="input">
             <label for="invoiceSendDate">Счет отправлен</label><br>
-            <input type="text" name="invoiceSendDate" readonly="readonly" id="invoiceSendDate">
+            <input type="text" name="invoiceSendDate" readonly="readonly" class="date" id="invoiceSendDate">
         </div>
         <br>
 
@@ -262,6 +356,9 @@
 
     </form>
 </div>
+<br>
 
+<div id="result">
+</div>
 </body>
 </html>

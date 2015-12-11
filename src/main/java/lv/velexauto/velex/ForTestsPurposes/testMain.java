@@ -1,5 +1,12 @@
 package lv.velexauto.velex.ForTestsPurposes;
 
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * Created by Dinjvald on 20/10/15.
  */
@@ -7,19 +14,18 @@ public class testMain {
 
     public static void main(String[] args) {
 
-        Human deniss = new Human.HumanBuilder()
-                .name("Deniss")
-                .surname("Besk")
-                .age(27)
-                .height(180.2)
-                .build();
-        System.out.println(deniss.getName() + "\n" + deniss.getSurname() + "\n" + deniss.getAge() + "\n"
-                + deniss.getHeight());
+        Map<String, String> list = new HashMap();
 
-        deniss.setAge(20);
+        String result = "Success";
+        String message = "Form is saved";
 
-        System.out.println(deniss.getName() + "\n" + deniss.getSurname() + "\n" + deniss.getAge() + "\n"
-                + deniss.getHeight());
+        list.put("result", result);
+        list.put("message", message);
+
+        Gson gson = new Gson();
+        String json = gson.toJson(list);
+
+        System.out.println(json);
 
     }
 }
