@@ -1,11 +1,8 @@
 package lv.velexauto.velex.ForTestsPurposes;
 
-import com.google.gson.Gson;
+import lv.velexauto.velex.HelperClasses.DateAssistant;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.ParseException;
 
 /**
  * Created by Dinjvald on 20/10/15.
@@ -14,18 +11,13 @@ public class testMain {
 
     public static void main(String[] args) {
 
-        Map<String, String> list = new HashMap();
-
-        String result = "Success";
-        String message = "Сохранено";
-
-        list.put("result", result);
-        list.put("message", message);
-
-        Gson gson = new Gson();
-        String json = gson.toJson(list);
-
-        System.out.println(json);
+        DateAssistant dateAssistant = new DateAssistant();
+        try {
+            java.util.Date date = dateAssistant.stringToDate("01.01.1971");
+            System.out.println(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
     }
 }

@@ -6,7 +6,9 @@ import org.springframework.stereotype.Component;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * Created by Dinjvald on 02/11/15.
@@ -30,18 +32,6 @@ public class DateAssistant {
 
     public boolean isDateValid(String date) {
 
-        String[] parts = date.split("\\.");
-        if (parts.length != 3) return false;
-
-        int day = Integer.parseInt(parts[0]);
-        if (day < 1 || day > 31) return false;
-
-        int month = Integer.parseInt(parts[1]);
-        if (month < 1 || month > 12) return false;
-
-        int year = Integer.parseInt(parts[2]);
-        if (year < 1900 || year > 2100) return false;
-
         try {
             stringToDate(date);
         } catch (ParseException pr) {
@@ -49,6 +39,13 @@ public class DateAssistant {
             return false;
         }
         return true;
+    }
+
+    public java.util.Date addDaysToDate(java.util.Date date, int days) {
+        GregorianCalendar calendar = new GregorianCalendar();
+        calendar.setTime(date);
+        calendar.add(Calendar.DATE, days);
+        return calendar.getTime();
     }
 
 }

@@ -11,7 +11,21 @@ body {
     margin: auto;
 }
 
-/* --------------------------------Menu START-------------------------------------- */
+img#logo {
+    width: 435px;
+    height: 100px;
+    margin: 20px 0 20px 20px;
+}
+
+.global_main_text {
+    font-size: 105%;
+    font-family: Georgia, serif;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+/* --- MENU START --- */
+
 ul#menu {
     list-style-type: none;
     margin: 0 0 30px 0;
@@ -59,17 +73,24 @@ ul#menu li ul li {
     list-style-type: none;
 }
 
-/* --------------------------------Menu END-------------------------------------- */
+/* --- MENU END --- */
 
-img#logo {
-    width: 435px;
-    height: 100px;
-    margin: 20px 0 20px 20px;
+/* --- CALENDAR START --- */
+
+.ui-datepicker {
+    background: #252525;
+    border: solid 1px #666666;
+    color: azure;
 }
 
-.global_main_text {
-    font-size: 105%;
-    font-family: Georgia, serif;
-    text-align: justify;
-    text-justify: inter-word;
+.ui-datepicker-calendar a.ui-state-default:hover {
+    background: #dc7700;
+    border: solid 1px #dc7700;
 }
+
+.ui-datepicker-calendar .ui-datepicker-today a {
+    background: #666666;
+    border: solid 1px #666666;
+}
+
+/* --- CALENDAR END --- */

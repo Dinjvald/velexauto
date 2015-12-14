@@ -5,7 +5,7 @@
   Time: 13:42
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="mytag" tagdir="/WEB-INF/tags" %>
 <!DOCTYPE html>
 <html>
@@ -15,7 +15,6 @@
         div#agreement {
             margin: auto;
             width: 85%;
-            /*border: solid 1px;*/
         }
 
         div#agreement label, div#agreement input {
@@ -39,12 +38,10 @@
             border: solid 1px #666666;
             color: azure;
             font-size: 15px;
-
         }
 
         div.input {
             display: inline-block;
-            /*border: solid 1px red;*/
             margin: 3px 7px 3px;
         }
 
@@ -77,22 +74,6 @@
             color: #dc7700;
         }
 
-        .ui-datepicker {
-            background: #252525;
-            border: solid 1px #666666;
-            color: azure;
-        }
-
-        .ui-datepicker-calendar a.ui-state-default:hover {
-            background: #dc7700;
-            border: solid 1px #dc7700;
-        }
-
-        .ui-datepicker-calendar .ui-datepicker-today a {
-            background: #666666;
-            border: solid 1px #666666;
-        }
-
         #result {
             /*border: solid 1px #666666;*/
             height: 40px;
@@ -103,12 +84,6 @@
             line-height: 40px;
             text-align: right;
         }
-
-        /*.ui-datepicker-trigger {*/
-        /*position: relative;*/
-        /*top: 6px;*/
-        /*left: 7px;*/
-        /*}*/
 
     </style>
     <script>
@@ -135,7 +110,6 @@
                     $.datepicker.regional["ru"]
             );
 
-
             function datePickerInit() {
                 $("#loadingDate").datepicker();
                 $("#unloadingDate").datepicker();
@@ -145,7 +119,7 @@
             function isDataValid() {
                 var isValid = true;
                 if (!isNumbersValid()) isValid = false;
-                if (!isTextValid()) isValid = false;
+                if (!isCharValid()) isValid = false;
                 if (!isValid) $("#result").html("Проверьте данные");
                 return isValid;
             }
@@ -172,36 +146,35 @@
                 return isNumbersValid;
             }
 
-            function isTextValid() {
-                var isTextValid = true;
+            function isCharValid() {
+                var isCharValid = true;
 
-                $(".text").each(function () {
-                    var attrName = $(this).attr("name");
+                $(".char").each(function () {
                     var length = $(this).val().length;
 
                     setDefaultBorderColor($(this));
                     if (isInputEmpty($(this))) return true;
-                    if (attrName == "fileLinkAgreement" || attrName == "fileLinkInvoice") return true;
                     if (length > 200) {
                         $(this).css({"border-color": "#920007"});
-                        isTextValid = false;
+                        isCharValid = false;
                     }
                 });
-                return isTextValid;
+                return isCharValid;
             }
 
             function fillDefaultIfEmpty() {
-                var notes = $("#notes");
                 $(".number").each(function () {
                     if (isInputEmpty($(this))) $(this).val("-1");
                 });
-                $(".text").each(function () {
+                $(".char").each(function () {
                     if (isInputEmpty($(this))) $(this).val("empty");
                 });
                 $(".date").each(function () {
                     if (isInputEmpty($(this))) $(this).val("01.01.1971")
                 });
-                if (notes.val() == "") notes.val("empty");
+                $(".text").each(function () {
+                    if (isInputEmpty($(this))) $(this).val("empty");
+                });
             }
 
             function getAgreementFormData() {
@@ -222,7 +195,7 @@
             }
 
             function postAgreementAJAX() {
-//                if (!isDataValid()) return false;
+                if (!isDataValid()) return false;
                 var dataToSend = getAgreementFormData();
 
                 $.ajax({
@@ -234,26 +207,58 @@
                     success: function (response) {
                         showResult(response);
                         $("#agreementForm")[0].reset();
+                    },
+                    error: function () {
+                        $("#result")
+                                .css({"color": "#C40005"})
+                                .html("Проверка формы не сработала. Сервер не может обработать данные.");
+
                     }
                 })
             }
 
             function showResult(response) {
                 var result = $("#result");
+                var key = {
+                    agreement: "Заявка сохранена"
+                };
                 var responseArray = JSON.parse(response);
 
                 if (responseArray[0] == "success") {
-                    result.css({"color": "#26a300"});
-                    result.html("Заявка сохранена");
-                    setTimeout(function () {
-                        result.html("");
-                    }, 10000);
+                    alertSuccess(responseArray[1]);
                 }
 
                 if (responseArray[0] == "error") {
-                    result.css({"color": "#C40005"});
-                    result.html("Отказ от сервера. Неправильные данные.");
+                    alertError(responseArray[1]);
                 }
+            }
+
+            function alertSuccess(key) {
+                var result = $("#result");
+                var message = {
+                    agreement: "Заявка сохранена."
+                };
+
+                result
+                        .css({"color": "#26a300"})
+                        .html(message[key]);
+                setTimeout(function () {
+                    result.html("");
+                }, 10000);
+            }
+
+            function alertError(key) {
+                var result = $("#result");
+                var message = {
+                    agreement: "Отказ от сервера. Неверные данные в заявке."
+                };
+
+                result
+                        .css({"color": "#C40005"})
+                        .html(message[key]);
+                setTimeout(function () {
+                    result.html("")
+                }, 15000);
             }
 
             $("#saveAgreement").click(function () {
@@ -276,35 +281,35 @@
             <input type="text" name="loadingDate" readonly="readonly" class="date" id="loadingDate">
             <br>
             <label for="loadingAddress">Адрес загрузки</label><br>
-            <input type="text" name="loadingAddress" class="text" id="loadingAddress">
+            <input type="text" name="loadingAddress" class="char" id="loadingAddress">
         </div>
 
         <div class="input">
             <label for="unloadingDate">Дата разгрузки</label><br>
-            <input type="text" name="unloadingDate"  class="date" id="unloadingDate">
+            <input type="text" name="unloadingDate" readonly="readonly" class="date" id="unloadingDate">
             <br>
             <label for="unloadingAddress">Адрес разгрузки</label><br>
-            <input type="text" name="unloadingAddress" class="text" id="unloadingAddress">
+            <input type="text" name="unloadingAddress" class="char" id="unloadingAddress">
         </div>
         <br>
 
         <div class="input">
             <label for="clientName">Заказчик</label><br>
-            <input type="text" name="clientName" class="text" id="clientName">
+            <input type="text" name="clientName" class="char" id="clientName">
         </div>
         <div class="input">
             <label for="agreementNr">Номер заявки</label><br>
-            <input type="text" name="agreementNr" class="text" id="agreementNr">
+            <input type="text" name="agreementNr" class="char" id="agreementNr">
         </div>
         <div class="input">
             <label for="invoiceNr">Номер счета</label><br>
-            <input type="text" name="invoiceNr" class="text" id="invoiceNr">
+            <input type="text" name="invoiceNr" class="char" id="invoiceNr">
         </div>
         <br>
 
         <div class="input">
             <label for="onBehalfOf">На основании документа</label><br>
-            <input type="text" name="onBehalfOf" class="text" id="onBehalfOf">
+            <input type="text" name="onBehalfOf" class="char" id="onBehalfOf">
         </div>
 
         <div class="input">
@@ -336,12 +341,12 @@
 
         <div class="input">
             <label for="driver">Водитель</label><br>
-            <input type="text" name="driver" class="text" id="driver">
+            <input type="text" name="driver" class="char" id="driver">
         </div>
 
         <div class="input">
             <label for="plateNr">Номера сцепки</label><br>
-            <input type="text" name="plateNr" class="text" id="plateNr">
+            <input type="text" name="plateNr" class="char" id="plateNr">
         </div>
 
         <div class="input">
@@ -353,7 +358,7 @@
         <div class="input" id="notesDiv">
             <label for="notes">Примечания</label><br>
             <%--<input type="text" name="notes" id="notes">--%>
-            <textarea name="notes" id="notes"></textarea>
+            <textarea name="notes" id="notes" class="text"></textarea>
         </div>
         <a href="" id="saveAgreement">Сохранить</a>
     </form>

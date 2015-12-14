@@ -7,7 +7,6 @@ import lv.velexauto.velex.HelperClasses.DateAssistant;
 import lv.velexauto.velex.HelperClasses.SecurityAssistant;
 import lv.velexauto.velex.database.AgreementDAO;
 import lv.velexauto.velex.database.DBException;
-import lv.velexauto.velex.database.UserDAO;
 import lv.velexauto.velex.domain.Agreement;
 import lv.velexauto.velex.domain.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,17 +27,19 @@ import java.util.List;
 @Controller
 public class AddAgreementController {
 
-    @Autowired
-    @Qualifier("SecurityAssistant")
-    private SecurityAssistant securityAssistant;
-
-    @Autowired
-    @Qualifier("HibernateDAOUser")
-    private UserDAO userDAO;
+    private final String SUCCESS = "success";
+    private final String ERROR = "error";
+    private final String AGREEMENT = "agreement";
+    private final String DEFAULT_DATE = "01.01.1971";
+    private final int DEFAULT_INT = -1;
 
     @Autowired
     @Qualifier("HibernateDAOAgreement")
     private AgreementDAO agreementDAO;
+
+    @Autowired
+    @Qualifier("SecurityAssistant")
+    private SecurityAssistant securityAssistant;
 
     @Autowired
     @Qualifier("DateAssistant")
@@ -46,7 +47,7 @@ public class AddAgreementController {
 
     @Autowired
     @Qualifier("DataValidateAssistant")
-    private DataValidateAssistant dataVA;
+    private DataValidateAssistant dataValidateAssistant;
 
     @RequestMapping(value = {"protected/addagreement"}, method = RequestMethod.POST)
     public
@@ -54,30 +55,14 @@ public class AddAgreementController {
     String addAgreement(@RequestBody AgreementRequestBody agreementRB)
             throws ParseException, DBException {
 
-        if (!dataVA.isAgreementRequestBodyValid(agreementRB)) {
-            List<String> response = new ArrayList<String>();
-            response.add("error");
-            response.add("rejected");
-            Gson gson = new Gson();
-            return gson.toJson(response);
+        if (!dataValidateAssistant.isAgreementRequestBodyValid(agreementRB)) {
+            return alertError();
         }
         Agreement agreement = toAgreementDomain(agreementRB);
         agreementDAO.create(agreement);
 
-        List<String> result = new ArrayList<String>();
-        result.add("success");
-        result.add("saved");
-        Gson gson = new Gson();
-
-        return gson.toJson(result);
+        return alertSuccess();
     }
-
-    /*private Employee getCurrentEmployee() throws DBException {
-
-        String login = securityAssistant.getCurrentUserLogin();
-        User user = userDAO.getByLogin(login);
-        return user.getEmployee();
-    }*/
 
     private Agreement toAgreementDomain(AgreementRequestBody agreementRB) throws ParseException, DBException {
 
@@ -105,6 +90,31 @@ public class AddAgreementController {
         agreement.setFileLinkInvoice(agreementRB.getFileLinkInvoice());
         agreement.setNotes(agreementRB.getNotes());
 
+        java.util.Date paymentDate = calculatePaymentDate(agreement.getInvoiceSendDate(), agreement.getPaymentTerm());
+        agreement.setEstimatedDateOfPayment(paymentDate);
+
         return agreement;
+    }
+
+    private java.util.Date calculatePaymentDate(java.util.Date date, int paymentTerm) throws ParseException {
+        java.util.Date def = dateAssistant.stringToDate(DEFAULT_DATE);
+        if (date == def || paymentTerm == DEFAULT_INT) return def;
+        return dateAssistant.addDaysToDate(date, paymentTerm);
+    }
+
+    private String alertSuccess() {
+        List<String> response = new ArrayList<>();
+        response.add(SUCCESS);
+        response.add(AGREEMENT);
+        Gson gson = new Gson();
+        return gson.toJson(response);
+    }
+
+    private String alertError() {
+        List<String> response = new ArrayList<>();
+        response.add(ERROR);
+        response.add(AGREEMENT);
+        Gson gson = new Gson();
+        return gson.toJson(response);
     }
 }
