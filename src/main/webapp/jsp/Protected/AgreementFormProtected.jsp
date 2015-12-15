@@ -120,7 +120,9 @@
                 var isValid = true;
                 if (!isNumbersValid()) isValid = false;
                 if (!isCharValid()) isValid = false;
-                if (!isValid) $("#result").html("Проверьте данные");
+                if (!isValid) $("#result")
+                        .css({"color": "#dc7700"})
+                        .html("Проверьте данные");
                 return isValid;
             }
 
@@ -139,6 +141,10 @@
                     setDefaultBorderColor($(this));
                     if (isInputEmpty($(this))) return true;
                     if (!$.isNumeric($(this).val())) {
+                        $(this).css({"border-color": "#920007"});
+                        isNumbersValid = false;
+                    }
+                    if ($(this).val() < -1) {
                         $(this).css({"border-color": "#920007"});
                         isNumbersValid = false;
                     }
@@ -184,11 +190,11 @@
 
                 agreementForm.find("input").each(function () {
                     var name = $(this).attr("name");
-                    if ($(this).val() != "") data[name] = $(this).val();
+                    data[name] = $(this).val();
                 });
                 agreementForm.find("textarea").each(function () {
                     var name = $(this).attr("name");
-                    if ($(this).val() != "") data[name] = $(this).val();
+                    data[name] = $(this).val();
                 });
                 console.log(data);
                 return data;

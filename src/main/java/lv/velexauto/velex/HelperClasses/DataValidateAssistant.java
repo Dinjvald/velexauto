@@ -14,13 +14,22 @@ import java.util.List;
 @Component("DataValidateAssistant")
 public class DataValidateAssistant {
 
+    private final int INT_DEFAULT = -1;
+
     @Autowired
     @Qualifier("DateAssistant")
     private DateAssistant dateAssistant;
 
     public boolean isAgreementRequestBodyValid(AgreementRequestBody agreementRB) {
+        if (!isAgreementTextValid(agreementRB)) return false;
+        if (!isAgreementDatesValid(agreementRB)) return false;
+        if (!isAgreementNumbersValid(agreementRB)) return false;
+        return true;
+    }
 
+    private boolean isAgreementTextValid (AgreementRequestBody agreementRB) {
         List<String> text = new ArrayList<String>();
+
         text.add(agreementRB.getLoadingAddress());
         text.add(agreementRB.getUnloadingAddress());
         text.add(agreementRB.getClientName());
@@ -33,7 +42,12 @@ public class DataValidateAssistant {
         for (String line : text) {
             if (line.length() > 200) return false;
         }
-        text.clear();
+        return true;
+    }
+
+    private boolean isAgreementDatesValid (AgreementRequestBody agreementRB) {
+        List<String> text = new ArrayList<String>();
+
         text.add(agreementRB.getLoadingDate());
         text.add(agreementRB.getUnloadingDate());
         text.add(agreementRB.getInvoiceSendDate());
@@ -45,10 +59,17 @@ public class DataValidateAssistant {
                 }
             }
         }
+        return true;
+    }
 
+    private boolean isAgreementNumbersValid (AgreementRequestBody agreementRB) {
         int paymentTerm = agreementRB.getPaymentTerm();
-        if (paymentTerm > 3000 || paymentTerm < -1) return false;
+        double number = agreementRB.getPrice();
 
+        if (paymentTerm > 3000 || paymentTerm < INT_DEFAULT) return false;
+        if (number < INT_DEFAULT) return false;
+        number = agreementRB.getValueAddedTax();
+        if (number < INT_DEFAULT) return false;
         return true;
     }
 }

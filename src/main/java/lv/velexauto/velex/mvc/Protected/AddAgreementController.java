@@ -90,8 +90,8 @@ public class AddAgreementController {
         agreement.setFileLinkInvoice(agreementRB.getFileLinkInvoice());
         agreement.setNotes(agreementRB.getNotes());
 
-        java.util.Date paymentDate = calculatePaymentDate(agreement.getInvoiceSendDate(), agreement.getPaymentTerm());
-        agreement.setEstimatedDateOfPayment(paymentDate);
+        //java.util.Date paymentDate = calculatePaymentDate(agreement.getInvoiceSendDate(), agreement.getPaymentTerm());
+        //agreement.setEstimatedDateOfPayment(paymentDate);
 
         return agreement;
     }

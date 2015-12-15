@@ -61,7 +61,7 @@ public class Agreement {
     private String plateNr;
 
     @Column(name = "price", columnDefinition = "float(11,2)")
-    private double price;
+    private double price = -1.00;
 
     @Column(name = "value_added_tax", columnDefinition = "float(11,2)")
     private double valueAddedTax;
