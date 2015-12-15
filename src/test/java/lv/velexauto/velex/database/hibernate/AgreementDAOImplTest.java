@@ -222,6 +222,7 @@ public class AgreementDAOImplTest extends DAOImplTest {
                 .fileLinkAgreement("http//www/velexauto.lv")
                 .fileLinkInvoice("http://www.kreiss.lv")
                 .notes("no notes")
+                .isPaid(false)
                 .build();
     }
 
@@ -248,6 +249,7 @@ public class AgreementDAOImplTest extends DAOImplTest {
                 .fileLinkAgreement("http//www/bilatris.lv")
                 .fileLinkInvoice("http://www.baltreiss.lv")
                 .notes("two notes")
+                .isPaid(false)
                 .build();
     }
 
@@ -274,6 +276,7 @@ public class AgreementDAOImplTest extends DAOImplTest {
                 .fileLinkAgreement("http//www/velexauto.lv")
                 .fileLinkInvoice("http://www.kreiss.lv")
                 .notes("no notes")
+                .isPaid(false)
                 .build();
     }
 
@@ -300,6 +303,7 @@ public class AgreementDAOImplTest extends DAOImplTest {
         assertEquals(agreement.getFileLinkAgreement(), agreementFromDB.getFileLinkAgreement());
         assertEquals(agreement.getFileLinkInvoice(), agreementFromDB.getFileLinkInvoice());
         assertEquals(agreement.getNotes(), agreementFromDB.getNotes());
+        assertEquals(agreement.isPaid(), agreementFromDB.isPaid());
     }
 
     private Agreement updateAgreementWithNewData(Agreement agreement, Company company, Employee employee) throws ParseException {
@@ -324,6 +328,7 @@ public class AgreementDAOImplTest extends DAOImplTest {
         agreement.setFileLinkAgreement("http//www/velexauto.ru");
         agreement.setFileLinkInvoice("http://www.kreiss.ru");
         agreement.setNotes("some note");
+        agreement.setIsPaid(true);
         return agreement;
     }
 }

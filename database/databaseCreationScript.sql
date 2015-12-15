@@ -46,7 +46,7 @@ CREATE TABLE employees (
   personal_code CHAR(50),
   e_mail        CHAR(100),
   telephone_nr  CHAR(50),
-  is_active     CHAR(1) NOT NULL,
+  is_active     CHAR(1)     NOT NULL,
   PRIMARY KEY (employee_id)
 );
 
@@ -60,24 +60,25 @@ CREATE TABLE agreement (
   agreement_id              INTEGER(11) NOT NULL AUTO_INCREMENT,
   employee_id               INTEGER(11),
   company_id                INTEGER(11),
-  agreement_nr              CHAR(200),
-  invoice_nr                CHAR(200),
-  client_name               CHAR(200),
-  loading_date              DATE,
-  loading_address           CHAR(200),
-  unloading_date            DATE,
-  unloading_address         CHAR(200),
-  driver                    CHAR(200),
-  plate_nr                  CHAR(200),
-  price                     FLOAT(11, 2),
-  value_added_tax           FLOAT(11, 2),
-  payment_term              INTEGER(11),
-  invoice_send_date         DATE,
-  estimated_date_of_payment DATE,
-  on_behalf_of              CHAR(200),
+  agreement_nr              CHAR(200)            DEFAULT 'empty',
+  invoice_nr                CHAR(200)            DEFAULT 'empty',
+  client_name               CHAR(200)            DEFAULT 'empty',
+  loading_date              DATE                 DEFAULT '1971.01.01',
+  loading_address           CHAR(200)            DEFAULT 'empty',
+  unloading_date            DATE                 DEFAULT '1971.01.01',
+  unloading_address         CHAR(200)            DEFAULT 'empty',
+  driver                    CHAR(200)            DEFAULT 'empty',
+  plate_nr                  CHAR(200)            DEFAULT 'empty',
+  price                     FLOAT(11, 2)         DEFAULT '-1',
+  value_added_tax           FLOAT(11, 2)         DEFAULT '-1',
+  payment_term              INTEGER(11)          DEFAULT '-1',
+  invoice_send_date         DATE                 DEFAULT '1971.01.01',
+  estimated_date_of_payment DATE                 DEFAULT '1971.01.01',
+  on_behalf_of              CHAR(200)            DEFAULT 'empty',
   file_link_agreement       TEXT,
   file_link_invoice         TEXT,
   notes                     TEXT,
+  is_paid                   CHAR(1)              DEFAULT 'T',
   PRIMARY KEY (agreement_id)
 );
 
@@ -123,6 +124,8 @@ ALTER TABLE user_roles ADD FOREIGN KEY (user_id) REFERENCES users (user_id)
 -- Table Properties
 -- -----------------------------------------------------
 
+ALTER TABLE companies ENGINE = InnoDB, DEFAULT CHARACTER SET = utf8;
+ALTER TABLE employees ENGINE = InnoDB, DEFAULT CHARACTER SET = utf8;
 ALTER TABLE agreement ENGINE = InnoDB, DEFAULT CHARACTER SET = utf8;
 ALTER TABLE users ENGINE = InnoDB, DEFAULT CHARACTER SET = utf8;
 ALTER TABLE user_roles ENGINE = InnoDB, DEFAULT CHARACTER SET = utf8;

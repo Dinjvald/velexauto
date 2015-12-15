@@ -46,8 +46,6 @@ public class DataValidateAssistant {
             }
         }
 
-
-
         int paymentTerm = agreementRB.getPaymentTerm();
         if (paymentTerm > 3000 || paymentTerm < -1) return false;
 

@@ -184,11 +184,11 @@
 
                 agreementForm.find("input").each(function () {
                     var name = $(this).attr("name");
-                    data[name] = $(this).val();
+                    if ($(this).val() != "") data[name] = $(this).val();
                 });
                 agreementForm.find("textarea").each(function () {
                     var name = $(this).attr("name");
-                    data[name] = $(this).val();
+                    if ($(this).val() != "") data[name] = $(this).val();
                 });
                 console.log(data);
                 return data;

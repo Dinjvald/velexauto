@@ -4,6 +4,8 @@ package lv.velexauto.velex.domain;
  * Created by Dinjvald on 23/03/15.
  */
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 
 @Entity
@@ -87,6 +89,10 @@ public class Agreement {
     @Column(name = "notes", columnDefinition = "text")
     private String notes;
 
+    @Column(name = "is_paid", columnDefinition = "char(1)")
+    @Type(type = "org.hibernate.type.TrueFalseType")
+    private boolean isPaid;
+
     public Agreement() {
 
     }
@@ -112,6 +118,7 @@ public class Agreement {
         this.fileLinkAgreement = ab.fileLinkAgreementBuilder;
         this.fileLinkInvoice = ab.fileLinkInvoiceBuilder;
         this.notes = ab.notesBuilder;
+        this.isPaid = ab.isPaidBuilder;
     }
 
     public static class AgreementBuilder {
@@ -135,6 +142,7 @@ public class Agreement {
         private String fileLinkAgreementBuilder;
         private String fileLinkInvoiceBuilder;
         private String notesBuilder;
+        private boolean isPaidBuilder;
 
         public AgreementBuilder employee(Employee newEmployee) {
             this.employeeBuilder = newEmployee;
@@ -233,6 +241,11 @@ public class Agreement {
 
         public AgreementBuilder notes(String newNotes) {
             this.notesBuilder = newNotes;
+            return this;
+        }
+
+        public AgreementBuilder isPaid(boolean newIsPaid) {
+            this.isPaidBuilder = newIsPaid;
             return this;
         }
 
@@ -405,5 +418,11 @@ public class Agreement {
         this.notes = notes;
     }
 
+    public boolean isPaid() {
+        return isPaid;
+    }
 
+    public void setIsPaid(boolean isPaid) {
+        this.isPaid = isPaid;
+    }
 }
