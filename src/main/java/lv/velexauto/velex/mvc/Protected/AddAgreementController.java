@@ -27,11 +27,7 @@ import java.util.List;
 @Controller
 public class AddAgreementController {
 
-    private final String SUCCESS = "success";
-    private final String ERROR = "error";
     private final String AGREEMENT = "agreement";
-    private final String DEFAULT_DATE = "01.01.1971";
-    private final int DEFAULT_INT = -1;
 
     @Autowired
     @Qualifier("HibernateDAOAgreement")
@@ -90,21 +86,21 @@ public class AddAgreementController {
         agreement.setFileLinkInvoice(agreementRB.getFileLinkInvoice());
         agreement.setNotes(agreementRB.getNotes());
 
-        //java.util.Date paymentDate = calculatePaymentDate(agreement.getInvoiceSendDate(), agreement.getPaymentTerm());
-        //agreement.setEstimatedDateOfPayment(paymentDate);
+        java.util.Date paymentDate = calculatePaymentDate(agreement.getInvoiceSendDate(), agreement.getPaymentTerm());
+        agreement.setEstimatedDateOfPayment(paymentDate);
 
         return agreement;
     }
 
     private java.util.Date calculatePaymentDate(java.util.Date date, int paymentTerm) throws ParseException {
-        java.util.Date def = dateAssistant.stringToDate(DEFAULT_DATE);
-        if (date == def || paymentTerm == DEFAULT_INT) return def;
+        java.util.Date def = dateAssistant.stringToDate(DataValidateAssistant.DEFAULT_DATE);
+        if (date == def || paymentTerm == DataValidateAssistant.DEFAULT_INT) return def;
         return dateAssistant.addDaysToDate(date, paymentTerm);
     }
 
     private String alertSuccess() {
         List<String> response = new ArrayList<>();
-        response.add(SUCCESS);
+        response.add(DataValidateAssistant.SUCCESS);
         response.add(AGREEMENT);
         Gson gson = new Gson();
         return gson.toJson(response);
@@ -112,7 +108,7 @@ public class AddAgreementController {
 
     private String alertError() {
         List<String> response = new ArrayList<>();
-        response.add(ERROR);
+        response.add(DataValidateAssistant.ERROR);
         response.add(AGREEMENT);
         Gson gson = new Gson();
         return gson.toJson(response);

@@ -14,7 +14,11 @@ import java.util.List;
 @Component("DataValidateAssistant")
 public class DataValidateAssistant {
 
-    private final int INT_DEFAULT = -1;
+    public static final String DEFAULT_DATE = "01.01.1971";
+    public static final String DEFAULT_TEXT = "empty";
+    public static final int DEFAULT_INT = -1;
+    public static final String SUCCESS = "success";
+    public static final String ERROR = "error";
 
     @Autowired
     @Qualifier("DateAssistant")
@@ -66,10 +70,10 @@ public class DataValidateAssistant {
         int paymentTerm = agreementRB.getPaymentTerm();
         double number = agreementRB.getPrice();
 
-        if (paymentTerm > 3000 || paymentTerm < INT_DEFAULT) return false;
-        if (number < INT_DEFAULT) return false;
+        if (paymentTerm > 3000 || paymentTerm < DEFAULT_INT) return false;
+        if (number < DEFAULT_INT) return false;
         number = agreementRB.getValueAddedTax();
-        if (number < INT_DEFAULT) return false;
+        if (number < DEFAULT_INT) return false;
         return true;
     }
 }
