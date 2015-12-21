@@ -25,7 +25,7 @@ import java.util.List;
  * Created by Dinjvald on 03/12/15.
  */
 @Controller
-public class AddAgreementController {
+public class AgreementAddController {
 
     private final String AGREEMENT = "agreement";
 
