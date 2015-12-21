@@ -5,7 +5,7 @@
         <a id="test" href=""> Заявки </a>
         <ul id="orders_submenu">
             <li><a href="agreementForm">Добавить</a></li>
-            <li><a href="">Что-то там</a></li>
+            <li><a href="agreementListRequest">Список</a></li>
             <li><a href="">Что-то там</a></li>
         </ul>
     </li>
