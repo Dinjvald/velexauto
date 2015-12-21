@@ -17,6 +17,6 @@ public class AgreementFormController {
 
     @RequestMapping(value = {"protected/agreementForm"}, method = RequestMethod.GET)
     public ModelAndView agreementForm(HttpServletRequest request, HttpServletResponse response) {
-        return new ModelAndView("Protected/AgreementFormProtected");
+        return new ModelAndView("Protected/AgreementForm");
     }
 }
