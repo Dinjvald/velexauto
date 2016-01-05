@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -23,6 +24,14 @@ public class DataValidateAssistant {
     @Autowired
     @Qualifier("DateAssistant")
     private DateAssistant dateAssistant;
+
+    public HashMap getDefaultValuesMap() {
+        return new HashMap(){{
+            put("defDate", DEFAULT_DATE);
+            put("defInt", DEFAULT_INT);
+            put("defText", DEFAULT_TEXT);
+        }};
+    }
 
     public boolean isAgreementRequestBodyValid(AgreementRequestBody agreementRB) {
         if (!isAgreementTextValid(agreementRB)) return false;

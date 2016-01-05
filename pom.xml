@@ -185,11 +185,25 @@
 
         <!-- Json library google GSON END -->
 
+        <!-- JSTL START -->
+
         <dependency>
             <groupId>jstl</groupId>
             <artifactId>jstl</artifactId>
             <version>1.2</version>
         </dependency>
+
+        <!-- JSTL END -->
+
+        <!-- JQuery DataTables plug-in START -->
+
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>datatables</artifactId>
+            <version>1.10.10</version>
+        </dependency>
+
+        <!-- JQuery DataTables plug-in END -->
 
     </dependencies>
 

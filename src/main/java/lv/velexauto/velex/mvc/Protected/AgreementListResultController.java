@@ -1,5 +1,6 @@
 package lv.velexauto.velex.mvc.Protected;
 
+import lv.velexauto.velex.HelperClasses.DataValidateAssistant;
 import lv.velexauto.velex.HelperClasses.DateAssistant;
 import lv.velexauto.velex.HelperClasses.SecurityAssistant;
 import lv.velexauto.velex.database.AgreementDAO;
@@ -18,8 +19,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
 /**
  * Created by Dinjvald on 17/12/15.
@@ -39,18 +38,19 @@ public class AgreementListResultController {
     @Qualifier("DateAssistant")
     private DateAssistant dateAssistant;
 
+    @Autowired
+    @Qualifier("DataValidateAssistant")
+    private DataValidateAssistant dataValidateAssistant;
+
     @RequestMapping(value = {"protected/agreementListResult"}, method = RequestMethod.POST)
     public ModelAndView agreementListResult(HttpServletRequest request, HttpServletResponse response) throws DBException, ParseException {
-
-        String string = "Testing";
 
         Employee employee = securityAssistant.getCurrentEmployee();
         java.util.Date starDate = dateAssistant.stringToDate(request.getParameter("startDate"));
         java.util.Date endDate = dateAssistant.stringToDate(request.getParameter("endDate"));
 
+        request.setAttribute("defValues", dataValidateAssistant.getDefaultValuesMap());
         List<Agreement> list = agreementDAO.getListByDateRange(starDate, endDate, employee);
-        request.setAttribute("agreement", list);
-        request.setAttribute("message", "Testing");
-        return new ModelAndView("Protected/AgreementListResult");
+        return new ModelAndView("Protected/AgreementListResult", "agreement", list);
     }
 }
