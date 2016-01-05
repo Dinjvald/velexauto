@@ -11,15 +11,9 @@ public class testMain {
 
     public static void main(String[] args) {
 
-        int x = -1;
+        double x = 1.20;
 
-        double z = -1.000000000;
-
-        if (z == -1) {
-            System.out.println("yes");
-        } else {
-            System.out.println("no");
-        }
+        System.out.println(x);
 
     }
 }
