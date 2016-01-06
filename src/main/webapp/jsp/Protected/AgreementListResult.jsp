@@ -169,6 +169,9 @@
                         if (response == "error") {
                             alert("Error on server side")
                         }
+                        if (response == "can't delete") {
+                            alert("Вы не можете удалить эту запись.")
+                        }
                     }
                 });
             });

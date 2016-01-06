@@ -6,6 +6,7 @@ import lv.velexauto.velex.HelperClasses.SecurityAssistant;
 import lv.velexauto.velex.database.AgreementDAO;
 import lv.velexauto.velex.database.DBException;
 import lv.velexauto.velex.domain.Agreement;
+import lv.velexauto.velex.domain.Company;
 import lv.velexauto.velex.domain.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -45,12 +46,12 @@ public class AgreementListResultController {
     @RequestMapping(value = {"protected/agreementListResult"}, method = RequestMethod.POST)
     public ModelAndView agreementListResult(HttpServletRequest request, HttpServletResponse response) throws DBException, ParseException {
 
-        Employee employee = securityAssistant.getCurrentEmployee();
+        Company company = securityAssistant.getCurrentCompany();
         java.util.Date starDate = dateAssistant.stringToDate(request.getParameter("startDate"));
         java.util.Date endDate = dateAssistant.stringToDate(request.getParameter("endDate"));
 
         request.setAttribute("defValues", dataValidateAssistant.getDefaultValuesMap());
-        List<Agreement> list = agreementDAO.getListByDateRange(starDate, endDate, employee);
+        List<Agreement> list = agreementDAO.getListByDateRange(starDate, endDate, company);
         return new ModelAndView("Protected/AgreementListResult", "agreement", list);
     }
 }

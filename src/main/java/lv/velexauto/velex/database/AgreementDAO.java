@@ -1,6 +1,7 @@
 package lv.velexauto.velex.database;
 
 import lv.velexauto.velex.domain.Agreement;
+import lv.velexauto.velex.domain.Company;
 import lv.velexauto.velex.domain.Employee;
 
 import java.util.List;
@@ -11,6 +12,6 @@ import java.util.List;
 
 public interface AgreementDAO extends CommonMethodsDAO <Agreement> {
 
-    List<Agreement> getListByDateRange(java.util.Date startDate, java.util.Date endDate, Employee employee);
+    List<Agreement> getListByDateRange(java.util.Date startDate, java.util.Date endDate, Company company);
 
 }

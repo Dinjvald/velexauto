@@ -2,6 +2,7 @@ package lv.velexauto.velex.database.hibernate;
 
 import lv.velexauto.velex.database.AgreementDAO;
 import lv.velexauto.velex.domain.Agreement;
+import lv.velexauto.velex.domain.Company;
 import lv.velexauto.velex.domain.Employee;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Component;
@@ -19,9 +20,9 @@ import java.util.List;
 public class AgreementDAOImpl extends CommonMetodsDAOImpl <Agreement> implements AgreementDAO {
 
     @Override
-    public List<Agreement> getListByDateRange(Date startDate, Date endDate, Employee employee) {
+    public List<Agreement> getListByDateRange(Date startDate, Date endDate, Company company) {
         List list = getCurrentSession().createCriteria(Agreement.class)
-                .add(Restrictions.eq("employee", employee))
+                .add(Restrictions.eq("company", company))
                 .add(Restrictions.between("unloadingDate", startDate, endDate))
                 .list();
         return list;
