@@ -206,7 +206,7 @@
 
                 $.ajax({
                     type: "POST",
-                    contentType: "application/json",
+                    contentType: "application/json; charset=utf-8",
                     url: "addagreement",
                     data: JSON.stringify(dataToSend),
                     dataType: "text",
@@ -224,10 +224,6 @@
             }
 
             function showResult(response) {
-                var result = $("#result");
-                var key = {
-                    agreement: "Заявка сохранена"
-                };
                 var responseArray = JSON.parse(response);
 
                 if (responseArray[0] == "success") {

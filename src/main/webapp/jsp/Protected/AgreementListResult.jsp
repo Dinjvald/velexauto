@@ -93,6 +93,7 @@
 
         #agreementTable tbody .col-4 {
             padding: 0 3px;
+            cursor: pointer;
         }
 
         .dtr-modal > .dtr-modal-display > .dtr-modal-content > table > tbody > tr > .dtr-modal-title {
@@ -152,6 +153,26 @@
                     }
                 }
             });
+
+            $(".deleteAgreement").click(function() {
+                var tr = $(this).parents("tr");
+                var id = tr.find(".agreementID").html();
+                $.ajax({
+                    type: "POST",
+                    url: "deleteAgreement",
+                    data: "agreementID=" + id,
+                    dataType: "text",
+                    success: function (response) {
+                        if (response == "success") {
+                            tr.remove();
+                        }
+                        if (response == "error") {
+                            alert("Error on server side")
+                        }
+                    }
+                });
+            });
+
         });
     </script>
 </head>
@@ -195,7 +216,7 @@
             <tr>
                 <td class="col-4"></td>
                 <td class="col-4"><img src="../Images/edit.png" align="center"></td>
-                <td class="col-4"><img src="../Images/DeleteRed.png" align="center"></td>
+                <td class="col-4"><img class="deleteAgreement" src="../Images/DeleteRed.png" align="center"></td>
                 <td>
                     <c:if test="${agr.employee.name != defText}">
                         ${agr.employee.name}
@@ -295,7 +316,7 @@
                         ${agr.notes}
                     </c:if>
                 </td>
-                <td>${agr.agreementId}</td>
+                <td class="agreementID">${agr.agreementId}</td>
             </tr>
         </c:forEach>
         </tbody>
