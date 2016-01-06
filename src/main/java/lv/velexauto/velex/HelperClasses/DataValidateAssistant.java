@@ -1,5 +1,6 @@
 package lv.velexauto.velex.HelperClasses;
 
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -31,6 +32,22 @@ public class DataValidateAssistant {
             put("defInt", DEFAULT_INT);
             put("defText", DEFAULT_TEXT);
         }};
+    }
+
+    public String alertSuccess(String type) {
+        List<String> response = new ArrayList<>();
+        response.add(SUCCESS);
+        response.add(type);
+        Gson gson = new Gson();
+        return gson.toJson(response);
+    }
+
+    public String alertError(String type) {
+        List<String> response = new ArrayList<>();
+        response.add(ERROR);
+        response.add(type);
+        Gson gson = new Gson();
+        return gson.toJson(response);
     }
 
     public boolean isAgreementRequestBodyValid(AgreementRequestBody agreementRB) {

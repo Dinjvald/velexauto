@@ -52,12 +52,12 @@ public class AgreementAddController {
             throws ParseException, DBException {
 
         if (!dataValidateAssistant.isAgreementRequestBodyValid(agreementRB)) {
-            return alertError();
+            return dataValidateAssistant.alertError(AGREEMENT);
         }
         Agreement agreement = toAgreementDomain(agreementRB);
         agreementDAO.create(agreement);
 
-        return alertSuccess();
+        return dataValidateAssistant.alertSuccess(AGREEMENT);
     }
 
     private Agreement toAgreementDomain(AgreementRequestBody agreementRB) throws ParseException, DBException {
