@@ -3,8 +3,6 @@ package lv.velexauto.velex.mvc.Protected;
 import lv.velexauto.velex.HelperClasses.SecurityAssistant;
 import lv.velexauto.velex.database.AgreementDAO;
 import lv.velexauto.velex.database.DBException;
-import lv.velexauto.velex.domain.Agreement;
-import lv.velexauto.velex.domain.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
