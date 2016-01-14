@@ -11,7 +11,7 @@
 <html>
 <head>
     <mytag:head/>
-    <style>
+    <%--<style>
         div#agreement {
             margin: auto;
             width: 85%;
@@ -85,38 +85,40 @@
             text-align: right;
         }
 
-    </style>
+    </style>--%>
     <script>
         $(document).ready(function () {
 
-            $.datepicker.regional["ru"] = {
-                monthNames: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август",
-                    "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"],
-                monthNamesShort: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август",
-                    "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"],
-                dayNamesMin: ["Вс", "Пн", "Вт", "Ср", "Чт", "Пн", "Сб"],
-                currentText: "Сегодня",
-                closeText: "Закрыть",
-                dateFormat: "dd.mm.yy",
-                showButtonPanel: true,
-                changeMonth: true,
-                changeYear: true
-                /*showOn: "button",
-                 buttonImage: "../Images/CalendarButton.png",
-                 buttonImageOnly: true*/
-            };
+            /*$.datepicker.regional["ru"] = {
+             monthNames: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август",
+             "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"],
+             monthNamesShort: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август",
+             "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"],
+             dayNamesMin: ["Вс", "Пн", "Вт", "Ср", "Чт", "Пн", "Сб"],
+             currentText: "Сегодня",
+             closeText: "Закрыть",
+             dateFormat: "dd.mm.yy",
+             showButtonPanel: true,
+             changeMonth: true,
+             changeYear: true
+             /!*showOn: "button",
+             buttonImage: "../Images/CalendarButton.png",
+             buttonImageOnly: true*!/
+             };*/
 
-            $.datepicker.setDefaults(
-                    $.datepicker.regional["ru"]
-            );
+            /*$.datepicker.setDefaults(
+             $.datepicker.regional["ru"]
+             );*/
 
-            function datePickerInit() {
+            /*function bindDatepicker() {
                 $("#loadingDate").datepicker();
                 $("#unloadingDate").datepicker();
                 $("#invoiceSendDate").datepicker();
-            }
+            }*/
 
-            function isDataValid() {
+            datepickerInit();
+
+            /*function isDataValid() {
                 var isValid = true;
                 if (!isNumbersValid()) isValid = false;
                 if (!isCharValid()) isValid = false;
@@ -261,22 +263,24 @@
                 setTimeout(function () {
                     result.html("")
                 }, 15000);
-            }
+            }*/
 
-            $("#saveAgreement").click(function () {
+            /*$("#saveAgreement").click(function () {
                 postAgreementAJAX();
                 return false;
-            });
+            });*/
+            initAgreementFormAJAX();
 
             menuHover();
-            datePickerInit();
+
         });
     </script>
 </head>
 <body>
 <mytag:logo/>
 <mytag:menuBarProtected/>
-<div id="agreement">
+<mytag:agreementForm/>
+<%--<div id="agreement">
     <form id="agreementForm" action="">
         <div class="input">
             <label for="loadingDate">Дата загрузки</label><br>
@@ -359,7 +363,7 @@
 
         <div class="input" id="notesDiv">
             <label for="notes">Примечания</label><br>
-            <%--<input type="text" name="notes" id="notes">--%>
+            &lt;%&ndash;<input type="text" name="notes" id="notes">&ndash;%&gt;
             <textarea name="notes" id="notes" class="text"></textarea>
         </div>
         <a href="" id="saveAgreement">Сохранить</a>
@@ -368,6 +372,6 @@
 <br>
 
 <div id="result">
-</div>
+</div>--%>
 </body>
 </html>

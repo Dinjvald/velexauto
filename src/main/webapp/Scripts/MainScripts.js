@@ -2,6 +2,8 @@
  * Created by Dinjvald on 04/12/15.
  */
 
+/* MENU START */
+
 function menuHover() {
     $("ul#menu li#orders").hover(
         function () {
@@ -11,3 +13,205 @@ function menuHover() {
             $("ul#menu li ul#orders_submenu").slideUp(150);
         });
 }
+
+/* MENU END */
+
+/* DATEPICKER START */
+
+function datepickerInit () {
+
+    datepickerConfig();
+    datepickerSetRegionalRU();
+    bindDatepicker();
+}
+
+function datepickerConfig () {
+    $.datepicker.regional["ru"] = {
+        monthNames: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август",
+            "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"],
+        monthNamesShort: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август",
+            "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"],
+        dayNamesMin: ["Вс", "Пн", "Вт", "Ср", "Чт", "Пн", "Сб"],
+        currentText: "Сегодня",
+        closeText: "Закрыть",
+        dateFormat: "dd.mm.yy",
+        showButtonPanel: true,
+        changeMonth: true,
+        changeYear: true
+        /*showOn: "button",
+         buttonImage: "../Images/CalendarButton.png",
+         buttonImageOnly: true*/
+    };
+}
+
+function datepickerSetRegionalRU () {
+    $.datepicker.setDefaults(
+        $.datepicker.regional["ru"]
+    );
+}
+
+function bindDatepicker() {
+    $("#loadingDate").datepicker();
+    $("#unloadingDate").datepicker();
+    $("#invoiceSendDate").datepicker();
+}
+
+/* DATEPICKER END */
+
+/* AGREEMENT FORM AJAX REQUEST PROCESSING START */
+
+function initAgreementFormAJAX () {
+    $("#saveAgreement").click(function () {
+        postAgreementAJAX();
+        return false;
+    });
+}
+
+function postAgreementAJAX() {
+    if (!isDataValid()) return false;
+    var dataToSend = getAgreementFormData();
+
+    $.ajax({
+        type: "POST",
+        contentType: "application/json; charset=utf-8",
+        url: "addagreement",
+        data: JSON.stringify(dataToSend),
+        dataType: "text",
+        success: function (response) {
+            showResult(response);
+            $("#agreementForm")[0].reset();
+        },
+        error: function () {
+            $("#result")
+                .css({"color": "#C40005"})
+                .html("Сервер не может обработать данные.");
+
+        }
+    })
+}
+
+function isDataValid() {
+    var isValid = true;
+    if (!isNumbersValid()) isValid = false;
+    if (!isCharValid()) isValid = false;
+    if (!isValid) $("#result")
+        .css({"color": "#dc7700"})
+        .html("Проверьте данные");
+    return isValid;
+}
+
+function isNumbersValid() {
+    var isNumbersValid = true;
+
+    $(".number").each(function () {
+        setDefaultBorderColor($(this));
+        if (isInputEmpty($(this))) return true;
+        if (!$.isNumeric($(this).val())) {
+            $(this).css({"border-color": "#920007"});
+            isNumbersValid = false;
+        }
+        if ($(this).val() < -1) {
+            $(this).css({"border-color": "#920007"});
+            isNumbersValid = false;
+        }
+    });
+    return isNumbersValid;
+}
+
+function setDefaultBorderColor(object) {
+    $(object).css({"border-color": "#666666"});
+}
+
+function isInputEmpty(object) {
+    return object.val() == "";
+}
+
+function isCharValid() {
+    var isCharValid = true;
+
+    $(".char").each(function () {
+        var length = $(this).val().length;
+
+        setDefaultBorderColor($(this));
+        if (isInputEmpty($(this))) return true;
+        if (length > 200) {
+            $(this).css({"border-color": "#920007"});
+            isCharValid = false;
+        }
+    });
+    return isCharValid;
+}
+
+function fillDefaultIfEmpty() {
+    $(".number").each(function () {
+        if (isInputEmpty($(this))) $(this).val("-1");
+    });
+    $(".char").each(function () {
+        if (isInputEmpty($(this))) $(this).val("empty");
+    });
+    $(".date").each(function () {
+        if (isInputEmpty($(this))) $(this).val("01.01.1971")
+    });
+    $(".text").each(function () {
+        if (isInputEmpty($(this))) $(this).val("empty");
+    });
+}
+
+function getAgreementFormData() {
+    fillDefaultIfEmpty();
+    var data = {};
+    var agreementForm = $("#agreementForm");
+
+    agreementForm.find("input").each(function () {
+        var name = $(this).attr("name");
+        data[name] = $(this).val();
+    });
+    agreementForm.find("textarea").each(function () {
+        var name = $(this).attr("name");
+        data[name] = $(this).val();
+    });
+    console.log(data);
+    return data;
+}
+
+function showResult(response) {
+    var responseArray = JSON.parse(response);
+
+    if (responseArray[0] == "success") {
+        alertSuccess(responseArray[1]);
+    }
+
+    if (responseArray[0] == "error") {
+        alertError(responseArray[1]);
+    }
+}
+
+function alertSuccess(key) {
+    var result = $("#result");
+    var message = {
+        agreement: "Заявка сохранена."
+    };
+
+    result
+        .css({"color": "#26a300"})
+        .html(message[key]);
+    setTimeout(function () {
+        result.html("");
+    }, 10000);
+}
+
+function alertError(key) {
+    var result = $("#result");
+    var message = {
+        agreement: "Отказ от сервера. Неверные данные в заявке."
+    };
+
+    result
+        .css({"color": "#C40005"})
+        .html(message[key]);
+    setTimeout(function () {
+        result.html("")
+    }, 15000);
+}
+
+/* AGREEMENT FORM AJAX REQUEST PROCESSING END */

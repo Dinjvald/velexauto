@@ -94,3 +94,91 @@ ul#menu li ul li {
 }
 
 /* --- CALENDAR END --- */
+
+/* --- AGREEMENT FORM START --- */
+
+div#agreement {
+    margin: auto;
+    width: 85%;
+}
+
+div#agreement label, div#agreement input {
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+div#agreement input {
+    border: solid 1px #666666;
+    height: 25px;
+    font-size: 15px;
+    width: 263px;
+    background-color: #252525;
+    color: azure;
+}
+
+div#agreement textarea#notes {
+    height: 200px;
+    width: 546px;
+    background-color: #252525;
+    border: solid 1px #666666;
+    color: azure;
+    font-size: 15px;
+    resize: none;
+}
+
+div.input {
+    display: inline-block;
+    margin: 3px 7px 3px;
+}
+
+div.input #loadingAddress, div.input #unloadingAddress {
+    width: 404px;
+}
+
+div.input input#loadingDate, div.input input#unloadingDate, div.input input#invoiceSendDate {
+    width: 110px;
+}
+
+#saveAgreement:link, #saveAgreement:visited {
+    width: 200px;
+    height: 40px;
+    background-color: #252525;
+    border: solid 1px #666666;
+    color: azure;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: larger;
+    line-height: 40px;
+    float: right;
+    margin-top: 182px;
+    margin-right: 10px;
+}
+
+#saveAgreement:active, #saveAgreement:hover {
+    border: solid 1px #dc7700;
+    color: #dc7700;
+}
+
+#result {
+    /*border: solid 1px #666666;*/
+    height: 40px;
+    width: 83%;
+    margin: auto;
+    font-weight: bold;
+    font-size: 125%;
+    line-height: 40px;
+    text-align: right;
+}
+
+#close_form {
+    display: none;
+}
+
+/* --- AGREEMENT FORM END  --- */
+
+/* --- DATATABLE START --- */
+
+
+
+/* --- DATATABLE END --- */
