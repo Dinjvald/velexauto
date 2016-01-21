@@ -7,10 +7,10 @@
 function menuHover() {
     $("ul#menu li#orders").hover(
         function () {
-            $("ul#menu li ul#orders_submenu").slideDown(150);
+            $("ul#menu li ul#orders-submenu").slideDown(150);
         },
         function () {
-            $("ul#menu li ul#orders_submenu").slideUp(150);
+            $("ul#menu li ul#orders-submenu").slideUp(150);
         });
 }
 
@@ -51,9 +51,9 @@ function datepickerSetRegionalRU() {
 }
 
 function bindDatepicker() {
-    $("#loadingDate").datepicker();
-    $("#unloadingDate").datepicker();
-    $("#invoiceSendDate").datepicker();
+    $("#loading-date").datepicker();
+    $("#unloading-date").datepicker();
+    $("#invoice-send-date").datepicker();
 }
 
 /* DATEPICKER END */
@@ -61,7 +61,7 @@ function bindDatepicker() {
 /* AGREEMENT FORM AJAX REQUEST PROCESSING START */
 
 function initAgreementFormAJAX(url) {
-    $("#saveAgreement").click(function () {
+    $("#save-agreement").click(function () {
         postAgreementAJAX(url);
         return false;
     });
@@ -79,7 +79,7 @@ function postAgreementAJAX(url) {
         dataType: "text",
         success: function (response) {
             showResult(response);
-            $("#agreementForm")[0].reset();
+            $("#agreement-form")[0].reset();
         },
         error: function () {
             $("#result")
@@ -160,7 +160,7 @@ function fillDefaultIfEmpty() {
 function getAgreementFormData() {
     fillDefaultIfEmpty();
     var data = {};
-    var agreementForm = $("#agreementForm");
+    var agreementForm = $("#agreement-form");
 
     agreementForm.find("input").each(function () {
         var name = $(this).attr("name");

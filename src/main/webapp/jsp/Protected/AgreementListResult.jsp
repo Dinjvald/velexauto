@@ -24,11 +24,11 @@
             src="https://cdn.datatables.net/plug-ins/1.10.10/sorting/datetime-moment.js"></script>--%>
     <c:set var="dateFormat" value="dd.MM.yyyy" scope="page"/>
     <style>
-        #divAgreementTable {
+        #div-agreement-table {
             margin-top: 150px;
         }
 
-        #agreementTable thead {
+        #agreement-table thead {
             background-color: #252525;
         }
 
@@ -55,16 +55,16 @@
             min-width: 130px;
         }
 
-        #agreementTable_length, #agreementTable_filter, #agreementTable_info, #agreementTable_paginate,
+        #agreement-table_length, #agreement-table_filter, #agreement-table_info, #agreement-table_paginate,
         .dtr-modal-content h2, .dtr-modal-content td {
             color: azure;
         }
 
-        #agreementTable_length, #agreementTable_filter {
+        #agreement-table_length, #agreement-table_filter {
             margin-bottom: 10px;
         }
 
-        #agreementTable_paginate .previous, #agreementTable_paginate .next {
+        #agreement-table_paginate .previous, #agreement-table_paginate .next {
             color: azure !important;
         }
 
@@ -88,7 +88,7 @@
             position: static;
         }
 
-        #agreementTable tbody .col-4 {
+        #agreement-table tbody .col-4 {
             padding: 0 3px;
             cursor: pointer;
         }
@@ -113,7 +113,7 @@
 
         /* AGREEMENT FORM */
 
-        div.agreement_form_position {
+        div.agreement-form-position {
             display: none;
             position: fixed;
             top: 0;
@@ -123,7 +123,7 @@
             height: 100%;
         }
 
-        div.agreement_form_position > div#agreement {
+        div.agreement-form-position > div#agreement {
             position: absolute;
             width: 850px;
             left: 50%;
@@ -134,7 +134,7 @@
             border-radius: 8px;
         }
 
-        #close_form {
+        #close-form {
             display: block;
             color: #dc7700;
             cursor: pointer;
@@ -148,7 +148,7 @@
             menuHover();
 
             $.fn.dataTable.moment("D.MM.YYYY");
-            $("#agreementTable").DataTable({
+            $("#agreement-table").DataTable({
                 language: {
                     "processing": "Подождите...",
                     "search": "Поиск:",
@@ -210,50 +210,53 @@
                 }
             });
 
-            $(".delete_agreement").click(function() {
-                toggle_visibility("delete_check_wrapper");
+            $(".delete-agreement").click(function() {
+                toggle_visibility("delete-check-wrapper");
                 var tr = $(this).parents("tr");
                 var index = $("tr").index(tr);
-                var id = tr.find(".agreementId").html();
-                var client = tr.find(".clientName").html() + "<br>";
-                var route = tr.find(".loadingAddress").html();
-                route += " - " + tr.find(".unloadingAddress").html();
-                $("#delete_check_body").html(client + route);
+                var id = tr.find(".agreement-id").html();
+                var client = tr.find(".client-name").html() + "<br>";
+                var route = tr.find(".loading-address").html();
+                route += " - " + tr.find(".unloading-address").html();
+                $("#delete-check-body").html(client + route);
                 $("#delete-check-agreement-id").html(id);
                 $("#agreement-row-index").html(index);
             });
 
-            $("#delete_check_no").click(function() {
-                toggle_visibility("delete_check_wrapper");
+            $("#delete-check-no").click(function() {
+                toggle_visibility("delete-check-wrapper");
             });
 
-            $("#delete_check_yes").click(function() {
+            $("#delete-check-yes").click(function() {
                 var id = $("#delete-check-agreement-id").html();
                 $.ajax({
                     type: "POST",
-                    url: "deleteAgreement",
+                    url: "delete-agreement",
                     data: "agreementId=" + id,
                     dataType: "text",
                     success: function (response) {
                         if (response == "success") {
+                            var agreementTable = $("#agreement-table");
                             var index = $("#agreement-row-index").html();
-                            $("#agreementTable").find("tr").eq(index).remove();
+                            var table = agreementTable.DataTable();
+                            var row = agreementTable.find("tr").eq(index);
+                            table.row(row).remove().draw();
                         }
                         if (response == "error") {
-                            toggle_visibility("alert_wrapper");
-                            $("#alert_text").empty().html("Ошибка со стороны сервера. Удалить не удалось.");
+                            toggle_visibility("alert-wrapper");
+                            $("#alert-text").empty().html("Ошибка со стороны сервера. Удалить не удалось.");
                         }
                         if (response == "can't delete") {
-                            toggle_visibility("alert_wrapper");
-                            $("#alert_text").empty().html("Вы не являетесь менеджером перевозки. Удаление невозможно.");
+                            toggle_visibility("alert-wrapper");
+                            $("#alert-text").empty().html("Вы не являетесь менеджером перевозки. Удаление невозможно.");
                         }
                     }
                 });
-                toggle_visibility("delete_check_wrapper");
+                toggle_visibility("delete-check-wrapper");
             });
 
             datepickerInit();
-            initAgreementFormAJAX("updateAgreement");
+            initAgreementFormAJAX("update-agreement");
 
             /*
              * Keep in mind that some columns (3rd and 5th in this case) can be made invisible in DataTables
@@ -268,27 +271,27 @@
              * So the Jquery .each() function will not see the hidden columns. If needed you must make them visible
              * before the function and invisible after, so that the main table remains the same.
              */
-            $(".edit_agreement").click(function () {
-                toggle_visibility("agreement_form_wrapper");
-                var table = $("#agreementTable").DataTable();
+            $(".edit-agreement").click(function () {
+                toggle_visibility("agreement-form-wrapper");
+                var table = $("#agreement-table").DataTable();
                 var tr = $(this).parents("tr");
                 table.column(5).visible(true);
                 fillAgreementFormWithCurrentRowData(tr);
                 table.column(5).visible(false);
             });
 
-            $("#close_form").click(function () {
-                toggle_visibility("agreement_form_wrapper");
+            $("#close-form").click(function () {
+                toggle_visibility("agreement-form-wrapper");
             });
 
-            $("#agreement_form_wrapper").click(function (e) {
+            $("#agreement-form-wrapper").click(function (e) {
                 if (e.target == this) {
-                    toggle_visibility("agreement_form_wrapper");
+                    toggle_visibility("agreement-form-wrapper");
                 }
             });
 
-            $("#alert_button_close").click(function () {
-                toggle_visibility("alert_wrapper");
+            $("#alert-button-close").click(function () {
+                toggle_visibility("alert-wrapper");
             });
 
             function toggle_visibility(id) {
@@ -314,7 +317,7 @@
                         for (var y = 0; y < classNames.length; y++) {
                             if (inputNames[x] == classNames[y]) {
                                 var input = "#" + inputNames[x];
-                                $("#agreementForm").find(input).val(value);
+                                $("#agreement-form").find(input).val(value);
                             }
                         }
                     }
@@ -322,13 +325,13 @@
             }
 
             function getAgreementFormInputNamesArray() {
-                var agreementForm = $("#agreementForm");
+                var agreementForm = $("#agreement-form");
                 var inputNames = [];
                 agreementForm.find("input").each(function () {
-                    inputNames[inputNames.length] = $(this).attr("name");
+                    inputNames[inputNames.length] = $(this).attr("id");
                 });
                 agreementForm.find("textarea").each(function () {
-                    inputNames[inputNames.length] = $(this).attr("name");
+                    inputNames[inputNames.length] = $(this).attr("id");
                 });
                 return inputNames;
             }
@@ -352,8 +355,8 @@
     </form>
 </div>
 
-<div id="divAgreementTable">
-    <table border="1" class="compact" id="agreementTable">
+<div id="div-agreement-table">
+    <table border="1" class="compact" id="agreement-table">
         <thead>
         <tr>
             <th rowspan="2" colspan="3"></th>
@@ -387,9 +390,9 @@
         <c:forEach items="${agreement}" var="agr">
             <tr>
                 <td class="col-4"></td>
-                <td class="col-4"><img class="edit_agreement" src="../Images/edit.png" align="center"></td>
-                <td class="col-4"><img class="delete_agreement" src="../Images/DeleteRed.png" align="center"></td>
-                <td class="name_surname">
+                <td class="col-4"><img class="edit-agreement" src="../Images/edit.png" align="center"></td>
+                <td class="col-4"><img class="delete-agreement" src="../Images/DeleteRed.png" align="center"></td>
+                <td class="name-surname">
                     <c:if test="${agr.employee.name != defText}">
                         ${agr.employee.name}
                     </c:if>
@@ -397,38 +400,38 @@
                         ${agr.employee.surname}
                     </c:if>
                 </td>
-                <td class="col-1 invoiceNr">
+                <td class="col-1 invoice-nr">
                     <c:if test="${agr.invoiceNr != defText}">
                         ${agr.invoiceNr}
                     </c:if>
                 </td>
-                <td class="agreementNr">
+                <td class="agreement-nr">
                     <c:if test="${agr.agreementNr != defText}">
                         ${agr.agreementNr}
                     </c:if>
                 </td>
-                <td class="col-2 clientName">
+                <td class="col-2 client-name">
                     <c:if test="${agr.clientName != defText}">
                         ${agr.clientName}
                     </c:if>
                 </td>
-                <td class="col-3 loadingAddress">
+                <td class="col-3 loading-address">
                     <c:if test="${agr.loadingAddress != defText}">
                         ${agr.loadingAddress}
                     </c:if>
                 </td>
-                <td class="col-1 loadingDate">
+                <td class="col-1 loading-date">
                     <fmt:formatDate var="loadingDate" value="${agr.loadingDate}" pattern="${dateFormat}"/>
                     <c:if test="${loadingDate != defDate}">
                         ${loadingDate}
                     </c:if>
                 </td>
-                <td class="col-3 unloadingAddress">
+                <td class="col-3 unloading-address">
                     <c:if test="${agr.unloadingAddress != defText}">
                         ${agr.unloadingAddress}
                     </c:if>
                 </td>
-                <td class="col-1 unloadingDate">
+                <td class="col-1 unloading-date">
                     <fmt:formatDate var="unloadingDate" value="${agr.unloadingDate}" pattern="${dateFormat}"/>
                     <c:if test="${unloadingDate != defDate}">
                         ${unloadingDate}
@@ -442,7 +445,7 @@
                         ${fn:replace(pat, ",", " ")}
                     </c:if>
                 </td>
-                <td class="col-1 estimatedDateOfPayment">
+                <td class="col-1 estimated-date-of-payment">
                     <fmt:formatDate var="estimatedDateOfPayment" value="${agr.estimatedDateOfPayment}"
                                     pattern="${dateFormat}"/>
                     <c:if test="${estimatedDateOfPayment != defDate}">
@@ -454,12 +457,12 @@
                         ${agr.driver}
                     </c:if>
                 </td>
-                <td class="plateNr">
+                <td class="plate-nr">
                     <c:if test="${agr.plateNr != defText}">
                         ${agr.plateNr}
                     </c:if>
                 </td>
-                <td class="valueAddedTax">
+                <td class="value-added-tax">
                     <c:set var="valueAddedTax" value="${agr.valueAddedTax}"/>
                     <c:if test="${agr.valueAddedTax != defInt}">
                         <fmt:formatNumber var="pat" value="${valueAddedTax}" minFractionDigits="2" maxFractionDigits="2"
@@ -467,18 +470,18 @@
                         ${fn:replace(pat, ",", " ")}
                     </c:if>
                 </td>
-                <td class="paymentTerm">
+                <td class="payment-term">
                     <c:if test="${agr.paymentTerm != defInt}">
                         ${agr.paymentTerm}
                     </c:if>
                 </td>
-                <td class="invoiceSendDate">
+                <td class="invoice-send-date">
                     <fmt:formatDate var="invoiceSendDate" value="${agr.invoiceSendDate}" pattern="${dateFormat}"/>
                     <c:if test="${invoiceSendDate != defDate}">
                         ${invoiceSendDate}
                     </c:if>
                 </td>
-                <td class="onBehalfOf">
+                <td class="on-behalf-of">
                     <c:if test="${agr.onBehalfOf != defText}">
                         ${agr.onBehalfOf}
                     </c:if>
@@ -488,13 +491,13 @@
                         ${agr.notes}
                     </c:if>
                 </td>
-                <td class="agreementId">${agr.agreementId}</td>
-                <td class="fileLinkInvoice">
+                <td class="agreement-id">${agr.agreementId}</td>
+                <td class="file-link-invoice">
                     <c:if test="${agr.fileLinkInvoice != defText}">
                         ${agr.fileLinkInvoice}
                     </c:if>
                 </td>
-                <td class="fileLinkAgreement">
+                <td class="file-link-agreement">
                     <c:if test="${agr.fileLinkAgreement != defText}">
                         ${agr.fileLinkAgreement}
                     </c:if>
@@ -506,28 +509,28 @@
 </div>
 <br>
 
-<div id="agreement_form_wrapper" class="agreement_form_position">
+<div id="agreement-form-wrapper" class="agreement-form-position">
     <mytag:agreementForm/>
 </div>
-<div id="delete_check_wrapper" class="delete_check_position">
+<div id="delete-check-wrapper" class="delete-check-position">
     <div id="delete-check-agreement-id"></div>
     <div id="agreement-row-index"></div>
-    <div id="delete_check_box">
+    <div id="delete-check-box">
         <div id="delete_check_head">
             Хотите удалить перевозку?
         </div>
-        <div id="delete_check_body"></div>
-        <div id="delete_check_yes_no">
-            <a id="delete_check_yes" href="" onclick="return false">Да</a>
-            <a id="delete_check_no" href="" onclick="return false">Нет</a>
+        <div id="delete-check-body"></div>
+        <div id="delete-check-yes-no">
+            <a id="delete-check-yes" href="" onclick="return false">Да</a>
+            <a id="delete-check-no" href="" onclick="return false">Нет</a>
         </div>
     </div>
 </div>
-<div id="alert_wrapper" class="alert_position">
-    <div id="alert_box">
-        <div id="alert_text">Тут какая-то надпись</div>
-        <div id="alert_button">
-            <a id="alert_button_close" href="" onclick="return false">Закрыть</a>
+<div id="alert-wrapper" class="alert-position">
+    <div id="alert-box">
+        <div id="alert-text"></div>
+        <div id="alert-button">
+            <a id="alert-button-close" href="" onclick="return false">Закрыть</a>
         </div>
     </div>
 </div>

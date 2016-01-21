@@ -16,10 +16,10 @@
 
             /*$("ul#menu li#orders").hover(
                     function () {
-                        $("ul#menu li ul#orders_submenu").slideDown(150);
+                        $("ul#menu li ul#orders-submenu").slideDown(150);
                     },
                     function () {
-                        $("ul#menu li ul#orders_submenu").slideUp(150);
+                        $("ul#menu li ul#orders-submenu").slideUp(150);
                     });*/
             menuHover();
 
@@ -42,10 +42,10 @@
 <body>
 <mytag:logo/>
 <%--<ul id="menu">
-    <li id="protected_first_li"><a href="../index"> Домой </a></li>
+    <li id="protected-first-li"><a href="../index"> Домой </a></li>
     <li id="orders">
         <a id="test" href=""> Заявки </a>
-        <ul id="orders_submenu">
+        <ul id="orders-submenu">
             <li><a href="">Что-то там</a></li>
             <li><a href="">Что-то там</a></li>
             <li><a href="">Что-то там</a></li>

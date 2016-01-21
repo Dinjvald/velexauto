@@ -1,55 +1,55 @@
 <%@tag pageEncoding="UTF-8" %>
 <div id="agreement">
-    <form id="agreementForm" action="">
-        <div class="input" id="agreementIdDiv">
-            <label for="agreementId">ID заявки</label>
-            <input type="text" name="agreementId" class="number" id="agreementId">
+    <form id="agreement-form" action="">
+        <div class="input" id="agreement-id-div">
+            <label for="agreement-id">ID заявки</label>
+            <input type="text" name="agreementId" class="number" id="agreement-id">
         </div>
         <div class="input">
-            <label for="loadingDate">Дата загрузки</label><br>
-            <input type="text" name="loadingDate" readonly="readonly" class="date" id="loadingDate">
+            <label for="loading-date">Дата загрузки</label><br>
+            <input type="text" name="loadingDate" readonly="readonly" class="date" id="loading-date">
             <br>
-            <label for="loadingAddress">Адрес загрузки</label><br>
-            <input type="text" name="loadingAddress" class="char" id="loadingAddress">
+            <label for="loading-address">Адрес загрузки</label><br>
+            <input type="text" name="loadingAddress" class="char" id="loading-address">
         </div>
 
         <div class="input">
-            <div id="close_form">&#x2715;</div>
-            <label for="unloadingDate">Дата разгрузки</label><br>
-            <input type="text" name="unloadingDate" readonly="readonly" class="date" id="unloadingDate">
+            <div id="close-form">&#x2715;</div>
+            <label for="unloading-date">Дата разгрузки</label><br>
+            <input type="text" name="unloadingDate" readonly="readonly" class="date" id="unloading-date">
             <br>
-            <label for="unloadingAddress">Адрес разгрузки</label><br>
-            <input type="text" name="unloadingAddress" class="char" id="unloadingAddress">
+            <label for="unloading-address">Адрес разгрузки</label><br>
+            <input type="text" name="unloadingAddress" class="char" id="unloading-address">
         </div>
         <br>
 
         <div class="input">
-            <label for="clientName">Заказчик</label><br>
-            <input type="text" name="clientName" class="char" id="clientName">
+            <label for="client-name">Заказчик</label><br>
+            <input type="text" name="clientName" class="char" id="client-name">
         </div>
         <div class="input">
-            <label for="agreementNr">Номер заявки</label><br>
-            <input type="text" name="agreementNr" class="char" id="agreementNr">
+            <label for="agreement-nr">Номер заявки</label><br>
+            <input type="text" name="agreementNr" class="char" id="agreement-nr">
         </div>
         <div class="input">
-            <label for="invoiceNr">Номер счета</label><br>
-            <input type="text" name="invoiceNr" class="char" id="invoiceNr">
+            <label for="invoice-nr">Номер счета</label><br>
+            <input type="text" name="invoiceNr" class="char" id="invoice-nr">
         </div>
         <br>
 
         <div class="input">
-            <label for="onBehalfOf">На основании документа</label><br>
-            <input type="text" name="onBehalfOf" class="char" id="onBehalfOf">
+            <label for="on-behalf-of">На основании документа</label><br>
+            <input type="text" name="onBehalfOf" class="char" id="on-behalf-of">
         </div>
 
         <div class="input">
-            <label for="fileLinkAgreement">Ссылка на заявку</label><br>
-            <input type="text" name="fileLinkAgreement" class="text" id="fileLinkAgreement">
+            <label for="file-link-agreement">Ссылка на заявку</label><br>
+            <input type="text" name="fileLinkAgreement" class="text" id="file-link-agreement">
         </div>
 
         <div class="input">
-            <label for="fileLinkInvoice">Ссылка на счет</label><br>
-            <input type="text" name="fileLinkInvoice" class="text" id="fileLinkInvoice">
+            <label for="file-link-invoice">Ссылка на счет</label><br>
+            <input type="text" name="fileLinkInvoice" class="text" id="file-link-invoice">
         </div>
         <br>
 
@@ -59,13 +59,13 @@
         </div>
 
         <div class="input">
-            <label for="valueAddedTax">PVN EUR</label><br>
-            <input type="text" name="valueAddedTax" class="number" id="valueAddedTax">
+            <label for="value-added-tax">PVN EUR</label><br>
+            <input type="text" name="valueAddedTax" class="number" id="value-added-tax">
         </div>
 
         <div class="input">
-            <label for="paymentTerm">Срок оплаты в днях</label><br>
-            <input type="text" name="paymentTerm" class="number" id="paymentTerm">
+            <label for="payment-term">Срок оплаты в днях</label><br>
+            <input type="text" name="paymentTerm" class="number" id="payment-term">
         </div>
         <br>
 
@@ -75,13 +75,13 @@
         </div>
 
         <div class="input">
-            <label for="plateNr">Номера сцепки</label><br>
-            <input type="text" name="plateNr" class="char" id="plateNr">
+            <label for="plate-nr">Номера сцепки</label><br>
+            <input type="text" name="plateNr" class="char" id="plate-nr">
         </div>
 
         <div class="input">
-            <label for="invoiceSendDate">Счет отправлен</label><br>
-            <input type="text" name="invoiceSendDate" readonly="readonly" class="date" id="invoiceSendDate">
+            <label for="invoice-send-date">Счет отправлен</label><br>
+            <input type="text" name="invoiceSendDate" readonly="readonly" class="date" id="invoice-send-date">
         </div>
         <br>
 
@@ -89,7 +89,7 @@
             <label for="notes">Примечания</label><br>
             <textarea name="notes" id="notes" class="text"></textarea>
         </div>
-        <a href="" id="saveAgreement">Сохранить</a>
+        <a href="" id="save-agreement">Сохранить</a>
     </form>
     <div id="result">
 

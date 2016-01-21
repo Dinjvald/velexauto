@@ -44,7 +44,7 @@ public class AgreementController {
     @Qualifier("DataValidateAssistant")
     private DataValidateAssistant dataValidateAssistant;
 
-    @RequestMapping(value = {"protected/addAgreement"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"protected/add-agreement"}, method = RequestMethod.POST)
     public
     @ResponseBody
     String addAgreement(@RequestBody AgreementRequestBody agreementRB) throws ParseException, DBException {
@@ -58,7 +58,7 @@ public class AgreementController {
         return dataValidateAssistant.alertSuccess(AGREEMENT);
     }
 
-    @RequestMapping(value = {"protected/updateAgreement"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"protected/update-agreement"}, method = RequestMethod.POST)
     public
     @ResponseBody
     String updateAgreement(@RequestBody AgreementRequestBody agreementRB) throws DBException, ParseException {
@@ -78,7 +78,7 @@ public class AgreementController {
         return dataValidateAssistant.alertSuccess(AGREEMENT);
     }
 
-    @RequestMapping(value = {"protected/agreementListResult"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"protected/agreement-list-result"}, method = RequestMethod.POST)
     public ModelAndView agreementListResult(HttpServletRequest request, HttpServletResponse response) throws DBException, ParseException {
 
         Company company = securityAssistant.getCurrentCompany();
@@ -90,7 +90,7 @@ public class AgreementController {
         return new ModelAndView("Protected/AgreementListResult", "agreement", list);
     }
 
-    @RequestMapping(value = {"protected/deleteAgreement"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"protected/delete-agreement"}, method = RequestMethod.POST)
     public @ResponseBody String deleteAgreement(@RequestParam(value = "agreementId") long agreementId) throws DBException {
 
         long currentManagerId = securityAssistant.getCurrentEmployee().getEmployeeId();

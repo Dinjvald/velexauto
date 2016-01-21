@@ -54,7 +54,7 @@
 <mytag:logo/>
 <mytag:menuBarProtected/>
 <div id="agreement-date-form-wrapper">
-    <form id="agreement-date-form" method="post" action="agreementListResult">
+    <form id="agreement-date-form" method="post" action="agreement-list-result">
         <div id="agreement-date-form-head">
             Дата разгрузки
         </div>

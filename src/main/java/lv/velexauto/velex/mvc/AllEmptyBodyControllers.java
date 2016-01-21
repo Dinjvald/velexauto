@@ -14,13 +14,13 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class AllEmptyBodyControllers {
 
-    @RequestMapping(value = {"/", "index", "homepage"}, method = {RequestMethod.GET})
+    @RequestMapping(value = {"/", "index", "home-page"}, method = {RequestMethod.GET})
     public ModelAndView index(HttpServletRequest request,
                               HttpServletResponse response) {
         return new ModelAndView("index");
     }
 
-    @RequestMapping(value = {"aboutUs"}, method = {RequestMethod.GET})
+    @RequestMapping(value = {"about-us"}, method = {RequestMethod.GET})
     public ModelAndView aboutUs(HttpServletRequest request,
                                 HttpServletResponse response) {
         return new ModelAndView("AboutUs");
@@ -49,12 +49,12 @@ public class AllEmptyBodyControllers {
         return new ModelAndView("ForTests/TestLocale");
     }
 
-    @RequestMapping(value = {"protected/agreementForm"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"protected/agreement-form"}, method = RequestMethod.GET)
     public ModelAndView agreementForm(HttpServletRequest request, HttpServletResponse response) {
         return new ModelAndView("Protected/AgreementForm");
     }
 
-    @RequestMapping(value = {"protected/agreementListRequest"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"protected/agreement-list-request"}, method = RequestMethod.GET)
     public ModelAndView agreementListRequest(HttpServletRequest request, HttpServletResponse response) {
         return new ModelAndView("Protected/AgreementListRequest");
     }

@@ -79,11 +79,11 @@ ul#menu li {
     float: left;
 }
 
-ul#menu li#first_li {
+ul#menu li#first-li {
     margin-left: 480px;
 }
 
-ul#menu li#protected_first_li {
+ul#menu li#protected-first-li {
     margin-left: 0;
 }
 
@@ -170,15 +170,15 @@ div.input {
     margin: 3px 7px 3px;
 }
 
-div.input #loadingAddress, div.input #unloadingAddress {
+div.input #loading-address, div.input #unloading-address {
     width: 396px;
 }
 
-div.input input#loadingDate, div.input input#unloadingDate, div.input input#invoiceSendDate {
+div.input input#loading-date, div.input input#unloading-date, div.input input#invoice-send-date {
     width: 110px;
 }
 
-#saveAgreement:link, #saveAgreement:visited {
+#save-agreement:link, #save-agreement:visited {
     width: 200px;
     height: 40px;
     background-color: #252525;
@@ -194,7 +194,7 @@ div.input input#loadingDate, div.input input#unloadingDate, div.input input#invo
     margin-right: 10px;
 }
 
-#saveAgreement:active, #saveAgreement:hover {
+#save-agreement:active, #save-agreement:hover {
     border: solid 1px #dc7700;
     color: #dc7700;
 }
@@ -210,11 +210,11 @@ div.input input#loadingDate, div.input input#unloadingDate, div.input input#invo
     text-align: right;
 }
 
-#close_form {
+#close-form {
     display: none;
 }
 
-#agreementIdDiv {
+#agreement-id-div {
     display: none;
     position: absolute;
 }
@@ -229,7 +229,7 @@ div.input input#loadingDate, div.input input#unloadingDate, div.input input#invo
 
 /* --- ALERT BOX START --- */
 
-.alert_position {
+.alert-position {
     display: none;
     position: fixed;
     top: 0;
@@ -239,7 +239,7 @@ div.input input#loadingDate, div.input input#unloadingDate, div.input input#invo
     height: 100%;
 }
 
-#alert_box {
+#alert-box {
     position: absolute;
     left: 50%;
     top: 50%;
@@ -252,7 +252,7 @@ div.input input#loadingDate, div.input input#unloadingDate, div.input input#invo
     display: inline-block;
 }
 
-#alert_button > a:link, #alert_button > a:visited {
+#alert-button > a:link, #alert-button > a:visited {
     background-color: #151515;
     text-decoration: none;
     display: block;
@@ -266,12 +266,12 @@ div.input input#loadingDate, div.input input#unloadingDate, div.input input#invo
     transform: translate(-50%);
 }
 
-#alert_button > a:hover, #alert_button > a:active {
+#alert-button > a:hover, #alert-button > a:active {
     border-color: #dc7700;
     color: #dc7700;
 }
 
-#alert_text {
+#alert-text {
     margin-bottom: 15px;
     text-align: justify;
     text-justify: inter-word;
@@ -281,7 +281,7 @@ div.input input#loadingDate, div.input input#unloadingDate, div.input input#invo
 
 /* --- DELETE CHECK BOX START --- */
 
-.delete_check_position {
+.delete-check-position {
     display: none;
     position: fixed;
     top: 0;
@@ -291,7 +291,7 @@ div.input input#loadingDate, div.input input#unloadingDate, div.input input#invo
     height: 100%;
 }
 
-#delete_check_box {
+#delete-check-box {
     position: absolute;
     left: 50%;
     top: 50%;
@@ -303,7 +303,7 @@ div.input input#loadingDate, div.input input#unloadingDate, div.input input#invo
     font-size: 130%;
 }
 
-#delete_check_yes_no > a:link, #delete_check_yes_no > a:visited {
+#delete-check-yes-no > a:link, #delete-check-yes-no > a:visited {
     display: inline-block;
     background-color: #252525;
     text-decoration: none;
@@ -315,21 +315,21 @@ div.input input#loadingDate, div.input input#unloadingDate, div.input input#invo
     height: 40px;
 }
 
-#delete_check_yes_no > a:hover, #delete_check_yes_no > a:active {
+#delete-check-yes-no > a:hover, #delete-check-yes-no > a:active {
     color: #dc7700;
     border-color: #dc7700;
 }
 
-#delete_check_yes_no {
+#delete-check-yes-no {
     width: 150px;
     margin: 15px 0 5px 100px;
 }
 
-#delete_check_yes_no > a:first-child {
+#delete-check-yes-no > a:first-child {
     margin-right: 10px;
 }
 
-#delete_check_yes_no > a:last-child {
+#delete-check-yes-no > a:last-child {
     margin-left: 10px;
 }
 
