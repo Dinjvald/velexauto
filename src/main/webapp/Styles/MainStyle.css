@@ -11,13 +11,53 @@ body {
     margin: auto;
 }
 
+input {
+    font-size: 15px;
+    background-color: #252525;
+    color: azure;
+    border: solid 1px #666666;
+    /*height: 25px;*/
+    line-height: 25px;
+    padding: 0 5px;
+    width: 110px;
+    outline: none;
+}
+
+.submit-button {
+    width: 123px;
+}
+
+.submit-button:hover {
+    cursor: pointer;
+    border-color: #dc7700;
+    color: #dc7700;
+}
+
+textarea {
+    background-color: #252525;
+    border: solid 1px #666666;
+    color: azure;
+    font-size: 15px;
+    padding: 5px;
+    outline-color: #dc7700;
+}
+
+input, label {
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+#submit-button {
+    height: 30px;
+}
+
 img#logo {
     width: 435px;
     height: 100px;
     margin: 20px 0 20px 20px;
 }
 
-.global_main_text {
+.global-main-text {
     font-size: 105%;
     font-family: Georgia, serif;
     text-align: justify;
@@ -103,26 +143,25 @@ div#agreement {
 }
 
 div#agreement label, div#agreement input {
-    margin-bottom: 5px;
-    margin-top: 5px;
+    /*margin-bottom: 5px;*/
+    /*margin-top: 5px;*/
 }
 
 div#agreement input {
-    border: solid 1px #666666;
-    height: 25px;
-    font-size: 15px;
-    width: 263px;
-    background-color: #252525;
-    color: azure;
+    /*border: solid 1px #666666;*/
+    /*height: 25px;*/
+    width: 254px;
+    /*background-color: #252525;*/
+    /*color: azure;*/
 }
 
 div#agreement textarea#notes {
     height: 200px;
     width: 546px;
-    background-color: #252525;
+    /*background-color: #252525;
     border: solid 1px #666666;
     color: azure;
-    font-size: 15px;
+    font-size: 15px;*/
     resize: none;
 }
 
@@ -132,7 +171,7 @@ div.input {
 }
 
 div.input #loadingAddress, div.input #unloadingAddress {
-    width: 404px;
+    width: 396px;
 }
 
 div.input input#loadingDate, div.input input#unloadingDate, div.input input#invoiceSendDate {
@@ -175,6 +214,11 @@ div.input input#loadingDate, div.input input#unloadingDate, div.input input#invo
     display: none;
 }
 
+#agreementIdDiv {
+    display: none;
+    position: absolute;
+}
+
 /* --- AGREEMENT FORM END  --- */
 
 /* --- DATATABLE START --- */
@@ -182,3 +226,111 @@ div.input input#loadingDate, div.input input#unloadingDate, div.input input#invo
 
 
 /* --- DATATABLE END --- */
+
+/* --- ALERT BOX START --- */
+
+.alert_position {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, .7);
+    width: 100%;
+    height: 100%;
+}
+
+#alert_box {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #151515;
+    border-radius: 8px;
+    max-width: 400px;
+    padding: 10px;
+    font-size: 140%;
+    display: inline-block;
+}
+
+#alert_button > a:link, #alert_button > a:visited {
+    background-color: #151515;
+    text-decoration: none;
+    display: block;
+    border: solid 1px #666666;
+    width: 100px;
+    height: 35px;
+    line-height: 35px;
+    color: azure;
+    text-align: center;
+    margin-left: 50%;
+    transform: translate(-50%);
+}
+
+#alert_button > a:hover, #alert_button > a:active {
+    border-color: #dc7700;
+    color: #dc7700;
+}
+
+#alert_text {
+    margin-bottom: 15px;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+/* --- ALERT BOX END --- */
+
+/* --- DELETE CHECK BOX START --- */
+
+.delete_check_position {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, .7);
+    width: 100%;
+    height: 100%;
+}
+
+#delete_check_box {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 8px;
+    padding: 5px 10px;
+    background-color: #151515;
+    width: 350px;
+    font-size: 130%;
+}
+
+#delete_check_yes_no > a:link, #delete_check_yes_no > a:visited {
+    display: inline-block;
+    background-color: #252525;
+    text-decoration: none;
+    text-align: center;
+    line-height: 40px;
+    color: azure;
+    border: solid 1px #666666;
+    width: 60px;
+    height: 40px;
+}
+
+#delete_check_yes_no > a:hover, #delete_check_yes_no > a:active {
+    color: #dc7700;
+    border-color: #dc7700;
+}
+
+#delete_check_yes_no {
+    width: 150px;
+    margin: 15px 0 5px 100px;
+}
+
+#delete_check_yes_no > a:first-child {
+    margin-right: 10px;
+}
+
+#delete_check_yes_no > a:last-child {
+    margin-left: 10px;
+}
+
+/* --- DELETE CHECK BOX END --- */

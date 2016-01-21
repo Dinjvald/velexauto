@@ -254,6 +254,10 @@ public class Agreement {
         }
     }
 
+    public void setAgreementId(long agreementId) {
+        this.agreementId = agreementId;
+    }
+
     public Employee getEmployee() {
         return employee;
     }

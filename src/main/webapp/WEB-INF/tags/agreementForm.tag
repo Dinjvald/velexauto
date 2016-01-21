@@ -1,6 +1,10 @@
 <%@tag pageEncoding="UTF-8" %>
 <div id="agreement">
     <form id="agreementForm" action="">
+        <div class="input" id="agreementIdDiv">
+            <label for="agreementId">ID заявки</label>
+            <input type="text" name="agreementId" class="number" id="agreementId">
+        </div>
         <div class="input">
             <label for="loadingDate">Дата загрузки</label><br>
             <input type="text" name="loadingDate" readonly="readonly" class="date" id="loadingDate">

@@ -107,6 +107,10 @@
             color: #dc7700;
         }
 
+        #delete-check-agreement-id, #agreement-row-index {
+            display: none;
+        }
+
         /* AGREEMENT FORM */
 
         div.agreement_form_position {
@@ -121,7 +125,7 @@
 
         div.agreement_form_position > div#agreement {
             position: absolute;
-            width: 845px;
+            width: 850px;
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
@@ -206,30 +210,50 @@
                 }
             });
 
-            $(".delete_agreement").click(function () {
+            $(".delete_agreement").click(function() {
+                toggle_visibility("delete_check_wrapper");
                 var tr = $(this).parents("tr");
-                var id = tr.find(".agreementID").html();
+                var index = $("tr").index(tr);
+                var id = tr.find(".agreementId").html();
+                var client = tr.find(".clientName").html() + "<br>";
+                var route = tr.find(".loadingAddress").html();
+                route += " - " + tr.find(".unloadingAddress").html();
+                $("#delete_check_body").html(client + route);
+                $("#delete-check-agreement-id").html(id);
+                $("#agreement-row-index").html(index);
+            });
+
+            $("#delete_check_no").click(function() {
+                toggle_visibility("delete_check_wrapper");
+            });
+
+            $("#delete_check_yes").click(function() {
+                var id = $("#delete-check-agreement-id").html();
                 $.ajax({
                     type: "POST",
                     url: "deleteAgreement",
-                    data: "agreementID=" + id,
+                    data: "agreementId=" + id,
                     dataType: "text",
                     success: function (response) {
                         if (response == "success") {
-                            tr.remove();
+                            var index = $("#agreement-row-index").html();
+                            $("#agreementTable").find("tr").eq(index).remove();
                         }
                         if (response == "error") {
-                            alert("Error on server side")
+                            toggle_visibility("alert_wrapper");
+                            $("#alert_text").empty().html("Ошибка со стороны сервера. Удалить не удалось.");
                         }
                         if (response == "can't delete") {
-                            alert("Вы не можете удалить эту запись.")
+                            toggle_visibility("alert_wrapper");
+                            $("#alert_text").empty().html("Вы не являетесь менеджером перевозки. Удаление невозможно.");
                         }
                     }
                 });
+                toggle_visibility("delete_check_wrapper");
             });
 
             datepickerInit();
-            initAgreementFormAJAX();
+            initAgreementFormAJAX("updateAgreement");
 
             /*
              * Keep in mind that some columns (3rd and 5th in this case) can be made invisible in DataTables
@@ -247,49 +271,24 @@
             $(".edit_agreement").click(function () {
                 toggle_visibility("agreement_form_wrapper");
                 var table = $("#agreementTable").DataTable();
-                table.column(5).visible(true);
-
-                var inputNames = getAgreementFormInputNamesArray();
-
-                /*var agreementForm = $("#agreementForm");
-                 var inputNames = [];
-                 agreementForm.find("input").each(function () {
-                 inputNames[inputNames.length] = $(this).attr("name");
-                 });
-                 agreementForm.find("textarea").each(function () {
-                 inputNames[inputNames.length] = $(this).attr("name");
-                 });*/
-
                 var tr = $(this).parents("tr");
-
-                /*tr.find("td").each(function () {
-                    var name = $(this).attr("class");
-
-                    var classNames = name.split(" ");
-
-                    var value = $.trim($(this).html());
-
-                    for (var x = 0; x < inputNames.length; x++) {
-                        for (var y = 0; y < classNames.length; y++) {
-                            if (inputNames[x] == classNames[y]) {
-                                var input = "#" + inputNames[x];
-                                $("#agreementForm").find(input).val(value);
-                            }
-                        }
-                    }
-                });*/
-
-                fillAgreementFormWithCurrentRowData(tr, inputNames);
-
+                table.column(5).visible(true);
+                fillAgreementFormWithCurrentRowData(tr);
                 table.column(5).visible(false);
             });
+
             $("#close_form").click(function () {
                 toggle_visibility("agreement_form_wrapper");
             });
+
             $("#agreement_form_wrapper").click(function (e) {
                 if (e.target == this) {
                     toggle_visibility("agreement_form_wrapper");
                 }
+            });
+
+            $("#alert_button_close").click(function () {
+                toggle_visibility("alert_wrapper");
             });
 
             function toggle_visibility(id) {
@@ -298,23 +297,12 @@
                     e.style.display = "none";
                 } else {
                     e.style.display = "block";
-
                 }
             }
 
-            function getAgreementFormInputNamesArray() {
-                var agreementForm = $("#agreementForm");
-                var inputNames = [];
-                agreementForm.find("input").each(function () {
-                    inputNames[inputNames.length] = $(this).attr("name");
-                });
-                agreementForm.find("textarea").each(function () {
-                    inputNames[inputNames.length] = $(this).attr("name");
-                });
-                return inputNames;
-            }
+            function fillAgreementFormWithCurrentRowData(tr) {
+                var inputNames = getAgreementFormInputNamesArray();
 
-            function fillAgreementFormWithCurrentRowData(tr, inputNames) {
                 tr.find("td").each(function () {
                     var name = $(this).attr("class");
 
@@ -332,6 +320,18 @@
                     }
                 });
             }
+
+            function getAgreementFormInputNamesArray() {
+                var agreementForm = $("#agreementForm");
+                var inputNames = [];
+                agreementForm.find("input").each(function () {
+                    inputNames[inputNames.length] = $(this).attr("name");
+                });
+                agreementForm.find("textarea").each(function () {
+                    inputNames[inputNames.length] = $(this).attr("name");
+                });
+                return inputNames;
+            }
         });
     </script>
 </head>
@@ -341,6 +341,17 @@
 <c:set var="defInt" value="${defValues.defInt}" scope="page"/>
 <mytag:logo/>
 <mytag:menuBarProtected/>
+
+<div>
+    <form method="post" action="">
+        <div><label for="start-date">Начало</label><br>
+        <input type="text" name="startDate" id="start-date"></div>
+        <div><label for="end-date">Конец</label><br>
+        <input type="text" name="endDate" id="end-date"></div>
+        <input type="submit">
+    </form>
+</div>
+
 <div id="divAgreementTable">
     <table border="1" class="compact" id="agreementTable">
         <thead>
@@ -477,7 +488,7 @@
                         ${agr.notes}
                     </c:if>
                 </td>
-                <td class="agreementID">${agr.agreementId}</td>
+                <td class="agreementId">${agr.agreementId}</td>
                 <td class="fileLinkInvoice">
                     <c:if test="${agr.fileLinkInvoice != defText}">
                         ${agr.fileLinkInvoice}
@@ -497,6 +508,28 @@
 
 <div id="agreement_form_wrapper" class="agreement_form_position">
     <mytag:agreementForm/>
+</div>
+<div id="delete_check_wrapper" class="delete_check_position">
+    <div id="delete-check-agreement-id"></div>
+    <div id="agreement-row-index"></div>
+    <div id="delete_check_box">
+        <div id="delete_check_head">
+            Хотите удалить перевозку?
+        </div>
+        <div id="delete_check_body"></div>
+        <div id="delete_check_yes_no">
+            <a id="delete_check_yes" href="" onclick="return false">Да</a>
+            <a id="delete_check_no" href="" onclick="return false">Нет</a>
+        </div>
+    </div>
+</div>
+<div id="alert_wrapper" class="alert_position">
+    <div id="alert_box">
+        <div id="alert_text">Тут какая-то надпись</div>
+        <div id="alert_button">
+            <a id="alert_button_close" href="" onclick="return false">Закрыть</a>
+        </div>
+    </div>
 </div>
 </body>
 </html>

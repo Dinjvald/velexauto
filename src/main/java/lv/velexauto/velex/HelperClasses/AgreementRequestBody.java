@@ -6,6 +6,7 @@ package lv.velexauto.velex.HelperClasses;
 
 public class AgreementRequestBody {
 
+    long agreementId;
     String loadingDate;
     String loadingAddress;
     String unloadingDate;
@@ -23,6 +24,10 @@ public class AgreementRequestBody {
     String plateNr;
     String invoiceSendDate;
     String notes;
+
+    public long getAgreementId() {
+        return agreementId;
+    }
 
     public String getLoadingDate() {
         return loadingDate;

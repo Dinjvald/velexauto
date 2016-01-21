@@ -28,7 +28,7 @@
     <br>
     <input type="password" name="password" placeholder="Пароль"><br>
     <br>
-    <button type="submit">Войти</button>
+    <input class="submit-button" type="submit" value="Войти">
 </form>
 </body>
 </html>

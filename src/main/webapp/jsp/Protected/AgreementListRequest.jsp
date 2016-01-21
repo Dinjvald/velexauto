@@ -12,27 +12,66 @@
 <head>
     <mytag:head/>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             menuHover();
+            datepickerConfig();
+            datepickerSetRegionalRU();
+            $(".date").datepicker();
+
         });
     </script>
     <style>
-        div {
-            border: solid 1px azure;
-            padding: 5px;
+        #agreement-date-form-wrapper {
+            /*border-right: solid 10px #dc7700;*/
+            width: 274px;
+            padding-right: 20px;
         }
+
+        .agreement-date-form-child-div {
+            display: inline-block;
+        }
+
+        #agreement-date-form > div:nth-child(2) {
+            margin-right: 25px;
+        }
+
+        #agreement-date-form-head {
+            /*text-align: center;*/
+            font-size: 130%;
+            margin-bottom: 10px;
+        }
+
+        #agreement-date-form-wrapper > #agreement-date-form > .submit-button {
+            margin-top: 20px;
+            position: relative;
+            left: 100%;
+            transform: translate(-100%);
+        }
+
     </style>
 </head>
 <body>
 <mytag:logo/>
 <mytag:menuBarProtected/>
-<div>
-    <form method="post" action="agreementListResult">
-        <label for="startDate">Начало</label>
-        <input type="text" name="startDate" class="date" id="startDate" value="01.01.2015">
-        <label for="endDate">Конец</label>
-        <input type="text" name="endDate" class="date" id="endDate" value="11.02.2015">
-        <input type="submit">
+<div id="agreement-date-form-wrapper">
+    <form id="agreement-date-form" method="post" action="agreementListResult">
+        <div id="agreement-date-form-head">
+            Дата разгрузки
+        </div>
+        <div class="agreement-date-form-child-div">
+            <label for="agreement-date-form-start-date">Начало</label>
+            <br>
+            <input type="text" name="startDate" class="date" id="agreement-date-form-start-date" readonly="readonly"
+                   value="01.01.2015">
+        </div>
+        <div class="agreement-date-form-child-div">
+            <label for="agreement-date-form-end-date">Конец</label>
+            <br>
+            <input type="text" name="endDate" class="date" id="agreement-date-form-end-date" readonly="readonly"
+                   value="11.02.2015">
+        </div>
+        <br>
+        <input class="submit-button" type="submit" value="Отправить">
     </form>
 </div>
 </body>

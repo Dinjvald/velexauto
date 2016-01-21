@@ -21,6 +21,7 @@ public class DataValidateAssistant {
     public static final int DEFAULT_INT = -1;
     public static final String SUCCESS = "success";
     public static final String ERROR = "error";
+    public static final String CANT_DELETE = "can't delete";
 
     @Autowired
     @Qualifier("DateAssistant")
@@ -92,6 +93,9 @@ public class DataValidateAssistant {
         return true;
     }
 
+    /*
+    * This method doesn't check the validity of agreementID
+    */
     private boolean isAgreementNumbersValid (AgreementRequestBody agreementRB) {
         int paymentTerm = agreementRB.getPaymentTerm();
         double number = agreementRB.getPrice();

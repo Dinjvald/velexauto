@@ -18,14 +18,14 @@ function menuHover() {
 
 /* DATEPICKER START */
 
-function datepickerInit () {
+function datepickerInit() {
 
     datepickerConfig();
     datepickerSetRegionalRU();
     bindDatepicker();
 }
 
-function datepickerConfig () {
+function datepickerConfig() {
     $.datepicker.regional["ru"] = {
         monthNames: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август",
             "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"],
@@ -44,7 +44,7 @@ function datepickerConfig () {
     };
 }
 
-function datepickerSetRegionalRU () {
+function datepickerSetRegionalRU() {
     $.datepicker.setDefaults(
         $.datepicker.regional["ru"]
     );
@@ -60,21 +60,21 @@ function bindDatepicker() {
 
 /* AGREEMENT FORM AJAX REQUEST PROCESSING START */
 
-function initAgreementFormAJAX () {
+function initAgreementFormAJAX(url) {
     $("#saveAgreement").click(function () {
-        postAgreementAJAX();
+        postAgreementAJAX(url);
         return false;
     });
 }
 
-function postAgreementAJAX() {
+function postAgreementAJAX(url) {
     if (!isDataValid()) return false;
     var dataToSend = getAgreementFormData();
 
     $.ajax({
         type: "POST",
         contentType: "application/json; charset=utf-8",
-        url: "addagreement",
+        url: url,
         data: JSON.stringify(dataToSend),
         dataType: "text",
         success: function (response) {

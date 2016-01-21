@@ -269,7 +269,7 @@
                 postAgreementAJAX();
                 return false;
             });*/
-            initAgreementFormAJAX();
+            initAgreementFormAJAX("addAgreement");
 
             menuHover();
 

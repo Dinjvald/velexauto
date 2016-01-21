@@ -1,6 +1,5 @@
-package lv.velexauto.velex.mvc.Protected;
+package lv.velexauto.velex.mvc;
 
-import com.google.gson.Gson;
 import lv.velexauto.velex.HelperClasses.AgreementRequestBody;
 import lv.velexauto.velex.HelperClasses.DataValidateAssistant;
 import lv.velexauto.velex.HelperClasses.DateAssistant;
@@ -8,24 +7,24 @@ import lv.velexauto.velex.HelperClasses.SecurityAssistant;
 import lv.velexauto.velex.database.AgreementDAO;
 import lv.velexauto.velex.database.DBException;
 import lv.velexauto.velex.domain.Agreement;
+import lv.velexauto.velex.domain.Company;
 import lv.velexauto.velex.domain.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Dinjvald on 03/12/15.
  */
 @Controller
-public class AgreementAddController {
+public class AgreementController {
 
     private final String AGREEMENT = "agreement";
 
@@ -45,11 +44,10 @@ public class AgreementAddController {
     @Qualifier("DataValidateAssistant")
     private DataValidateAssistant dataValidateAssistant;
 
-    @RequestMapping(value = {"protected/addagreement"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"protected/addAgreement"}, method = RequestMethod.POST)
     public
     @ResponseBody
-    String addAgreement(@RequestBody AgreementRequestBody agreementRB)
-            throws ParseException, DBException {
+    String addAgreement(@RequestBody AgreementRequestBody agreementRB) throws ParseException, DBException {
 
         if (!dataValidateAssistant.isAgreementRequestBodyValid(agreementRB)) {
             return dataValidateAssistant.alertError(AGREEMENT);
@@ -60,12 +58,63 @@ public class AgreementAddController {
         return dataValidateAssistant.alertSuccess(AGREEMENT);
     }
 
+    @RequestMapping(value = {"protected/updateAgreement"}, method = RequestMethod.POST)
+    public
+    @ResponseBody
+    String updateAgreement(@RequestBody AgreementRequestBody agreementRB) throws DBException, ParseException {
+
+        if (!dataValidateAssistant.isAgreementRequestBodyValid(agreementRB)) {
+            return dataValidateAssistant.alertError(AGREEMENT);
+        }
+
+        Agreement agreement = toAgreementDomain(agreementRB);
+        try {
+            agreementDAO.update(agreement);
+        } catch (Throwable e) {
+            e.printStackTrace();
+            return dataValidateAssistant.alertError(AGREEMENT);
+        }
+
+        return dataValidateAssistant.alertSuccess(AGREEMENT);
+    }
+
+    @RequestMapping(value = {"protected/agreementListResult"}, method = RequestMethod.POST)
+    public ModelAndView agreementListResult(HttpServletRequest request, HttpServletResponse response) throws DBException, ParseException {
+
+        Company company = securityAssistant.getCurrentCompany();
+        java.util.Date starDate = dateAssistant.stringToDate(request.getParameter("startDate"));
+        java.util.Date endDate = dateAssistant.stringToDate(request.getParameter("endDate"));
+
+        request.setAttribute("defValues", dataValidateAssistant.getDefaultValuesMap());
+        List<Agreement> list = agreementDAO.getListByDateRange(starDate, endDate, company);
+        return new ModelAndView("Protected/AgreementListResult", "agreement", list);
+    }
+
+    @RequestMapping(value = {"protected/deleteAgreement"}, method = RequestMethod.POST)
+    public @ResponseBody String deleteAgreement(@RequestParam(value = "agreementId") long agreementId) throws DBException {
+
+        long currentManagerId = securityAssistant.getCurrentEmployee().getEmployeeId();
+        long agreementManagerId = agreementDAO.getById(agreementId).getEmployee().getEmployeeId();
+
+        if (currentManagerId != agreementManagerId) return DataValidateAssistant.CANT_DELETE;
+
+        try {
+            agreementDAO.delete(agreementId);
+            return DataValidateAssistant.SUCCESS;
+        } catch (DBException | IllegalArgumentException e) {
+            e.printStackTrace();
+            return DataValidateAssistant.ERROR;
+        }
+    }
+
     private Agreement toAgreementDomain(AgreementRequestBody agreementRB) throws ParseException, DBException {
 
         Employee employee = securityAssistant.getCurrentEmployee();
-        System.out.println(employee.getName());
         Agreement agreement = new Agreement();
 
+        if (agreementRB.getAgreementId() != DataValidateAssistant.DEFAULT_INT) {
+            agreement.setAgreementId(agreementRB.getAgreementId());
+        }
         agreement.setEmployee(employee);
         agreement.setCompany(employee.getCompany());
         agreement.setAgreementNr(agreementRB.getAgreementNr());
@@ -93,24 +142,10 @@ public class AgreementAddController {
     }
 
     private java.util.Date calculatePaymentDate(java.util.Date date, int paymentTerm) throws ParseException {
+
         java.util.Date def = dateAssistant.stringToDate(DataValidateAssistant.DEFAULT_DATE);
         if (date == def || paymentTerm == DataValidateAssistant.DEFAULT_INT) return def;
         return dateAssistant.addDaysToDate(date, paymentTerm);
     }
 
-    private String alertSuccess() {
-        List<String> response = new ArrayList<>();
-        response.add(DataValidateAssistant.SUCCESS);
-        response.add(AGREEMENT);
-        Gson gson = new Gson();
-        return gson.toJson(response);
-    }
-
-    private String alertError() {
-        List<String> response = new ArrayList<>();
-        response.add(DataValidateAssistant.ERROR);
-        response.add(AGREEMENT);
-        Gson gson = new Gson();
-        return gson.toJson(response);
-    }
 }

@@ -15,7 +15,7 @@
         $(document).ready(function () {
 
             function loopSpansInMainTextToPopup() {
-                var spanLength = $(".global_main_text span");
+                var spanLength = $(".global-main-text span");
                 var speed = 250;
                 var delay = 150;
                 spanLength.eq(0).animate({color: "#dc7700", fontSize: "24px"}, speed);
@@ -43,7 +43,7 @@
 <mytag:menuBar/>
 <img id="daf" src="Images/DAFSketch.png">
 
-<div class="global_main_text">
+<div class="global-main-text">
     <span>SIA VelexAuto</span> - это компания, основаная в январе 2014 года человеком с более чем
     <span>25-ти летним стажем</span> в области грузоперевозок и уже длительное время предоставлет свои услуги. За это
     время мы успели зарекомендовать себя как надежного и честного партнера.<br>

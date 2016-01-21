@@ -12,7 +12,7 @@
 <head>
     <mytag:head lang="en, ru, lv"/>
     <style>
-        .global_main_text {
+        .global-main-text {
             float: left;
             margin: 10px 60px 0 0;
         }
@@ -44,7 +44,7 @@
 <body>
 <mytag:logo/>
 <mytag:menuBar/>
-<div class="global_main_text">
+<div class="global-main-text">
     <span class="popup_text">
         Юридический адрес:<br>
         Фактический адрес:<br>
@@ -58,7 +58,7 @@
 
     <span class="popup_text">Е-почта:</span><br>
 </div>
-<div class="global_main_text">
+<div class="global-main-text">
     Lāčplēša iela <span class="numbers">29-36</span>, Aizkraukle, LV-<span class="numbers">5101</span><br>
     Lāčplēša iela <span class="numbers">29-36</span>, Aizkraukle, LV-<span class="numbers">5101</span><br>
     <br>
@@ -72,7 +72,7 @@
     <a class="email" href="mailto:velexvladimir@gmail.com">velexvladimir@gmail.com</a><br>
     <a class="email" href="mailto:velexauto@gmail.com">velexauto@gmail.com</a>
 </div>
-<div id="details" class="global_main_text">
+<div id="details" class="global-main-text">
     <span class="popup_text">Реквизиты:</span><br>
     SIA “VelexAuto”<br>
     Рег.: <span class="numbers">45403038976</span><br>

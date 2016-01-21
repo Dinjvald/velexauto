@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
  * Created by Dinjvald on 21/05/15.
  */
 @Controller
-public class EmptyControllers {
+public class AllEmptyBodyControllers {
 
     @RequestMapping(value = {"/", "index", "homepage"}, method = {RequestMethod.GET})
     public ModelAndView index(HttpServletRequest request,
@@ -47,5 +47,15 @@ public class EmptyControllers {
     @RequestMapping(value = {"testlocale"}, method = {RequestMethod.GET})
     public ModelAndView testLocale(HttpServletRequest request, HttpServletResponse response) {
         return new ModelAndView("ForTests/TestLocale");
+    }
+
+    @RequestMapping(value = {"protected/agreementForm"}, method = RequestMethod.GET)
+    public ModelAndView agreementForm(HttpServletRequest request, HttpServletResponse response) {
+        return new ModelAndView("Protected/AgreementForm");
+    }
+
+    @RequestMapping(value = {"protected/agreementListRequest"}, method = RequestMethod.GET)
+    public ModelAndView agreementListRequest(HttpServletRequest request, HttpServletResponse response) {
+        return new ModelAndView("Protected/AgreementListRequest");
     }
 }
