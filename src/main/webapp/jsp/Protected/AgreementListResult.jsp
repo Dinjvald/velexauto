@@ -210,8 +210,9 @@
                 }
             });
 
-            $(".delete-agreement").click(function() {
-                toggle_visibility("delete-check-wrapper");
+
+            $(".delete-agreement").click(function () {
+                toggleVisibility("delete-check-wrapper");
                 var tr = $(this).parents("tr");
                 var index = $("tr").index(tr);
                 var id = tr.find(".agreement-id").html();
@@ -223,11 +224,11 @@
                 $("#agreement-row-index").html(index);
             });
 
-            $("#delete-check-no").click(function() {
-                toggle_visibility("delete-check-wrapper");
+            $("#delete-check-no").click(function () {
+                toggleVisibility("delete-check-wrapper");
             });
 
-            $("#delete-check-yes").click(function() {
+            $("#delete-check-yes").click(function () {
                 var id = $("#delete-check-agreement-id").html();
                 $.ajax({
                     type: "POST",
@@ -236,24 +237,29 @@
                     dataType: "text",
                     success: function (response) {
                         if (response == "success") {
-                            var agreementTable = $("#agreement-table");
-                            var index = $("#agreement-row-index").html();
-                            var table = agreementTable.DataTable();
-                            var row = agreementTable.find("tr").eq(index);
-                            table.row(row).remove().draw();
+                            deleteRow("agreement-table", "agreement-row-index");
                         }
                         if (response == "error") {
-                            toggle_visibility("alert-wrapper");
-                            $("#alert-text").empty().html("Ошибка со стороны сервера. Удалить не удалось.");
+                            toggleVisibility("alert-wrapper");
+                            $("#alert-text").html("Ошибка со стороны сервера. Удалить не удалось.");
                         }
                         if (response == "can't delete") {
-                            toggle_visibility("alert-wrapper");
-                            $("#alert-text").empty().html("Вы не являетесь менеджером перевозки. Удаление невозможно.");
+                            toggleVisibility("alert-wrapper");
+                            $("#alert-text").html("Вы не являетесь менеджером перевозки. Удаление невозможно.");
                         }
                     }
                 });
-                toggle_visibility("delete-check-wrapper");
+                toggleVisibility("delete-check-wrapper");
             });
+
+            function deleteRow(id, index) {
+                var tableElement = $("#" + id);
+                var rowIndex = $("#" + index).html();
+                var table = tableElement.DataTable();
+                var row = tableElement.find("tr").eq(rowIndex);
+                table.row(row).remove().draw();
+            }
+
 
             datepickerInit();
             initAgreementFormAJAX("update-agreement");
@@ -272,7 +278,7 @@
              * before the function and invisible after, so that the main table remains the same.
              */
             $(".edit-agreement").click(function () {
-                toggle_visibility("agreement-form-wrapper");
+                toggleVisibility("agreement-form-wrapper");
                 var table = $("#agreement-table").DataTable();
                 var tr = $(this).parents("tr");
                 table.column(5).visible(true);
@@ -281,20 +287,20 @@
             });
 
             $("#close-form").click(function () {
-                toggle_visibility("agreement-form-wrapper");
+                toggleVisibility("agreement-form-wrapper");
             });
 
             $("#agreement-form-wrapper").click(function (e) {
                 if (e.target == this) {
-                    toggle_visibility("agreement-form-wrapper");
+                    toggleVisibility("agreement-form-wrapper");
                 }
             });
 
             $("#alert-button-close").click(function () {
-                toggle_visibility("alert-wrapper");
+                toggleVisibility("alert-wrapper");
             });
 
-            function toggle_visibility(id) {
+            function toggleVisibility(id) {
                 var e = document.getElementById(id);
                 if (e.style.display == "block") {
                     e.style.display = "none";
@@ -348,9 +354,9 @@
 <div>
     <form method="post" action="">
         <div><label for="start-date">Начало</label><br>
-        <input type="text" name="startDate" id="start-date"></div>
+            <input type="text" name="startDate" id="start-date"></div>
         <div><label for="end-date">Конец</label><br>
-        <input type="text" name="endDate" id="end-date"></div>
+            <input type="text" name="endDate" id="end-date"></div>
         <input type="submit">
     </form>
 </div>
