@@ -292,33 +292,7 @@
                 $("#agreement-row-index").html(index);
             });
 
-            /*
-             * Keep in mind that some columns (3rd and 5th in this case) can be made invisible in DataTables
-             * configuration:
-             *
-             *   "columnDefs": [
-             *       {
-             *           "targets": [3, 5],
-             *           "visible": false
-             *       }
-             *   ]
-             * So the Jquery .each() function will not see the hidden columns. If needed you must make them visible
-             * before the function and invisible after, so that the main table remains the same.
-             * Alternatively you can place the code BEFORE you initialize DataTable.
-             */
-
             editAgreementClickEvent();
-
-            /*$(".edit-agreement").click(function () {
-             toggleVisibility("agreement-form-wrapper");
-             console.log("you clicked on edit");
-             var table = $("#agreement-table").DataTable();
-             var tr = $(this).parents("tr");
-             $(".agreement-table-row-index").html(tr.index());
-             table.column(5).visible(true);
-             fillAgreementFormWithCurrentRowData(tr);
-             table.column(5).visible(false);
-             });*/
 
             $("#close-form").click(function () {
                 toggleVisibility("agreement-form-wrapper");
@@ -378,26 +352,7 @@
 
             datepickerInit();
 
-            /*function alertPopupBoxClickEvent() {
-             $("#alert-button-close").click(function () {
-             toggleVisibility("alert-wrapper");
-             });
-             }*/
-
             alertPopupBoxClickEvent();
-
-            /*$("#alert-button-close").click(function () {
-             toggleVisibility("alert-wrapper");
-             });*/
-
-            /*function toggleVisibility(id) {
-             var e = document.getElementById(id);
-             if (e.style.display == "block") {
-             e.style.display = "none";
-             } else {
-             e.style.display = "block";
-             }
-             }*/
 
             function editAgreementClickEvent() {
                 var editAgreement = $(".edit-agreement");
@@ -411,15 +366,12 @@
                     var rowData = table.row(rowIndex).data();
 
                     $(".agreement-table-row-index").html(rowIndex);
-                    /*table.column(5).visible(true);*/
-                    fillAgreementFormWithCurrentRowData(tr, rowData);
-                    /*table.column(5).visible(false);*/
+                    fillAgreementFormWithCurrentRowData(rowData);
                 });
             }
 
-            function fillAgreementFormWithCurrentRowData(tr, rowData) {
+            function fillAgreementFormWithCurrentRowData(rowData) {
                 var table = $("#agreement-table").DataTable();
-                /*var inputIds = getAgreementFormInputIdsArray();*/
                 var inputNames = getAgreementFormInputNames();
 
                 for (var x = 0; x < inputNames.length; x++) {
@@ -431,23 +383,6 @@
                     }
 
                 }
-
-                /*tr.find("td").each(function () {
-                 var name = $(this).attr("class");
-
-                 var classNames = name.split(" ");
-
-                 var value = $.trim($(this).html());
-
-                 for (var x = 0; x < inputIds.length; x++) {
-                 for (var y = 0; y < classNames.length; y++) {
-                 if (inputIds[x] == classNames[y]) {
-                 var input = "#" + inputIds[x];
-                 $("#agreement-form").find(input).val(value);
-                 }
-                 }
-                 }
-                 });*/
             }
 
             function getAgreementFormInputNames() {
@@ -461,18 +396,6 @@
                 });
                 return inputNames;
             }
-
-            /*function getAgreementFormInputIdsArray() {
-             var agreementForm = $("#agreement-form");
-             var inputIds = [];
-             agreementForm.find("input").each(function () {
-             inputIds[inputIds.length] = $(this).attr("id");
-             });
-             agreementForm.find("textarea").each(function () {
-             inputIds[inputIds.length] = $(this).attr("id");
-             });
-             return inputIds;
-             }*/
 
             $("#save-agreement").click(function () {
                 updateAgreementAJAX();
@@ -541,17 +464,6 @@
 <c:set var="defInt" value="${defValues.defInt}" scope="page"/>
 <mytag:logo/>
 <mytag:menuBarProtected/>
-
-<%--<div>
-    <form method="post" action="">
-        <div><label for="start-date">Начало</label><br>
-            <input type="text" name="startDate" id="start-date"></div>
-        <div><label for="end-date">Конец</label><br>
-            <input type="text" name="endDate" id="end-date"></div>
-        <input type="submit">
-    </form>
-</div>--%>
-
 <div id="div-agreement-table">
     <table border="1" class="compact" id="agreement-table">
         <thead>
@@ -728,13 +640,5 @@
     </div>
 </div>
 <mytag:allertPopupBox/>
-<%--<div id="alert-wrapper" class="alert-position">
-    <div id="alert-box">
-        <div id="alert-text"></div>
-        <div id="alert-button">
-            <a id="alert-button-close" href="" onclick="return false">Закрыть</a>
-        </div>
-    </div>
-</div>--%>
 </body>
 </html>
