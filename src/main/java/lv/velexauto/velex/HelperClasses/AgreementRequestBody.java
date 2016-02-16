@@ -24,6 +24,7 @@ public class AgreementRequestBody {
     String plateNr;
     String invoiceSendDate;
     String notes;
+    String paid;
 
     public long getAgreementId() {
         return agreementId;
@@ -97,4 +98,7 @@ public class AgreementRequestBody {
         return notes;
     }
 
+    public String getPaid() {
+        return paid;
+    }
 }

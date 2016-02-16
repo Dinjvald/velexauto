@@ -32,6 +32,10 @@
             background-color: #252525;
         }
 
+        /*#agreement-table > tbody > tr {
+            background-color: #c3c3c3;
+        }*/
+
         td {
             padding: 5px;
             color: #151515;
@@ -111,6 +115,11 @@
             display: none;
         }
 
+        #agreement-table_filter > label > input {
+            width: 250px;
+            padding-left: 0;
+        }
+
         /* AGREEMENT FORM */
 
         div.agreement-form-position {
@@ -167,8 +176,38 @@
                         "last": "Последняя"
                     }
                 },
+                "columns": [
+                    {"name": "details"},
+                    {"name": "edit"},
+                    {"name": "delete"},
+                    {"name": "nameSurname"},
+                    {"name": "invoiceNr"},
+                    {"name": "agreementNr"},
+                    {"name": "clientName"},
+                    {"name": "loadingAddress"},
+                    {"name": "loadingDate"},
+                    {"name": "unloadingAddress"},
+                    {"name": "unloadingDate"},
+                    {"name": "price"},
+                    {"name": "estimatedDateOfPayment"},
+                    {"name": "driver"},
+                    {"name": "plateNr"},
+                    {"name": "valueAddedTax"},
+                    {"name": "paymentTerm"},
+                    {"name": "invoiceSendDate"},
+                    {"name": "onBehalfOf"},
+                    {"name": "notes"},
+                    {"name": "agreementId"},
+                    {"name": "fileLinkInvoice"},
+                    {"name": "fileLinkAgreement"},
+                    {"name": "paid"}
+                ],
+                "drawCallback": function (settings) {
+                    editAgreementClickEvent();
+                    checkForDebtor();
+                },
                 "autoWidth": false,
-                "pageLength": 50,
+                "paging": false,
                 "columnDefs": [
                     {
                         "targets": [3, 5],
@@ -179,23 +218,32 @@
                     details: {
                         display: $.fn.dataTable.Responsive.display.modal({
                             header: function (row) {
+                                var clientNameColumn = 6;
+                                var loadingDateColumn = 8;
                                 var data = row.data();
-                                return 'Данные перевозки:' + '<br>' + ' ' + data[6] + ' - ' + data[8];
+                                return 'Данные перевозки:' + '<br>' + ' ' + data[clientNameColumn] + ' - ' + data[loadingDateColumn];
                             }
                         }),
                         renderer: function (api, rowIdx, columns) {
+                            var minRenderColumn = 3;
+                            var maxRenderColumn = 19;
+                            var invoiceNrColumn = 4;
+                            var agreementNrColumn = 5;
+                            var fileLinkInvoiceColumn = 21;
+                            var fileLinkAgreementColumn = 22;
+
                             var data = $.map(columns, function (col, i) {
-                                if (i < 3 || i > 19) return false;
-                                if (i == 4 && columns[21].data != "") {
+                                if (i < minRenderColumn || i > maxRenderColumn) return false;
+                                if (i == invoiceNrColumn && columns[fileLinkInvoiceColumn].data != "") {
                                     return '<tr>' +
                                             '<td class="dtr-modal-title">' + col.title + ':' + '</td>' +
-                                            '<td>' + '<a class="dtr-modal-link" target="_blank" href="' + columns[21].data + '">' + col.data + '</a>' +
+                                            '<td>' + '<a class="dtr-modal-link" target="_blank" href="' + columns[fileLinkInvoiceColumn].data + '">' + col.data + '</a>' +
                                             '</tr>';
                                 }
-                                if (i == 5 && columns[22].data != "") {
+                                if (i == agreementNrColumn && columns[fileLinkAgreementColumn].data != "") {
                                     return '<tr>' +
                                             '<td class="dtr-modal-title">' + col.title + ':' + '</td>' +
-                                            '<td>' + '<a class="dtr-modal-link" target="_blank" href="' + columns[22].data + '">' + col.data + '</a>' +
+                                            '<td>' + '<a class="dtr-modal-link" target="_blank" href="' + columns[fileLinkAgreementColumn].data + '">' + col.data + '</a>' +
                                             '</tr>';
                                 }
                                 return '<tr>' +
@@ -210,6 +258,26 @@
                 }
             });
 
+            function checkForDebtor() {
+                $("#agreement-table").find(".is-paid").each(function () {
+                    var isPaid = $.trim($(this).html());
+                    var currentDate = getCurrentMomentDate("day");
+                    var paymentDateString = $.trim($(this).parents("tr").find(".estimated-date-of-payment").html());
+                    var paymentDate = stringToMomentDate(paymentDateString);
+
+                    if (isPaid == "true") {
+                        $(this).parents("tr").css({"background-color": "#c3c3c3"});
+                    }
+                    if (isPaid == "false" && moment(currentDate).isBefore(paymentDate)) {
+                        $(this).parents("tr").css({"background-color": "##b6d7a8"});
+                    }
+                    if (isPaid == "false" && moment(currentDate).isAfter(paymentDate)) {
+                        $(this).parents("tr").css({"background-color": "#f9cb9c"});
+                    }
+                });
+            }
+
+            checkForDebtor();
 
             $(".delete-agreement").click(function () {
                 toggleVisibility("delete-check-wrapper");
@@ -222,6 +290,44 @@
                 $("#delete-check-body").html(client + route);
                 $("#delete-check-agreement-id").html(id);
                 $("#agreement-row-index").html(index);
+            });
+
+            /*
+             * Keep in mind that some columns (3rd and 5th in this case) can be made invisible in DataTables
+             * configuration:
+             *
+             *   "columnDefs": [
+             *       {
+             *           "targets": [3, 5],
+             *           "visible": false
+             *       }
+             *   ]
+             * So the Jquery .each() function will not see the hidden columns. If needed you must make them visible
+             * before the function and invisible after, so that the main table remains the same.
+             * Alternatively you can place the code BEFORE you initialize DataTable.
+             */
+
+            editAgreementClickEvent();
+
+            /*$(".edit-agreement").click(function () {
+             toggleVisibility("agreement-form-wrapper");
+             console.log("you clicked on edit");
+             var table = $("#agreement-table").DataTable();
+             var tr = $(this).parents("tr");
+             $(".agreement-table-row-index").html(tr.index());
+             table.column(5).visible(true);
+             fillAgreementFormWithCurrentRowData(tr);
+             table.column(5).visible(false);
+             });*/
+
+            $("#close-form").click(function () {
+                toggleVisibility("agreement-form-wrapper");
+            });
+
+            $("#agreement-form-wrapper").click(function (e) {
+                if (e.target == this) {
+                    toggleVisibility("agreement-form-wrapper");
+                }
             });
 
             $("#delete-check-no").click(function () {
@@ -240,17 +346,27 @@
                             deleteRow("agreement-table", "agreement-row-index");
                         }
                         if (response == "error") {
-                            toggleVisibility("alert-wrapper");
-                            $("#alert-text").html("Ошибка со стороны сервера. Удалить не удалось.");
+                            alertMessage("Ошибка со стороны сервера. Удалить не удалось.");
                         }
                         if (response == "can't delete") {
-                            toggleVisibility("alert-wrapper");
-                            $("#alert-text").html("Вы не являетесь менеджером перевозки. Удаление невозможно.");
+                            alertMessage("Вы не являетесь менеджером перевозки. Удаление невозможно.");
                         }
                     }
                 });
                 toggleVisibility("delete-check-wrapper");
             });
+
+            function stringToMomentDate(string) {
+                var dateFormat = "DD.MM.YYYY";
+                return moment(string, dateFormat);
+            }
+
+            function getCurrentMomentDate(string) {
+                if (string != null) {
+                    return moment().startOf(string);
+                }
+                return moment();
+            }
 
             function deleteRow(id, index) {
                 var tableElement = $("#" + id);
@@ -260,86 +376,161 @@
                 table.row(row).remove().draw();
             }
 
-
             datepickerInit();
-            initAgreementFormAJAX("update-agreement");
 
-            /*
-             * Keep in mind that some columns (3rd and 5th in this case) can be made invisible in DataTables
-             * configuration:
-             *
-             *   "columnDefs": [
-             *       {
-             *           "targets": [3, 5],
-             *           "visible": false
-             *       }
-             *   ]
-             * So the Jquery .each() function will not see the hidden columns. If needed you must make them visible
-             * before the function and invisible after, so that the main table remains the same.
-             */
-            $(".edit-agreement").click(function () {
-                toggleVisibility("agreement-form-wrapper");
-                var table = $("#agreement-table").DataTable();
-                var tr = $(this).parents("tr");
-                table.column(5).visible(true);
-                fillAgreementFormWithCurrentRowData(tr);
-                table.column(5).visible(false);
-            });
+            /*function alertPopupBoxClickEvent() {
+             $("#alert-button-close").click(function () {
+             toggleVisibility("alert-wrapper");
+             });
+             }*/
 
-            $("#close-form").click(function () {
-                toggleVisibility("agreement-form-wrapper");
-            });
+            alertPopupBoxClickEvent();
 
-            $("#agreement-form-wrapper").click(function (e) {
-                if (e.target == this) {
+            /*$("#alert-button-close").click(function () {
+             toggleVisibility("alert-wrapper");
+             });*/
+
+            /*function toggleVisibility(id) {
+             var e = document.getElementById(id);
+             if (e.style.display == "block") {
+             e.style.display = "none";
+             } else {
+             e.style.display = "block";
+             }
+             }*/
+
+            function editAgreementClickEvent() {
+                var editAgreement = $(".edit-agreement");
+                editAgreement.off();
+                editAgreement.on("click", function () {
                     toggleVisibility("agreement-form-wrapper");
-                }
-            });
+                    var table = $("#agreement-table").DataTable();
+                    var tr = $(this).parents("tr");
+                    var rowIndex = tr.index();
 
-            $("#alert-button-close").click(function () {
-                toggleVisibility("alert-wrapper");
-            });
+                    var rowData = table.row(rowIndex).data();
 
-            function toggleVisibility(id) {
-                var e = document.getElementById(id);
-                if (e.style.display == "block") {
-                    e.style.display = "none";
-                } else {
-                    e.style.display = "block";
-                }
+                    $(".agreement-table-row-index").html(rowIndex);
+                    /*table.column(5).visible(true);*/
+                    fillAgreementFormWithCurrentRowData(tr, rowData);
+                    /*table.column(5).visible(false);*/
+                });
             }
 
-            function fillAgreementFormWithCurrentRowData(tr) {
-                var inputNames = getAgreementFormInputNamesArray();
+            function fillAgreementFormWithCurrentRowData(tr, rowData) {
+                var table = $("#agreement-table").DataTable();
+                /*var inputIds = getAgreementFormInputIdsArray();*/
+                var inputNames = getAgreementFormInputNames();
 
-                tr.find("td").each(function () {
-                    var name = $(this).attr("class");
+                for (var x = 0; x < inputNames.length; x++) {
+                    if (inputNames[x] != "paid") {
+                        var columnIndex = table.column(inputNames[x] + ":name").index();
+                        var value = rowData[columnIndex];
+                        var input = $("#agreement-form").find(":input[name=" + inputNames[x] + "]");
+                        input.val(value);
+                    }
 
-                    var classNames = name.split(" ");
+                }
 
-                    var value = $.trim($(this).html());
+                /*tr.find("td").each(function () {
+                 var name = $(this).attr("class");
 
-                    for (var x = 0; x < inputNames.length; x++) {
-                        for (var y = 0; y < classNames.length; y++) {
-                            if (inputNames[x] == classNames[y]) {
-                                var input = "#" + inputNames[x];
-                                $("#agreement-form").find(input).val(value);
+                 var classNames = name.split(" ");
+
+                 var value = $.trim($(this).html());
+
+                 for (var x = 0; x < inputIds.length; x++) {
+                 for (var y = 0; y < classNames.length; y++) {
+                 if (inputIds[x] == classNames[y]) {
+                 var input = "#" + inputIds[x];
+                 $("#agreement-form").find(input).val(value);
+                 }
+                 }
+                 }
+                 });*/
+            }
+
+            function getAgreementFormInputNames() {
+                var agreementForm = $("#agreement-form");
+                var inputNames = [];
+                agreementForm.find("input").each(function () {
+                    inputNames[inputNames.length] = $(this).attr("name");
+                });
+                agreementForm.find("textarea").each(function () {
+                    inputNames[inputNames.length] = $(this).attr("name");
+                });
+                return inputNames;
+            }
+
+            /*function getAgreementFormInputIdsArray() {
+             var agreementForm = $("#agreement-form");
+             var inputIds = [];
+             agreementForm.find("input").each(function () {
+             inputIds[inputIds.length] = $(this).attr("id");
+             });
+             agreementForm.find("textarea").each(function () {
+             inputIds[inputIds.length] = $(this).attr("id");
+             });
+             return inputIds;
+             }*/
+
+            $("#save-agreement").click(function () {
+                updateAgreementAJAX();
+                return false;
+            });
+
+            function updateAgreementAJAX() {
+                if (!isDataValid()) return false;
+                var dataToSend = getAgreementFormData();
+
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    url: "update-agreement",
+                    data: JSON.stringify(dataToSend),
+                    dataType: "text",
+                    success: function (response) {
+                        if (response == "can't update") {
+                            toggleVisibility("agreement-form-wrapper");
+                            alertMessage("Вы не являетесь менеджером перевозки, обновить невозможно")
+                        } else {
+                            if (response == "error") {
+                                toggleVisibility("agreement-form-wrapper");
+                                alertMessage("Сервер принял данные, но не смог их сохранить")
+                            } else {
+                                updateAgreementTableRow(dataToSend, response);
+                                toggleVisibility("agreement-form-wrapper");
+                                alertMessage("Заявка обновлена успешно");
                             }
                         }
+                    },
+                    error: function () {
+                        alertMessage("Сервет не принимает данные")
                     }
                 });
             }
 
-            function getAgreementFormInputNamesArray() {
-                var agreementForm = $("#agreement-form");
-                var inputNames = [];
-                agreementForm.find("input").each(function () {
-                    inputNames[inputNames.length] = $(this).attr("id");
+            function updateAgreementTableRow(dataToSend, estimatedDateOfPayment) {
+                var table = $("#agreement-table").DataTable();
+                var defInt = -1;
+                var defText = "empty";
+                var defDate = "01.01.1971";
+                var rowIndex = parseInt($(".agreement-table-row-index").html());
+                var rowElement = table.row(rowIndex);
+                var rowData = rowElement.data();
+
+                $.each(dataToSend, function (key, value) {
+                    var colIndex = table.column(key + ":name").index();
+                    if (value == defInt || value == defDate || value == defText) {
+                        rowData[colIndex] = "";
+                    } else {
+                        rowData[colIndex] = value;
+                    }
                 });
-                agreementForm.find("textarea").each(function () {
-                    inputNames[inputNames.length] = $(this).attr("id");
-                });
-                return inputNames;
+                var colIndex2 = table.column("estimatedDateOfPayment:name").index();
+                rowData[colIndex2] = estimatedDateOfPayment;
+                rowElement.data(rowData);
+                table.draw();
             }
         });
     </script>
@@ -351,7 +542,7 @@
 <mytag:logo/>
 <mytag:menuBarProtected/>
 
-<div>
+<%--<div>
     <form method="post" action="">
         <div><label for="start-date">Начало</label><br>
             <input type="text" name="startDate" id="start-date"></div>
@@ -359,7 +550,7 @@
             <input type="text" name="endDate" id="end-date"></div>
         <input type="submit">
     </form>
-</div>
+</div>--%>
 
 <div id="div-agreement-table">
     <table border="1" class="compact" id="agreement-table">
@@ -384,6 +575,7 @@
             <th rowspan="2">ID заявки</th>
             <th rowspan="2">Ссылка на счет</th>
             <th rowspan="2">Ссылка на заявку</th>
+            <th rowspan="2">Оплачено ли?</th>
         </tr>
         <tr>
             <th>Адрес</th>
@@ -406,7 +598,7 @@
                         ${agr.employee.surname}
                     </c:if>
                 </td>
-                <td class="col-1 invoice-nr">
+                <td title="invoiceNr" class="col-1 invoice-nr">
                     <c:if test="${agr.invoiceNr != defText}">
                         ${agr.invoiceNr}
                     </c:if>
@@ -448,7 +640,7 @@
                     <c:if test="${price != defInt}">
                         <fmt:formatNumber var="pat" value="${price}" minFractionDigits="2" maxFractionDigits="2"
                                           type="number"/>
-                        ${fn:replace(pat, ",", " ")}
+                        ${fn:replace(pat, ",", "")}
                     </c:if>
                 </td>
                 <td class="col-1 estimated-date-of-payment">
@@ -473,7 +665,7 @@
                     <c:if test="${agr.valueAddedTax != defInt}">
                         <fmt:formatNumber var="pat" value="${valueAddedTax}" minFractionDigits="2" maxFractionDigits="2"
                                           type="number"/>
-                        ${fn:replace(pat, ",", " ")}
+                        ${fn:replace(pat, ",", "")}
                     </c:if>
                 </td>
                 <td class="payment-term">
@@ -508,6 +700,9 @@
                         ${agr.fileLinkAgreement}
                     </c:if>
                 </td>
+                <td class="is-paid">
+                        ${agr.paid}
+                </td>
             </tr>
         </c:forEach>
         </tbody>
@@ -532,13 +727,14 @@
         </div>
     </div>
 </div>
-<div id="alert-wrapper" class="alert-position">
+<mytag:allertPopupBox/>
+<%--<div id="alert-wrapper" class="alert-position">
     <div id="alert-box">
         <div id="alert-text"></div>
         <div id="alert-button">
             <a id="alert-button-close" href="" onclick="return false">Закрыть</a>
         </div>
     </div>
-</div>
+</div>--%>
 </body>
 </html>

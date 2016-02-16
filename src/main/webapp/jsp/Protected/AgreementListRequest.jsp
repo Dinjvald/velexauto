@@ -53,7 +53,7 @@
 <body>
 <mytag:logo/>
 <mytag:menuBarProtected/>
-<div id="agreement-date-form-wrapper">
+<div id="agreement-date-form-wrapper" class="div-display-inline-block">
     <form id="agreement-date-form" method="post" action="agreement-list-result">
         <div id="agreement-date-form-head">
             Дата разгрузки
@@ -68,11 +68,14 @@
             <label for="agreement-date-form-end-date">Конец</label>
             <br>
             <input type="text" name="endDate" class="date" id="agreement-date-form-end-date" readonly="readonly"
-                   value="11.02.2015">
+                   value="31.01.2016">
         </div>
         <br>
         <input class="submit-button" type="submit" value="Отправить">
     </form>
+</div>
+<div class="div-display-inline-block">
+
 </div>
 </body>
 </html>

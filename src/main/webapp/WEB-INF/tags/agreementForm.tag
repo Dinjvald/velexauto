@@ -1,6 +1,7 @@
 <%@tag pageEncoding="UTF-8" %>
 <div id="agreement">
     <form id="agreement-form" action="">
+        <div class="agreement-table-row-index"></div>
         <div class="input" id="agreement-id-div">
             <label for="agreement-id">ID заявки</label>
             <input type="text" name="agreementId" class="number" id="agreement-id">
@@ -14,7 +15,7 @@
         </div>
 
         <div class="input">
-            <div id="close-form">&#x2715;</div>
+            <div id="close-form">&#x2715;</div> <%--CLOSE HERE--%>
             <label for="unloading-date">Дата разгрузки</label><br>
             <input type="text" name="unloadingDate" readonly="readonly" class="date" id="unloading-date">
             <br>
@@ -89,9 +90,13 @@
             <label for="notes">Примечания</label><br>
             <textarea name="notes" id="notes" class="text"></textarea>
         </div>
+        <div class="input agreement-radio">
+            <input type="radio" name="paid" value="false" checked><span>Перевозка не оплачена</span><br>
+            <input type="radio" name="paid" value="true"><span>Перевозка оплачена</span>
+        </div>
         <a href="" id="save-agreement">Сохранить</a>
     </form>
-    <div id="result">
+    <%--<div id="result">
 
-    </div>
+    </div>--%>
 </div>

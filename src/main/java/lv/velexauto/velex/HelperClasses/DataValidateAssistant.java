@@ -22,6 +22,7 @@ public class DataValidateAssistant {
     public static final String SUCCESS = "success";
     public static final String ERROR = "error";
     public static final String CANT_DELETE = "can't delete";
+    public static final String CANT_UPDATE = "can't update";
 
     @Autowired
     @Qualifier("DateAssistant")
@@ -35,18 +36,18 @@ public class DataValidateAssistant {
         }};
     }
 
-    public String alertSuccess(String type) {
+    public String sendSuccessMsg(String msg) {
         List<String> response = new ArrayList<>();
         response.add(SUCCESS);
-        response.add(type);
+        response.add(msg);
         Gson gson = new Gson();
         return gson.toJson(response);
     }
 
-    public String alertError(String type) {
+    public String sendErrorMsg(String msg) {
         List<String> response = new ArrayList<>();
         response.add(ERROR);
-        response.add(type);
+        response.add(msg);
         Gson gson = new Gson();
         return gson.toJson(response);
     }

@@ -11,7 +11,8 @@ body {
     margin: auto;
 }
 
-input {
+input:not([type=radio]) {
+    -webkit-appearance: none;
     font-size: 15px;
     background-color: #252525;
     color: azure;
@@ -21,6 +22,10 @@ input {
     padding: 0 5px;
     width: 110px;
     outline: none;
+}
+
+input[type=radio] {
+    margin: 3px 10px 3px 3px;
 }
 
 .submit-button {
@@ -140,14 +145,10 @@ ul#menu li ul li {
 div#agreement {
     margin: auto;
     width: 85%;
+    height: 605px;
 }
 
-div#agreement label, div#agreement input {
-    /*margin-bottom: 5px;*/
-    /*margin-top: 5px;*/
-}
-
-div#agreement input {
+div#agreement input:not([type=radio]) {
     /*border: solid 1px #666666;*/
     /*height: 25px;*/
     width: 254px;
@@ -178,7 +179,23 @@ div.input input#loading-date, div.input input#unloading-date, div.input input#in
     width: 110px;
 }
 
+#agreement-form > div:nth-child(4) {
+    width: 552px;
+}
+
+div.agreement-radio {
+    position: relative;
+    bottom: 166px;
+}
+
+div.agreement-radio > input:first-child {
+    margin-bottom: 15px;
+}
+
 #save-agreement:link, #save-agreement:visited {
+    position: relative;
+    bottom: 50px;
+    right: 15px;
     width: 200px;
     height: 40px;
     background-color: #252525;
@@ -190,8 +207,6 @@ div.input input#loading-date, div.input input#unloading-date, div.input input#in
     font-size: larger;
     line-height: 40px;
     float: right;
-    margin-top: 182px;
-    margin-right: 10px;
 }
 
 #save-agreement:active, #save-agreement:hover {
@@ -199,8 +214,8 @@ div.input input#loading-date, div.input input#unloading-date, div.input input#in
     color: #dc7700;
 }
 
-#result {
-    /*border: solid 1px #666666;*/
+/*#result {
+    /!*border: solid 1px #666666;*!/
     height: 40px;
     width: 83%;
     margin: auto;
@@ -208,7 +223,7 @@ div.input input#loading-date, div.input input#unloading-date, div.input input#in
     font-size: 125%;
     line-height: 40px;
     text-align: right;
-}
+}*/
 
 #close-form {
     display: none;
@@ -217,6 +232,10 @@ div.input input#loading-date, div.input input#unloading-date, div.input input#in
 #agreement-id-div {
     display: none;
     position: absolute;
+}
+
+.agreement-table-row-index {
+    display: none;
 }
 
 /* --- AGREEMENT FORM END  --- */

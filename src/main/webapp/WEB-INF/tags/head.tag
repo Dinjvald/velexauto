@@ -11,7 +11,7 @@
 <link rel="stylesheet" type="text/css"
       href="https://cdn.datatables.net/s/dt/dt-1.10.10,r-2.0.0/datatables.min.css"/>
 <script type="text/javascript" src="https://cdn.datatables.net/s/dt/dt-1.10.10,r-2.0.0/datatables.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.1/moment.min.js"></script>
 <script type="text/javascript"
         src="https://cdn.datatables.net/plug-ins/1.10.10/sorting/datetime-moment.js"></script>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/Styles/MainStyle.css">

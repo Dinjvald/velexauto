@@ -2,7 +2,7 @@
  * Created by Dinjvald on 04/12/15.
  */
 
-/* MENU START */
+/* --- MENU START --- */
 
 function menuHover() {
     $("ul#menu li#orders").hover(
@@ -14,9 +14,9 @@ function menuHover() {
         });
 }
 
-/* MENU END */
+/* --- MENU END --- */
 
-/* DATEPICKER START */
+/* --- DATEPICKER START --- */
 
 function datepickerInit() {
 
@@ -56,9 +56,9 @@ function bindDatepicker() {
     $("#invoice-send-date").datepicker();
 }
 
-/* DATEPICKER END */
+/* --- DATEPICKER END --- */
 
-/* AGREEMENT FORM AJAX REQUEST PROCESSING START */
+/* --- AGREEMENT FORM AJAX REQUEST PROCESSING START --- */
 
 function initAgreementFormAJAX(url) {
     $("#save-agreement").click(function () {
@@ -78,14 +78,21 @@ function postAgreementAJAX(url) {
         data: JSON.stringify(dataToSend),
         dataType: "text",
         success: function (response) {
-            showResult(response);
-            $("#agreement-form")[0].reset();
+            if (response == "success") {
+                $("#agreement-form")[0].reset();
+                alertMessage("Заяка сохранена успешно");
+            }
+            if (response == "error") {
+                alertMessage("Отказ от сервера. Неверные данные в заявке");
+            }
+            /*showResult(response);
+            $("#agreement-form")[0].reset();*/
         },
         error: function () {
-            $("#result")
+            alertMessage("Сервер не может обработать данные");
+            /*$("#result")
                 .css({"color": "#C40005"})
-                .html("Сервер не может обработать данные.");
-
+                .html("Сервер не может обработать данные.");*/
         }
     })
 }
@@ -162,7 +169,7 @@ function getAgreementFormData() {
     var data = {};
     var agreementForm = $("#agreement-form");
 
-    agreementForm.find("input").each(function () {
+    agreementForm.find("input:not([type=radio])").each(function () {
         var name = $(this).attr("name");
         data[name] = $(this).val();
     });
@@ -170,7 +177,9 @@ function getAgreementFormData() {
         var name = $(this).attr("name");
         data[name] = $(this).val();
     });
-    console.log(data);
+    var radioCheckedElement = agreementForm.find("input[type=radio]:checked");
+    var radioName = radioCheckedElement.attr("name");
+    data[radioName] = radioCheckedElement.val();
     return data;
 }
 
@@ -214,4 +223,39 @@ function alertError(key) {
     }, 15000);
 }
 
-/* AGREEMENT FORM AJAX REQUEST PROCESSING END */
+/* --- AGREEMENT FORM AJAX REQUEST PROCESSING END --- */
+
+/* --- ALERT POPUP BOX START --- */
+
+function alertPopupBoxClickEvent() {
+    $("#alert-button-close").click(function () {
+        toggleVisibility("alert-wrapper");
+    });
+}
+
+function alertMessage(msg) {
+    toggleVisibility("alert-wrapper");
+    $("#alert-text").html(msg);
+}
+
+/*function alertResponseFromServer(key) {
+    var agreement = {
+        "can't delete" : "Вы не являетесь менеджером перевозки. Удаление невозможно",
+        "error" : "Ошибка со стороны сервера. Удалить не удалось"
+    };
+    if (key[1] == "agreement") {
+        var msg = agreement[key[2]];
+        alertMessage(msg);
+    }
+}*/
+
+/* --- ALERT POPUP BOX END --- */
+
+function toggleVisibility(id) {
+    var e = document.getElementById(id);
+    if (e.style.display == "block") {
+        e.style.display = "none";
+    } else {
+        e.style.display = "block";
+    }
+}

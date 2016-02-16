@@ -91,7 +91,7 @@ public class Agreement {
 
     @Column(name = "is_paid", columnDefinition = "char(1)")
     @Type(type = "org.hibernate.type.TrueFalseType")
-    private boolean isPaid;
+    private boolean paid;
 
     public Agreement() {
 
@@ -118,7 +118,7 @@ public class Agreement {
         this.fileLinkAgreement = ab.fileLinkAgreementBuilder;
         this.fileLinkInvoice = ab.fileLinkInvoiceBuilder;
         this.notes = ab.notesBuilder;
-        this.isPaid = ab.isPaidBuilder;
+        this.paid = ab.paidBuilder;
     }
 
     public static class AgreementBuilder {
@@ -142,7 +142,7 @@ public class Agreement {
         private String fileLinkAgreementBuilder;
         private String fileLinkInvoiceBuilder;
         private String notesBuilder;
-        private boolean isPaidBuilder;
+        private boolean paidBuilder;
 
         public AgreementBuilder employee(Employee newEmployee) {
             this.employeeBuilder = newEmployee;
@@ -244,8 +244,8 @@ public class Agreement {
             return this;
         }
 
-        public AgreementBuilder isPaid(boolean newIsPaid) {
-            this.isPaidBuilder = newIsPaid;
+        public AgreementBuilder isPaid(boolean newPaid) {
+            this.paidBuilder = newPaid;
             return this;
         }
 
@@ -423,10 +423,10 @@ public class Agreement {
     }
 
     public boolean isPaid() {
-        return isPaid;
+        return paid;
     }
 
-    public void setIsPaid(boolean isPaid) {
-        this.isPaid = isPaid;
+    public void setPaid(boolean isPaid) {
+        this.paid = isPaid;
     }
 }

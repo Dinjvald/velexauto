@@ -1,5 +1,6 @@
 package lv.velexauto.velex.mvc;
 
+import com.google.gson.Gson;
 import lv.velexauto.velex.HelperClasses.AgreementRequestBody;
 import lv.velexauto.velex.HelperClasses.DataValidateAssistant;
 import lv.velexauto.velex.HelperClasses.DateAssistant;
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -50,12 +52,13 @@ public class AgreementController {
     String addAgreement(@RequestBody AgreementRequestBody agreementRB) throws ParseException, DBException {
 
         if (!dataValidateAssistant.isAgreementRequestBodyValid(agreementRB)) {
-            return dataValidateAssistant.alertError(AGREEMENT);
+            return DataValidateAssistant.ERROR;
         }
         Agreement agreement = toAgreementDomain(agreementRB);
+
         agreementDAO.create(agreement);
 
-        return dataValidateAssistant.alertSuccess(AGREEMENT);
+        return DataValidateAssistant.SUCCESS;
     }
 
     @RequestMapping(value = {"protected/update-agreement"}, method = RequestMethod.POST)
@@ -64,18 +67,22 @@ public class AgreementController {
     String updateAgreement(@RequestBody AgreementRequestBody agreementRB) throws DBException, ParseException {
 
         if (!dataValidateAssistant.isAgreementRequestBodyValid(agreementRB)) {
-            return dataValidateAssistant.alertError(AGREEMENT);
+            return DataValidateAssistant.ERROR;
         }
 
+        long currentManagerId = securityAssistant.getCurrentEmployee().getEmployeeId();
+        long agreementManagerId = agreementDAO.getById(agreementRB.getAgreementId()).getEmployee().getEmployeeId();
+        if (currentManagerId != agreementManagerId) return DataValidateAssistant.CANT_UPDATE;
+
         Agreement agreement = toAgreementDomain(agreementRB);
+
         try {
             agreementDAO.update(agreement);
         } catch (Throwable e) {
             e.printStackTrace();
-            return dataValidateAssistant.alertError(AGREEMENT);
+            return DataValidateAssistant.ERROR;
         }
-
-        return dataValidateAssistant.alertSuccess(AGREEMENT);
+        return dateAssistant.dateToString(agreement.getEstimatedDateOfPayment());
     }
 
     @RequestMapping(value = {"protected/agreement-list-result"}, method = RequestMethod.POST)
@@ -94,14 +101,20 @@ public class AgreementController {
     public @ResponseBody String deleteAgreement(@RequestParam(value = "agreementId") long agreementId) throws DBException {
 
         long currentManagerId = securityAssistant.getCurrentEmployee().getEmployeeId();
-        long agreementManagerId = agreementDAO.getById(agreementId).getEmployee().getEmployeeId();
+        long agreementManagerId;
+        try {
+            agreementManagerId = agreementDAO.getById(agreementId).getEmployee().getEmployeeId();
+        } catch (DBException | NullPointerException e) {
+            e.printStackTrace();
+            return DataValidateAssistant.ERROR;
+        }
 
         if (currentManagerId != agreementManagerId) return DataValidateAssistant.CANT_DELETE;
 
         try {
             agreementDAO.delete(agreementId);
             return DataValidateAssistant.SUCCESS;
-        } catch (DBException | IllegalArgumentException e) {
+        } catch (DBException | IllegalArgumentException | NullPointerException e) {
             e.printStackTrace();
             return DataValidateAssistant.ERROR;
         }
@@ -134,6 +147,7 @@ public class AgreementController {
         agreement.setFileLinkAgreement(agreementRB.getFileLinkAgreement());
         agreement.setFileLinkInvoice(agreementRB.getFileLinkInvoice());
         agreement.setNotes(agreementRB.getNotes());
+        agreement.setPaid(Boolean.parseBoolean(agreementRB.getPaid()));
 
         java.util.Date paymentDate = calculatePaymentDate(agreement.getInvoiceSendDate(), agreement.getPaymentTerm());
         agreement.setEstimatedDateOfPayment(paymentDate);

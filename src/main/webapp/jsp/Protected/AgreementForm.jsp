@@ -14,10 +14,10 @@
     <script>
         $(document).ready(function () {
 
+            menuHover();
             datepickerInit();
             initAgreementFormAJAX("add-agreement");
-            menuHover();
-
+            alertPopupBoxClickEvent();
         });
     </script>
 </head>
@@ -25,5 +25,6 @@
 <mytag:logo/>
 <mytag:menuBarProtected/>
 <mytag:agreementForm/>
+<mytag:allertPopupBox/>
 </body>
 </html>

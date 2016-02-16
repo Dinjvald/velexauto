@@ -328,7 +328,7 @@ public class AgreementDAOImplTest extends DAOImplTest {
         agreement.setFileLinkAgreement("http//www/velexauto.ru");
         agreement.setFileLinkInvoice("http://www.kreiss.ru");
         agreement.setNotes("some note");
-        agreement.setIsPaid(true);
+        agreement.setPaid(true);
         return agreement;
     }
 }
