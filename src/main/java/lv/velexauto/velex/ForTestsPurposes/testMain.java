@@ -2,18 +2,39 @@ package lv.velexauto.velex.ForTestsPurposes;
 
 import lv.velexauto.velex.HelperClasses.DateAssistant;
 
+import javax.sound.midi.Soundbank;
 import java.text.ParseException;
+import java.time.LocalDate;
+import java.util.*;
 
 /**
  * Created by Dinjvald on 20/10/15.
  */
 public class testMain {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
 
-        double x = 1.20;
+        List<String > list = new ArrayList<>();
+        list.add("f");
+        list.add("t");
+        list.add("f");
+        list.add("f");
+        list.add("f");
+        list.add("t");
+        list.add("f");
 
-        System.out.println(x);
+        for (int x = 0; x < list.size(); x++) {
+//            System.out.println("This is " + x + "iteration");
+            System.out.println(list.get(x));
+            if (list.get(x).equals("t")) {
+                list.remove(x);
+                x--;
+            }
+        }
 
+        System.out.println("- - -");
+        for (String text : list) {
+            System.out.println(text);
+        }
     }
 }

@@ -27,4 +27,13 @@ public class AgreementDAOImpl extends CommonMetodsDAOImpl <Agreement> implements
                 .list();
         return list;
     }
+
+    @Override
+    public List<Agreement> getUnpaidAgreements(Company company) {
+        List list = getCurrentSession().createCriteria(Agreement.class)
+                .add(Restrictions.eq("company", company))
+                .add(Restrictions.eq("paid", false))
+                .list();
+        return list;
+    }
 }

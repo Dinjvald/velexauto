@@ -22,9 +22,9 @@
     </script>
     <style>
         #agreement-date-form-wrapper {
-            /*border-right: solid 10px #dc7700;*/
             width: 274px;
             padding-right: 20px;
+            /*margin-right: 30px;*/
         }
 
         .agreement-date-form-child-div {
@@ -36,7 +36,6 @@
         }
 
         #agreement-date-form-head {
-            /*text-align: center;*/
             font-size: 130%;
             margin-bottom: 10px;
         }
@@ -48,6 +47,36 @@
             transform: translate(-100%);
         }
 
+        .div-display-inline-block {
+            display: inline-block;
+            /*border: solid 1px azure;*/
+        }
+
+        ul.agreement-list-links {
+            list-style-type: circle;
+        }
+
+        ul.agreement-list-links > li/*:not(:first-child):not(:last-child)*/ {
+            margin: 7px 0;
+        }
+
+        ul.agreement-list-links > li > a:link, ul.agreement-list-links > li > a:visited {
+            text-decoration: none;
+            color: azure;
+        }
+
+        ul.agreement-list-links > li > a:hover, ul.agreement-list-links > li > a:active {
+            color: #dc7700;
+        }
+
+        #agreement-list-links-wrapper-first, #agreement-list-links-wrapper-second {
+            margin-left: 30px;
+        }
+
+        #agreement-list-links-wrapper-second {
+            position: relative;
+            bottom: 75px;
+        }
     </style>
 </head>
 <body>
@@ -74,8 +103,20 @@
         <input class="submit-button" type="submit" value="Отправить">
     </form>
 </div>
-<div class="div-display-inline-block">
-
+<div class="div-display-inline-block" id="agreement-list-links-wrapper-first">
+    <ul class="agreement-list-links">
+        <li><a href="this-month-agreements">За этот месяц</a></li>
+        <li><a href="this-quarter-agreements">За этот квартал</a></li>
+        <li><a href="this-half-year-agreements">За это полугодие</a></li>
+        <li><a href="this-year-agreements">За этот год</a></li>
+        <li><a href="this-and-last-years-agreements">За этот и прошлый года</a></li>
+    </ul>
+</div>
+<div class="div-display-inline-block" id="agreement-list-links-wrapper-second">
+    <ul class="agreement-list-links">
+        <li><a href="unpaid-agreements">Неоплаченные перевозки</a></li>
+        <li><a href="late-payment-agreements">Просроченные перевозки</a></li>
+    </ul>
 </div>
 </body>
 </html>

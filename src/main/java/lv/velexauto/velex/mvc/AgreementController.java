@@ -1,6 +1,5 @@
 package lv.velexauto.velex.mvc;
 
-import com.google.gson.Gson;
 import lv.velexauto.velex.HelperClasses.AgreementRequestBody;
 import lv.velexauto.velex.HelperClasses.DataValidateAssistant;
 import lv.velexauto.velex.HelperClasses.DateAssistant;
@@ -19,7 +18,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,8 +25,6 @@ import java.util.List;
  */
 @Controller
 public class AgreementController {
-
-    private final String AGREEMENT = "agreement";
 
     @Autowired
     @Qualifier("HibernateDAOAgreement")
@@ -50,14 +46,11 @@ public class AgreementController {
     public
     @ResponseBody
     String addAgreement(@RequestBody AgreementRequestBody agreementRB) throws ParseException, DBException {
-
         if (!dataValidateAssistant.isAgreementRequestBodyValid(agreementRB)) {
             return DataValidateAssistant.ERROR;
         }
         Agreement agreement = toAgreementDomain(agreementRB);
-
         agreementDAO.create(agreement);
-
         return DataValidateAssistant.SUCCESS;
     }
 
@@ -65,17 +58,14 @@ public class AgreementController {
     public
     @ResponseBody
     String updateAgreement(@RequestBody AgreementRequestBody agreementRB) throws DBException, ParseException {
-
         if (!dataValidateAssistant.isAgreementRequestBodyValid(agreementRB)) {
             return DataValidateAssistant.ERROR;
         }
-
         long currentManagerId = securityAssistant.getCurrentEmployee().getEmployeeId();
         long agreementManagerId = agreementDAO.getById(agreementRB.getAgreementId()).getEmployee().getEmployeeId();
         if (currentManagerId != agreementManagerId) return DataValidateAssistant.CANT_UPDATE;
 
         Agreement agreement = toAgreementDomain(agreementRB);
-
         try {
             agreementDAO.update(agreement);
         } catch (Throwable e) {
@@ -87,7 +77,6 @@ public class AgreementController {
 
     @RequestMapping(value = {"protected/agreement-list-result"}, method = RequestMethod.POST)
     public ModelAndView agreementListResult(HttpServletRequest request, HttpServletResponse response) throws DBException, ParseException {
-
         Company company = securityAssistant.getCurrentCompany();
         java.util.Date starDate = dateAssistant.stringToDate(request.getParameter("startDate"));
         java.util.Date endDate = dateAssistant.stringToDate(request.getParameter("endDate"));
@@ -98,8 +87,9 @@ public class AgreementController {
     }
 
     @RequestMapping(value = {"protected/delete-agreement"}, method = RequestMethod.POST)
-    public @ResponseBody String deleteAgreement(@RequestParam(value = "agreementId") long agreementId) throws DBException {
-
+    public
+    @ResponseBody
+    String deleteAgreement(@RequestParam(value = "agreementId") long agreementId) throws DBException {
         long currentManagerId = securityAssistant.getCurrentEmployee().getEmployeeId();
         long agreementManagerId;
         try {
@@ -110,7 +100,6 @@ public class AgreementController {
         }
 
         if (currentManagerId != agreementManagerId) return DataValidateAssistant.CANT_DELETE;
-
         try {
             agreementDAO.delete(agreementId);
             return DataValidateAssistant.SUCCESS;
@@ -120,11 +109,89 @@ public class AgreementController {
         }
     }
 
-    private Agreement toAgreementDomain(AgreementRequestBody agreementRB) throws ParseException, DBException {
+    @RequestMapping(value = {"protected/this-month-agreements"}, method = RequestMethod.GET)
+    public ModelAndView thisMonthAgreements(HttpServletRequest request, HttpServletResponse response) throws DBException {
+        Company company = securityAssistant.getCurrentCompany();
+        java.util.Date endDate = dateAssistant.getCurrentSystemDateWithoutTimestamp();
+        java.util.Date startDate = dateAssistant.getFirstDateOfCurrentMonth(endDate);
 
+        request.setAttribute("defValues", dataValidateAssistant.getDefaultValuesMap());
+        List<Agreement> list = agreementDAO.getListByDateRange(startDate, endDate, company);
+        return new ModelAndView("Protected/AgreementListResult", "agreement", list);
+    }
+
+    @RequestMapping(value = {"protected/this-quarter-agreements"}, method = RequestMethod.GET)
+    public ModelAndView thisQuarterAgreements(HttpServletRequest request, HttpServletResponse response) throws DBException, ParseException {
+        Company company = securityAssistant.getCurrentCompany();
+        java.util.Date endDate = dateAssistant.getCurrentSystemDateWithoutTimestamp();
+        java.util.Date startDate = dateAssistant.getFirstDateOfCurrentQuarter(endDate);
+
+        request.setAttribute("defValues", dataValidateAssistant.getDefaultValuesMap());
+        List<Agreement> list = agreementDAO.getListByDateRange(startDate, endDate, company);
+        return new ModelAndView("Protected/AgreementListResult", "agreement", list);
+    }
+
+    @RequestMapping(value = {"protected/this-half-year-agreements"}, method = RequestMethod.GET)
+    public ModelAndView thisHalfYearAgreements(HttpServletRequest request, HttpServletResponse response) throws DBException, ParseException {
+        Company company = securityAssistant.getCurrentCompany();
+        java.util.Date endDate = dateAssistant.getCurrentSystemDateWithoutTimestamp();
+        java.util.Date startDate = dateAssistant.getFirstDateOfCurrentHalfYear(endDate);
+
+        request.setAttribute("defValues", dataValidateAssistant.getDefaultValuesMap());
+        List<Agreement> list = agreementDAO.getListByDateRange(startDate, endDate, company);
+        return new ModelAndView("Protected/AgreementListResult", "agreement", list);
+    }
+
+    @RequestMapping(value = {"protected/this-year-agreements"}, method = RequestMethod.GET)
+    public ModelAndView thisYearAgreements(HttpServletRequest request, HttpServletResponse response) throws DBException, ParseException {
+        Company company = securityAssistant.getCurrentCompany();
+        java.util.Date endDate = dateAssistant.getCurrentSystemDateWithoutTimestamp();
+        java.util.Date startDate = dateAssistant.getFirstDateOfCurrentYear(endDate);
+
+        request.setAttribute("defValues", dataValidateAssistant.getDefaultValuesMap());
+        List<Agreement> list = agreementDAO.getListByDateRange(startDate, endDate, company);
+        return new ModelAndView("Protected/AgreementListResult", "agreement", list);
+    }
+
+    @RequestMapping(value = {"protected/this-and-last-years-agreements"}, method = RequestMethod.GET)
+    public ModelAndView thisAndLastYearsAgreements(HttpServletRequest request, HttpServletResponse response) throws DBException, ParseException {
+        Company company = securityAssistant.getCurrentCompany();
+        java.util.Date endDate = dateAssistant.getCurrentSystemDateWithoutTimestamp();
+        java.util.Date startDate = dateAssistant.getFirstDateOfLastYear(endDate);
+
+        request.setAttribute("defValues", dataValidateAssistant.getDefaultValuesMap());
+        List<Agreement> list = agreementDAO.getListByDateRange(startDate, endDate, company);
+        return new ModelAndView("Protected/AgreementListResult", "agreement", list);
+    }
+
+    @RequestMapping(value = {"protected/unpaid-agreements"})
+    public ModelAndView unpaidAgreements(HttpServletRequest request, HttpServletResponse response) throws DBException {
+        Company company = securityAssistant.getCurrentCompany();
+        request.setAttribute("defValues", dataValidateAssistant.getDefaultValuesMap());
+        List<Agreement> list = agreementDAO.getUnpaidAgreements(company);
+        return new ModelAndView("Protected/AgreementListResult", "agreement", list);
+    }
+
+    @RequestMapping(value = {"protected/late-payment-agreements"}, method = RequestMethod.GET)
+    public ModelAndView latePaymentAgreements(HttpServletRequest request, HttpServletResponse response) throws DBException {
+        Company company = securityAssistant.getCurrentCompany();
+        java.util.Date currentDate = dateAssistant.getCurrentSystemDateWithoutTimestamp();
+        List<Agreement> list = agreementDAO.getUnpaidAgreements(company);
+
+        for (int x = 0; x < list.size(); x++) {
+            int compareArgument = currentDate.compareTo(list.get(x).getEstimatedDateOfPayment());
+            if (compareArgument == -1) {
+                list.remove(x);
+                x--;
+            }
+        }
+        request.setAttribute("defValues", dataValidateAssistant.getDefaultValuesMap());
+        return new ModelAndView("Protected/AgreementListResult", "agreement", list);
+    }
+
+    private Agreement toAgreementDomain(AgreementRequestBody agreementRB) throws ParseException, DBException {
         Employee employee = securityAssistant.getCurrentEmployee();
         Agreement agreement = new Agreement();
-
         if (agreementRB.getAgreementId() != DataValidateAssistant.DEFAULT_INT) {
             agreement.setAgreementId(agreementRB.getAgreementId());
         }
@@ -151,12 +218,10 @@ public class AgreementController {
 
         java.util.Date paymentDate = calculatePaymentDate(agreement.getInvoiceSendDate(), agreement.getPaymentTerm());
         agreement.setEstimatedDateOfPayment(paymentDate);
-
         return agreement;
     }
 
     private java.util.Date calculatePaymentDate(java.util.Date date, int paymentTerm) throws ParseException {
-
         java.util.Date def = dateAssistant.stringToDate(DataValidateAssistant.DEFAULT_DATE);
         if (date == def || paymentTerm == DataValidateAssistant.DEFAULT_INT) return def;
         return dateAssistant.addDaysToDate(date, paymentTerm);
