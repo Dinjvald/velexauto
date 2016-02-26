@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface AgreementDAO extends CommonMethodsDAO <Agreement> {
 
-    List<Agreement> getListByDateRange(java.util.Date startDate, java.util.Date endDate, Company company);
+    List<Agreement> getListByDateRange(java.util.Date startDate, java.util.Date endDate, java.util.Date defaultDate, Company company);
 
     List<Agreement> getUnpaidAgreements(Company company);
 

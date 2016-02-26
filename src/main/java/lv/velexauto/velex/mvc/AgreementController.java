@@ -80,9 +80,10 @@ public class AgreementController {
         Company company = securityAssistant.getCurrentCompany();
         java.util.Date starDate = dateAssistant.stringToDate(request.getParameter("startDate"));
         java.util.Date endDate = dateAssistant.stringToDate(request.getParameter("endDate"));
+        java.util.Date defaultDate = dateAssistant.stringToDate(DataValidateAssistant.DEFAULT_DATE);
 
         request.setAttribute("defValues", dataValidateAssistant.getDefaultValuesMap());
-        List<Agreement> list = agreementDAO.getListByDateRange(starDate, endDate, company);
+        List<Agreement> list = agreementDAO.getListByDateRange(starDate, endDate, defaultDate, company);
         return new ModelAndView("Protected/AgreementListResult", "agreement", list);
     }
 
@@ -110,13 +111,14 @@ public class AgreementController {
     }
 
     @RequestMapping(value = {"protected/this-month-agreements"}, method = RequestMethod.GET)
-    public ModelAndView thisMonthAgreements(HttpServletRequest request, HttpServletResponse response) throws DBException {
+    public ModelAndView thisMonthAgreements(HttpServletRequest request, HttpServletResponse response) throws DBException, ParseException {
         Company company = securityAssistant.getCurrentCompany();
         java.util.Date endDate = dateAssistant.getCurrentSystemDateWithoutTimestamp();
         java.util.Date startDate = dateAssistant.getFirstDateOfCurrentMonth(endDate);
+        java.util.Date defaultDate = dateAssistant.stringToDate(DataValidateAssistant.DEFAULT_DATE);
 
         request.setAttribute("defValues", dataValidateAssistant.getDefaultValuesMap());
-        List<Agreement> list = agreementDAO.getListByDateRange(startDate, endDate, company);
+        List<Agreement> list = agreementDAO.getListByDateRange(startDate, endDate, defaultDate, company);
         return new ModelAndView("Protected/AgreementListResult", "agreement", list);
     }
 
@@ -125,9 +127,10 @@ public class AgreementController {
         Company company = securityAssistant.getCurrentCompany();
         java.util.Date endDate = dateAssistant.getCurrentSystemDateWithoutTimestamp();
         java.util.Date startDate = dateAssistant.getFirstDateOfCurrentQuarter(endDate);
+        java.util.Date defaultDate = dateAssistant.stringToDate(DataValidateAssistant.DEFAULT_DATE);
 
         request.setAttribute("defValues", dataValidateAssistant.getDefaultValuesMap());
-        List<Agreement> list = agreementDAO.getListByDateRange(startDate, endDate, company);
+        List<Agreement> list = agreementDAO.getListByDateRange(startDate, endDate, defaultDate, company);
         return new ModelAndView("Protected/AgreementListResult", "agreement", list);
     }
 
@@ -136,9 +139,10 @@ public class AgreementController {
         Company company = securityAssistant.getCurrentCompany();
         java.util.Date endDate = dateAssistant.getCurrentSystemDateWithoutTimestamp();
         java.util.Date startDate = dateAssistant.getFirstDateOfCurrentHalfYear(endDate);
+        java.util.Date defaultDate = dateAssistant.stringToDate(DataValidateAssistant.DEFAULT_DATE);
 
         request.setAttribute("defValues", dataValidateAssistant.getDefaultValuesMap());
-        List<Agreement> list = agreementDAO.getListByDateRange(startDate, endDate, company);
+        List<Agreement> list = agreementDAO.getListByDateRange(startDate, endDate, defaultDate, company);
         return new ModelAndView("Protected/AgreementListResult", "agreement", list);
     }
 
@@ -147,9 +151,10 @@ public class AgreementController {
         Company company = securityAssistant.getCurrentCompany();
         java.util.Date endDate = dateAssistant.getCurrentSystemDateWithoutTimestamp();
         java.util.Date startDate = dateAssistant.getFirstDateOfCurrentYear(endDate);
+        java.util.Date defaultDate = dateAssistant.stringToDate(DataValidateAssistant.DEFAULT_DATE);
 
         request.setAttribute("defValues", dataValidateAssistant.getDefaultValuesMap());
-        List<Agreement> list = agreementDAO.getListByDateRange(startDate, endDate, company);
+        List<Agreement> list = agreementDAO.getListByDateRange(startDate, endDate, defaultDate, company);
         return new ModelAndView("Protected/AgreementListResult", "agreement", list);
     }
 
@@ -158,9 +163,10 @@ public class AgreementController {
         Company company = securityAssistant.getCurrentCompany();
         java.util.Date endDate = dateAssistant.getCurrentSystemDateWithoutTimestamp();
         java.util.Date startDate = dateAssistant.getFirstDateOfLastYear(endDate);
+        java.util.Date defaultDate = dateAssistant.stringToDate(DataValidateAssistant.DEFAULT_DATE);
 
         request.setAttribute("defValues", dataValidateAssistant.getDefaultValuesMap());
-        List<Agreement> list = agreementDAO.getListByDateRange(startDate, endDate, company);
+        List<Agreement> list = agreementDAO.getListByDateRange(startDate, endDate, defaultDate, company);
         return new ModelAndView("Protected/AgreementListResult", "agreement", list);
     }
 

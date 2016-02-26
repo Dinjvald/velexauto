@@ -14,27 +14,13 @@ public class testMain {
 
     public static void main(String[] args) throws ParseException {
 
-        List<String > list = new ArrayList<>();
-        list.add("f");
-        list.add("t");
-        list.add("f");
-        list.add("f");
-        list.add("f");
-        list.add("t");
-        list.add("f");
+        DateAssistant dateAssistant = new DateAssistant();
+        Date date = dateAssistant.stringToDate("01.01.1971");
+        long milli = date.getTime();
+        System.out.println(milli);
 
-        for (int x = 0; x < list.size(); x++) {
-//            System.out.println("This is " + x + "iteration");
-            System.out.println(list.get(x));
-            if (list.get(x).equals("t")) {
-                list.remove(x);
-                x--;
-            }
-        }
+        Date date1 = new Date(milli);
+        System.out.println(date1);
 
-        System.out.println("- - -");
-        for (String text : list) {
-            System.out.println(text);
-        }
     }
 }

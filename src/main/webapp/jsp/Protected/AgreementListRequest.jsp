@@ -21,10 +21,10 @@
         });
     </script>
     <style>
-        #agreement-date-form-wrapper {
+        /*#agreement-date-form-wrapper {
             width: 274px;
             padding-right: 20px;
-            /*margin-right: 30px;*/
+            /!*margin-right: 30px;*!/
         }
 
         .agreement-date-form-child-div {
@@ -49,14 +49,14 @@
 
         .div-display-inline-block {
             display: inline-block;
-            /*border: solid 1px azure;*/
+            /!*border: solid 1px azure;*!/
         }
 
         ul.agreement-list-links {
             list-style-type: circle;
         }
 
-        ul.agreement-list-links > li/*:not(:first-child):not(:last-child)*/ {
+        ul.agreement-list-links > li/!*:not(:first-child):not(:last-child)*!/ {
             margin: 7px 0;
         }
 
@@ -76,13 +76,14 @@
         #agreement-list-links-wrapper-second {
             position: relative;
             bottom: 75px;
-        }
+        }*/
     </style>
 </head>
 <body>
 <mytag:logo/>
 <mytag:menuBarProtected/>
-<div id="agreement-date-form-wrapper" class="div-display-inline-block">
+<mytag:AgreementListRequest/>
+<%--<div id="agreement-date-form-wrapper" class="div-display-inline-block">
     <form id="agreement-date-form" method="post" action="agreement-list-result">
         <div id="agreement-date-form-head">
             Дата разгрузки
@@ -117,6 +118,6 @@
         <li><a href="unpaid-agreements">Неоплаченные перевозки</a></li>
         <li><a href="late-payment-agreements">Просроченные перевозки</a></li>
     </ul>
-</div>
+</div>--%>
 </body>
 </html>

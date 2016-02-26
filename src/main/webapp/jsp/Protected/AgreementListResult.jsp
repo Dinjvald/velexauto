@@ -25,7 +25,8 @@
     <c:set var="dateFormat" value="dd.MM.yyyy" scope="page"/>
     <style>
         #div-agreement-table {
-            margin-top: 150px;
+            position: relative;
+            top: 30px;
         }
 
         #agreement-table thead {
@@ -281,15 +282,16 @@
 
             $(".delete-agreement").click(function () {
                 toggleVisibility("delete-check-wrapper");
+                var table = $("#agreement-table").DataTable();
                 var tr = $(this).parents("tr");
-                var index = $("tr").index(tr);
+                var rowIndex = table.row(tr).index();
                 var id = tr.find(".agreement-id").html();
                 var client = tr.find(".client-name").html() + "<br>";
                 var route = tr.find(".loading-address").html();
                 route += " - " + tr.find(".unloading-address").html();
                 $("#delete-check-body").html(client + route);
                 $("#delete-check-agreement-id").html(id);
-                $("#agreement-row-index").html(index);
+                $("#agreement-row-index").html(rowIndex);
             });
 
             editAgreementClickEvent();
@@ -344,9 +346,9 @@
 
             function deleteRow(id, index) {
                 var tableElement = $("#" + id);
-                var rowIndex = $("#" + index).html();
+                var rowIndex = parseInt($("#" + index).html());
                 var table = tableElement.DataTable();
-                var row = tableElement.find("tr").eq(rowIndex);
+                var row = table.row(rowIndex);
                 table.row(row).remove().draw();
             }
 
@@ -361,8 +363,7 @@
                     toggleVisibility("agreement-form-wrapper");
                     var table = $("#agreement-table").DataTable();
                     var tr = $(this).parents("tr");
-                    var rowIndex = tr.index();
-
+                    var rowIndex = table.row(tr).index();
                     var rowData = table.row(rowIndex).data();
 
                     $(".agreement-table-row-index").html(rowIndex);
@@ -464,6 +465,7 @@
 <c:set var="defInt" value="${defValues.defInt}" scope="page"/>
 <mytag:logo/>
 <mytag:menuBarProtected/>
+<mytag:AgreementListRequest/>
 <div id="div-agreement-table">
     <table border="1" class="compact" id="agreement-table">
         <thead>
@@ -497,7 +499,7 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${agreement}" var="agr">
+        <c:forEach items="${agreement}" var="agr" varStatus="counter">
             <tr>
                 <td class="col-4"></td>
                 <td class="col-4"><img class="edit-agreement" src="../Images/edit.png" align="center"></td>
