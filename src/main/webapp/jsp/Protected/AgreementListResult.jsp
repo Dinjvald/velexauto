@@ -158,6 +158,52 @@
             menuHover();
 
             $.fn.dataTable.moment("D.MM.YYYY");
+            jQuery.extend(jQuery.fn.dataTableExt.oSort, {
+                "invoice-pre": function (a) {
+                    var year = a.slice(2, 4);
+                    var month = a.slice(0, 2);
+                    var invoiceNr = a.slice(4);
+                    return year.concat(month, invoiceNr);
+                },
+                "invoice-asc": function (a, b) {
+                    var date1 = parseInt(a.slice(0, 4));
+                    var date2 = parseInt(b.slice(0, 4));
+                    var number1 = parseInt(a.slice(4));
+                    var number2 = parseInt(b.slice(4));
+
+                    if (date1 < date2) {
+                        return -1;
+                    }
+                    if (date1 > date2) {
+                        return 1;
+                    } else if (number1 < number2) {
+                        return -1;
+                    } else if (number2 > number2) {
+                        return 1;
+                    } else {
+                        return 0;
+                    }
+                },
+                "invoice-desc": function (a, b) {
+                    var date1 = parseInt(a.slice(0, 4));
+                    var date2 = parseInt(b.slice(0, 4));
+                    var number1 = parseInt(a.slice(4));
+                    var number2 = parseInt(b.slice(4));
+
+                    if (date1 < date2) {
+                        return 1;
+                    }
+                    if (date1 > date2) {
+                        return -1;
+                    } else if (number1 < number2) {
+                        return 1;
+                    } else if (number2 > number2) {
+                        return -1;
+                    } else {
+                        return 0;
+                    }
+                }
+            });
             $("#agreement-table").DataTable({
                 language: {
                     "processing": "Подождите...",
@@ -213,6 +259,10 @@
                     {
                         "targets": [3, 5],
                         "visible": false
+                    },
+                    {
+                        "type": "invoice",
+                        "targets": 4
                     }
                 ],
                 responsive: {
