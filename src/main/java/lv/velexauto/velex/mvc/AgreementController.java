@@ -173,8 +173,17 @@ public class AgreementController {
     @RequestMapping(value = {"protected/unpaid-agreements"})
     public ModelAndView unpaidAgreements(HttpServletRequest request, HttpServletResponse response) throws DBException {
         Company company = securityAssistant.getCurrentCompany();
-        request.setAttribute("defValues", dataValidateAssistant.getDefaultValuesMap());
+        java.util.Date currentDate = dateAssistant.getCurrentSystemDateWithoutTimestamp();
         List<Agreement> list = agreementDAO.getUnpaidAgreements(company);
+
+        for (int x = 0; x < list.size(); x++) {
+            int compareArgument = currentDate.compareTo(list.get(x).getEstimatedDateOfPayment());
+            if (compareArgument == 1) {
+                list.remove(x);
+                x--;
+            }
+        }
+        request.setAttribute("defValues", dataValidateAssistant.getDefaultValuesMap());
         return new ModelAndView("Protected/AgreementListResult", "agreement", list);
     }
 
