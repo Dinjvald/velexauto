@@ -152,56 +152,52 @@
             font-size: 150%;
         }
 
+        #agreement-table-summary > table > tbody > tr > td {
+            color: azure;
+        }
+
+        #agreement-table-summary > table > tbody > tr:first-child > td:first-child,
+        #agreement-table-summary > table > tbody > tr:last-child > td:first-child {
+            text-align: right;
+        }
+
+        #agreement-table-summary {
+            position: relative;
+            left: 40px;
+            bottom: 59px;
+        }
+
     </style>
     <script>
         $(document).ready(function () {
             menuHover();
+            datepickerConfig();
+            datepickerSetRegionalRU();
+            $(".date").datepicker();
 
-            $.fn.dataTable.moment("D.MM.YYYY");
+            jQuery.extend(jQuery.fn.dataTable.moment("D.MM.YYYY"));
             jQuery.extend(jQuery.fn.dataTableExt.oSort, {
                 "invoice-pre": function (a) {
-                    var year = a.slice(2, 4);
-                    var month = a.slice(0, 2);
-                    var invoiceNr = a.slice(4);
+                    var year = a.slice(2, 4),
+                            month = a.slice(0, 2),
+                            invoiceNr = a.slice(4);
                     return year.concat(month, invoiceNr);
                 },
                 "invoice-asc": function (a, b) {
-                    var date1 = parseInt(a.slice(0, 4));
-                    var date2 = parseInt(b.slice(0, 4));
-                    var number1 = parseInt(a.slice(4));
-                    var number2 = parseInt(b.slice(4));
+                    var date1 = parseInt(a.slice(0, 4)),
+                            date2 = parseInt(b.slice(0, 4)),
+                            number1 = parseInt(a.slice(4)),
+                            number2 = parseInt(b.slice(4));
 
-                    if (date1 < date2) {
-                        return -1;
-                    }
-                    if (date1 > date2) {
-                        return 1;
-                    } else if (number1 < number2) {
-                        return -1;
-                    } else if (number2 > number2) {
-                        return 1;
-                    } else {
-                        return 0;
-                    }
+                    return ((date1 < date2) ? -1 : (date1 > date2) ? 1 : (number1 < number2) ? -1 : (number1 > number2) ? 1 : 0);
                 },
                 "invoice-desc": function (a, b) {
-                    var date1 = parseInt(a.slice(0, 4));
-                    var date2 = parseInt(b.slice(0, 4));
-                    var number1 = parseInt(a.slice(4));
-                    var number2 = parseInt(b.slice(4));
+                    var date1 = parseInt(a.slice(0, 4)),
+                            date2 = parseInt(b.slice(0, 4)),
+                            number1 = parseInt(a.slice(4)),
+                            number2 = parseInt(b.slice(4));
 
-                    if (date1 < date2) {
-                        return 1;
-                    }
-                    if (date1 > date2) {
-                        return -1;
-                    } else if (number1 < number2) {
-                        return 1;
-                    } else if (number2 > number2) {
-                        return -1;
-                    } else {
-                        return 0;
-                    }
+                    return ((date1 < date2) ? 1 : (date1 > date2) ? -1 : (number1 < number2) ? 1 : (number1 > number2) ? -1 : 0);
                 }
             });
             $("#agreement-table").DataTable({
@@ -319,7 +315,7 @@
                     if (isPaid == "true") {
                         $(this).parents("tr").css({"background-color": "#c3c3c3"});
                     }
-                    if (isPaid == "false" && moment(currentDate).isBefore(paymentDate)) {
+                    if (isPaid == "false" && moment(currentDate).isBefore(paymentDate) || moment(currentDate).isSame(paymentDate)) {
                         $(this).parents("tr").css({"background-color": "##b6d7a8"});
                     }
                     if (isPaid == "false" && moment(currentDate).isAfter(paymentDate)) {
@@ -506,6 +502,20 @@
                 rowElement.data(rowData);
                 table.draw();
             }
+
+            function countTotalAgreements() {
+                var table = $("#agreement-table").DataTable();
+                var data = table.rows().data();
+                var priceColumn = 11;
+                $("#agreement-count").html(data.length);
+                var sum = 0;
+                for (var i = 0; i < data.length; i++) {
+                    sum += parseInt(data[i][priceColumn]);
+                }
+                $("#agreement-income").html(sum);
+            }
+
+            countTotalAgreements();
         });
     </script>
 </head>
@@ -516,6 +526,24 @@
 <mytag:logo/>
 <mytag:menuBarProtected/>
 <mytag:AgreementListRequest/>
+<div class="div-display-inline-block" id="agreement-table-summary">
+    <table>
+        <tbody>
+        <tr>
+            <td>
+                Перевозок:
+            </td>
+            <td id="agreement-count"></td>
+        </tr>
+        <tr>
+            <td>
+                Доход:
+            </td>
+            <td id="agreement-income"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 <div id="div-agreement-table">
     <table border="1" class="compact" id="agreement-table">
         <thead>

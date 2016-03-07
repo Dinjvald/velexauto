@@ -186,7 +186,7 @@ public class AgreementController {
 
         for (int x = 0; x < list.size(); x++) {
             int compareArgument = currentDate.compareTo(list.get(x).getEstimatedDateOfPayment());
-            if (compareArgument == -1) {
+            if (compareArgument == -1 || compareArgument == 0) {
                 list.remove(x);
                 x--;
             }
