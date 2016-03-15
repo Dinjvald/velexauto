@@ -248,7 +248,9 @@
                 "drawCallback": function (settings) {
                     editAgreementClickEvent();
                     checkForDebtor();
+                    countTotalAgreements();
                 },
+                "searchDelay": 500,
                 "autoWidth": false,
                 "paging": false,
                 "columnDefs": [
@@ -505,7 +507,7 @@
 
             function countTotalAgreements() {
                 var table = $("#agreement-table").DataTable();
-                var data = table.rows().data();
+                var data = table.rows({"page":"current"}).data();
                 var priceColumn = 11;
                 $("#agreement-count").html(data.length);
                 var sum = 0;
@@ -514,8 +516,6 @@
                 }
                 $("#agreement-income").html(sum);
             }
-
-            countTotalAgreements();
         });
     </script>
 </head>
