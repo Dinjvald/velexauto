@@ -46,7 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .rememberMe()
                 .key("rem-me-key")
                 .rememberMeParameter("remember-me-param")
-                .tokenValiditySeconds(8*60*60)
+                .tokenValiditySeconds(28800)
                 .and()
             .logout()
                 .logoutUrl("/logout").logoutSuccessUrl("/index")
