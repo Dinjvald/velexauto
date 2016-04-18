@@ -38,11 +38,10 @@ public class AllEmptyBodyControllers {
         return new ModelAndView("Login");
     }
 
-    @RequestMapping(value = {"protected/home"}, method = {RequestMethod.GET})
-    public ModelAndView home(HttpServletRequest request,
-                             HttpServletResponse response) {
+    /*@RequestMapping(value = {"protected/home"}, method = {RequestMethod.GET})
+    public ModelAndView home(HttpServletRequest request, HttpServletResponse response) {
         return new ModelAndView("Protected/HomeProtected");
-    }
+    }*/
 
     @RequestMapping(value = {"testlocale"}, method = {RequestMethod.GET})
     public ModelAndView testLocale(HttpServletRequest request, HttpServletResponse response) {

@@ -1,6 +1,7 @@
 <%@tag pageEncoding="UTF-8" %>
 <ul id="menu">
     <li id="protected-first-li"><a href="../index">Домой</a></li>
+    <li><a href="home">Стартовая</a></li>
     <li id="orders">
         <a id="test" href="" onclick="return false">Заявки</a>
         <ul id="orders-submenu">

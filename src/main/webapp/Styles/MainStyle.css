@@ -69,6 +69,10 @@ img#logo {
     text-justify: inter-word;
 }
 
+.display-none {
+    display: none;
+}
+
 /* --- MENU START --- */
 
 ul#menu {
@@ -108,7 +112,7 @@ ul#menu li a:hover, ul#menu li a:active {
 
 ul#menu li ul {
     position: absolute;
-    background-color: rgba(66, 66, 66, 0.65);
+    background-color: rgba(66, 66, 66, 0.90);
     border-top: solid 1px #dc7700;
     display: none;
 }
