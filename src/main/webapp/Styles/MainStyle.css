@@ -11,7 +11,7 @@ body {
     margin: auto;
 }
 
-input:not([type=radio]) {
+input:not([type=radio]):not([type=checkbox]) {
     -webkit-appearance: none;
     font-size: 15px;
     background-color: #252525;

@@ -15,10 +15,18 @@
         #account_form {
             margin: auto;
             border: solid 1px #dc7700;
-            width: 135px;
+            width: 200px;
             padding: 10px;
             position: relative;
             top: 300px
+        }
+
+        #account_form > input:not([type=checkbox]) {
+            width: 180px;
+        }
+
+        #account_form > input[type=checkbox] {
+            margin-right: 10px;
         }
     </style>
 </head>
@@ -28,6 +36,7 @@
     <br>
     <input type="password" name="password" placeholder="Пароль"><br>
     <br>
+    <input type="checkbox" name="remember-me-param"/>Запомнить меня на этом компьютере?<br><br>
     <input class="submit-button" type="submit" value="Войти">
 </form>
 </body>
