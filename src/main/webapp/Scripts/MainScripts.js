@@ -16,6 +16,21 @@ function menuHover() {
 
 /* --- MENU END --- */
 
+/* --- LOCALE START --- */
+
+function localeInit() {
+    var fullURL = $(location).attr("href").split("?")[0];
+    var ruURL = fullURL + "?mylocale=ru";
+    var enURL = fullURL + "?mylocale=en";
+    var lvURL = fullURL + "?mylocale=lv";
+
+    $("#locale-ru").attr("href", ruURL);
+    $("#locale-en").attr("href", enURL);
+    $("#locale-lv").attr("href", lvURL);
+}
+
+/* --- LOCALE END --- */
+
 /* --- DATEPICKER START --- */
 
 function datepickerInit() {

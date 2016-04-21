@@ -6,7 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@taglib prefix="mytag" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="mytag" tagdir="/WEB-INF/tags" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,6 +28,7 @@
             }
 
             loopSpansInMainTextToPopup();
+            localeInit();
         });
     </script>
     <style>
@@ -43,8 +45,7 @@
 <mytag:menuBar/>
 <img id="daf" src="Images/DAFSketch.png">
 
-<div class="global-main-text">
-    <span>SIA VelexAuto</span> - это компания, основаная в январе 2014 года человеком с более чем
+<div class="global-main-text"><%--<span>SIA VelexAuto</span> - это компания, основаная в январе 2014 года человеком с более чем
     <span>25-ти летним стажем</span> в области грузоперевозок и уже длительное время предоставлет свои услуги. За это
     время мы успели зарекомендовать себя как надежного и честного партнера.<br>
     <br>
@@ -56,7 +57,6 @@
     для диалога, преложений и просьб со стороны клиентов.<br>
     <br>
     Мы можем предложить вам скорость и адекватные расценки на любые грузы для тентовых полуприцепов. Мы всегда нацелены
-    на предоставление <span>качественных</span> услуг, чтобы к нам возвращались снова и снова.
-</div>
+    на предоставление <span>качественных</span> услуг, чтобы к нам возвращались снова и снова.--%><spring:message code="locale.about-us-text"/></div>
 </body>
 </html>

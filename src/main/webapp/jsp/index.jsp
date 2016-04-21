@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="mytag" tagdir="/WEB-INF/tags" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,20 +23,7 @@
             }
 
             popupMainWord();
-
-            function doAjax() {
-                $.ajax({
-                    url : 'testAjax',
-                    type : 'GET',
-
-                    success : function(response) {
-                        $("#typeAjaxHere").html(response);
-                    }
-                });
-            }
-
-            setTimeout(doAjax, 1500);
-
+            localeInit();
         });
     </script>
     <style>
@@ -83,22 +71,15 @@
 <img id="daf"
      src="Images/truck000.png">
 
-<div id="first_word" class="first_part"> Надежность</div>
-<div class="global-main-text first_part"> Мы считаем, что главное в выгодных партнерских отношениях является возможность
-    положиться друг на друга. Имено это свойство мы стараемся выдерживать.
-</div>
+<div id="first_word" class="first_part"><spring:message code="locale.reliability"/></div>
+<div class="global-main-text first_part"><spring:message code="locale.first-part"/></div>
 <br>
 
-<div id="second_word" class="second_part"> Честность</div>
-<div class="global-main-text second_part"> Мы ценим доверие своих партнеров. Поэтому мы всегда предоставляем оперативную
-    и правдивую информацию о движении груза и текущем состоянии перевозки.⁄
-</div>
+<div id="second_word" class="second_part"><spring:message code="locale.clarity"/></div>
+<div class="global-main-text second_part"><spring:message code="locale.second-part"/></div>
 <br>
 
-<div id="third_word" class="third_part"> Оперативность</div>
-<div class="global-main-text third_part"> В реалиях современной бизнес среды каждая минута времени критически важна для
-    успешной работы предприятия. Мы это понимаем и осуществляем доставку груза в максимально сжатые сроки.
-</div>
-<div id="typeAjaxHere"></div>
+<div id="third_word" class="third_part"><spring:message code="locale.efficiency"/></div>
+<div class="global-main-text third_part"><spring:message code="locale.third-part"/></div>
 </body>
 </html>

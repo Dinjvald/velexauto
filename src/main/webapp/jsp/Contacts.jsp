@@ -6,7 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@taglib prefix="mytag" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="mytag" tagdir="/WEB-INF/tags" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,13 +18,26 @@
             margin: 10px 60px 0 0;
         }
 
+        #contact-1 {
+            position: inherit;
+            width: 175px;
+        }
+
+        #contact-2 {
+            position: inherit;
+            width: 310px;
+        }
+
         .popup_text {
             color: #dc7700;
         }
 
         #details {
-            margin-left: 186px;
+            position: inherit;
+            width: 225px;
+            margin-left: 170px;
             margin-right: 0;
+
         }
 
         .numbers {
@@ -40,25 +54,30 @@
             text-decoration: underline;
         }
     </style>
+    <script>
+        $(document).ready(function() {
+           localeInit()
+        });
+    </script>
 </head>
 <body>
 <mytag:logo/>
 <mytag:menuBar/>
-<div class="global-main-text">
+<div id="contact-1" class="global-main-text">
     <span class="popup_text">
-        Юридический адрес:<br>
-        Фактический адрес:<br>
+        <spring:message code="locale.legal-address"/> <br>
+        <spring:message code="locale.actual-address"/> <br>
     </span>
     <br>
-    <span class="popup_text">Телефоны:</span><br>
-    Владимир<br>
+    <span class="popup_text"><spring:message code="locale.telephones"/></span><br>
+    <spring:message code="locale.vladimir"/><br>
     <br>
     <%--Денис<br>--%>
     <br>
 
     <span class="popup_text">Е-почта:</span><br>
 </div>
-<div class="global-main-text">
+<div id="contact-2" class="global-main-text">
     Lāčplēša iela <span class="numbers">29-36</span>, Aizkraukle, LV-<span class="numbers">5101</span><br>
     Lāčplēša iela <span class="numbers">29-36</span>, Aizkraukle, LV-<span class="numbers">5101</span><br>
     <br>
@@ -70,13 +89,12 @@
     </span>
     <br>
     <a class="email" href="mailto:velexvladimir@gmail.com">velexvladimir@gmail.com</a><br>
-    <a class="email" href="mailto:velexauto@gmail.com">velexauto@gmail.com</a>
 </div>
 <div id="details" class="global-main-text">
-    <span class="popup_text">Реквизиты:</span><br>
+    <span class="popup_text"><spring:message code="locale.details"/></span><br>
     SIA “VelexAuto”<br>
-    Рег.: <span class="numbers">45403038976</span><br>
-    НДС: LV<span class="numbers">45403038976</span><br>
+    <spring:message code="locale.reg-nr"/> <span class="numbers">45403038976</span><br>
+    <spring:message code="locale.vat"/> LV<span class="numbers">45403038976</span><br>
     <br>
     Lāčplēša <span class="numbers">29-36</span>, Aizkraukle,<br>
     Aizkraukles novads, LV-<span class="numbers">5101</span> <br>

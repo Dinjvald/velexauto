@@ -73,6 +73,29 @@ img#logo {
     display: none;
 }
 
+/* --- LOCALE START --- */
+
+#choose-locale > a:link, #choose-locale > a:visited {
+    text-decoration: none;
+    color: azure;
+}
+
+#choose-locale > a:hover, #choose-locale > a:active {
+    color: #dc7700;
+}
+
+#choose-locale > a {
+    margin: 0 4px;
+}
+
+#choose-locale {
+    position: absolute;
+    left: 1045px;
+    top: 43px;
+}
+
+/* --- LOCALE END --- */
+
 /* --- MENU START --- */
 
 ul#menu {
