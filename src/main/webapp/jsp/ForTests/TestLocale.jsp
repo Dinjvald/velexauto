@@ -11,7 +11,6 @@
 <html>
 <head>
     <title>
-        <spring:message code="locale.title"/>
     </title>
     <mytag:head/>
     <script>
@@ -39,9 +38,6 @@
 </head>
 <body>
 <div>
-    <spring:message code="locale.name"/>
-    <spring:message code="locale.age"/>
-    <spring:message code="locale.success"/>
 </div>
 
 <div id="fullURL"></div>

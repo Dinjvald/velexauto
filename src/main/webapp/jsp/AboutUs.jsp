@@ -38,6 +38,10 @@
             height: 365px;
             margin: 20px 10px 0 20px;
         }
+
+        #about-us-text {
+            width: 470px;
+        }
     </style>
 </head>
 <body>
@@ -45,7 +49,7 @@
 <mytag:menuBar/>
 <img id="daf" src="Images/DAFSketch.png">
 
-<div class="global-main-text"><%--<span>SIA VelexAuto</span> - это компания, основаная в январе 2014 года человеком с более чем
+<div class="global-main-text" id="about-us-text"><%--<span>SIA VelexAuto</span> - это компания, основаная в январе 2014 года человеком с более чем
     <span>25-ти летним стажем</span> в области грузоперевозок и уже длительное время предоставлет свои услуги. За это
     время мы успели зарекомендовать себя как надежного и честного партнера.<br>
     <br>

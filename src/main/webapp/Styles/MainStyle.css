@@ -89,9 +89,11 @@ img#logo {
 }
 
 #choose-locale {
-    position: absolute;
-    left: 1045px;
-    top: 43px;
+    position: relative;
+    margin: 0;
+    width: 126px;
+    left: 875px;
+    top: -90px;
 }
 
 /* --- LOCALE END --- */
