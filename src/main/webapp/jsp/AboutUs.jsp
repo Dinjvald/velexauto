@@ -18,7 +18,7 @@
             function loopSpansInMainTextToPopup() {
                 var spanLength = $(".global-main-text span");
                 var speed = 250;
-                var delay = 150;
+                var delay = 350;
                 spanLength.eq(0).animate({color: "#dc7700", fontSize: "24px"}, speed);
                 for (var i = 1; i < spanLength.length; i++) {
                     spanLength.eq(i).delay(delay).animate({color: "#dc7700"}, speed);

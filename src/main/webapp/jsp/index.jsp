@@ -17,9 +17,9 @@
 
             function popupMainWord() {
                 var speed = 400;
-                $("#first_word").animate({color: "#dc7700", fontSize: "40px"}, speed);
-                $("#second_word").delay(150).animate({color: "#dc7700", fontSize: "40px"}, speed);
-                $("#third_word").delay(350).animate({color: "#dc7700", fontSize: "40px"}, speed);
+                $("#first_word").delay(350).animate({color: "#dc7700", fontSize: "40px"}, speed);
+                $("#second_word").delay(500).animate({color: "#dc7700", fontSize: "40px"}, speed);
+                $("#third_word").delay(650).animate({color: "#dc7700", fontSize: "40px"}, speed);
             }
 
             popupMainWord();
