@@ -75,7 +75,7 @@
     <%--Денис<br>--%>
     <br>
 
-    <span class="popup_text">Е-почта:</span><br>
+    <span class="popup_text"><spring:message code="locale.email"/></span><br>
 </div>
 <div id="contact-2" class="global-main-text">
     Lāčplēša iela <span class="numbers">29-36</span>, Aizkraukle, LV-<span class="numbers">5101</span><br>
