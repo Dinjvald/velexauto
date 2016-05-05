@@ -496,6 +496,10 @@
                     if (value == defInt || value == defDate || value == defText) {
                         rowData[colIndex] = "";
                     } else {
+                        if($.isNumeric(value)) {
+                            value = parseInt(value);
+                            value = value.toFixed(2);
+                        }
                         rowData[colIndex] = value;
                     }
                 });
@@ -509,11 +513,17 @@
                 var table = $("#agreement-table").DataTable();
                 var data = table.rows({"page":"current"}).data();
                 var priceColumn = 11;
-                $("#agreement-count").html(data.length);
+                var agreementCount = data.length;
                 var sum = 0;
                 for (var i = 0; i < data.length; i++) {
-                    sum += parseInt(data[i][priceColumn]);
+                    var price = data[i][priceColumn];
+                    if ($.isNumeric(price)) {
+                        sum += parseInt(price);
+                    } else {
+                        agreementCount--;
+                    }
                 }
+                $("#agreement-count").html(agreementCount);
                 $("#agreement-income").html(sum);
             }
         });
@@ -632,7 +642,7 @@
                     <c:if test="${price != defInt}">
                         <fmt:formatNumber var="pat" value="${price}" minFractionDigits="2" maxFractionDigits="2"
                                           type="number"/>
-                        ${fn:replace(pat, ",", "")}
+                        ${fn:replace(pat, ",", ".")}
                     </c:if>
                 </td>
                 <td class="col-1 estimated-date-of-payment">
@@ -657,7 +667,7 @@
                     <c:if test="${agr.valueAddedTax != defInt}">
                         <fmt:formatNumber var="pat" value="${valueAddedTax}" minFractionDigits="2" maxFractionDigits="2"
                                           type="number"/>
-                        ${fn:replace(pat, ",", "")}
+                        ${fn:replace(pat, ",", ".")}
                     </c:if>
                 </td>
                 <td class="payment-term">
