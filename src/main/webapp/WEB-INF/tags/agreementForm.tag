@@ -8,7 +8,7 @@
         </div>
         <div class="input">
             <label for="loading-date">Дата загрузки</label><br>
-            <input type="text" name="loadingDate" readonly="readonly" class="date" id="loading-date">
+            <input type="text" name="loadingDate" readonly="readonly" class="date agreement-form-date" id="loading-date">
             <br>
             <label for="loading-address">Адрес загрузки</label><br>
             <input type="text" name="loadingAddress" class="char" id="loading-address">
@@ -17,7 +17,7 @@
         <div class="input">
             <div id="close-form">&#x2715;</div> <%--CLOSE HERE--%>
             <label for="unloading-date">Дата разгрузки</label><br>
-            <input type="text" name="unloadingDate" readonly="readonly" class="date" id="unloading-date">
+            <input type="text" name="unloadingDate" readonly="readonly" class="date agreement-form-date" id="unloading-date">
             <br>
             <label for="unloading-address">Адрес разгрузки</label><br>
             <input type="text" name="unloadingAddress" class="char" id="unloading-address">
@@ -82,7 +82,7 @@
 
         <div class="input">
             <label for="invoice-send-date">Счет отправлен</label><br>
-            <input type="text" name="invoiceSendDate" readonly="readonly" class="date" id="invoice-send-date">
+            <input type="text" name="invoiceSendDate" readonly="readonly" class="date agreement-form-date" id="invoice-send-date">
         </div>
         <br>
 

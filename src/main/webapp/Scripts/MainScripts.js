@@ -171,7 +171,7 @@ function fillDefaultIfEmpty() {
     $(".char").each(function () {
         if (isInputEmpty($(this))) $(this).val("empty");
     });
-    $(".date").each(function () {
+    $(".agreement-form-date").each(function () {
         if (isInputEmpty($(this))) $(this).val("01.01.1971")
     });
     $(".text").each(function () {
