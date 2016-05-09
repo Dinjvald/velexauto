@@ -63,7 +63,8 @@ public class AgreementController {
         }
         long currentManagerId = securityAssistant.getCurrentEmployee().getEmployeeId();
         long agreementManagerId = agreementDAO.getById(agreementRB.getAgreementId()).getEmployee().getEmployeeId();
-        if (currentManagerId != agreementManagerId) return DataValidateAssistant.CANT_UPDATE;
+        if (!securityAssistant.hasCurrentUserAdminRole() && currentManagerId != agreementManagerId)
+            return DataValidateAssistant.CANT_UPDATE;
 
         Agreement agreement = toAgreementDomain(agreementRB);
         try {
@@ -100,7 +101,8 @@ public class AgreementController {
             return DataValidateAssistant.ERROR;
         }
 
-        if (currentManagerId != agreementManagerId) return DataValidateAssistant.CANT_DELETE;
+        if (!securityAssistant.hasCurrentUserAdminRole() && currentManagerId != agreementManagerId)
+            return DataValidateAssistant.CANT_DELETE;
         try {
             agreementDAO.delete(agreementId);
             return DataValidateAssistant.SUCCESS;

@@ -8,4 +8,6 @@ import lv.velexauto.velex.domain.User;
 public interface UserDAO extends CommonMethodsDAO <User> {
 
     public User getByLogin(String login) throws DBException;
+
+    public User getByLoginWithRoles(String login) throws  DBException;
 }

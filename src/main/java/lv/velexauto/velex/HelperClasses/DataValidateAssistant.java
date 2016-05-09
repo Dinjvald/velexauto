@@ -23,6 +23,7 @@ public class DataValidateAssistant {
     public static final String ERROR = "error";
     public static final String CANT_DELETE = "can't delete";
     public static final String CANT_UPDATE = "can't update";
+    public static final String ROLE_ADMIN = "ROLE_ADMIN";
 
     @Autowired
     @Qualifier("DateAssistant")
