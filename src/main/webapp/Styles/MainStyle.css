@@ -9,6 +9,7 @@ body {
     color: white;
     width: 1000px;
     margin: auto;
+    padding: 5px;
 }
 
 input:not([type=radio]):not([type=checkbox]) {
