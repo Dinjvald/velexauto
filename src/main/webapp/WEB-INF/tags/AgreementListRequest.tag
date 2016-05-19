@@ -31,5 +31,6 @@
     <ul class="agreement-list-links">
         <li><a href="unpaid-agreements">Неоплаченные перевозки</a></li>
         <li><a href="late-payment-agreements">Просроченные перевозки</a></li>
+        <li><a href="planned-agreements">Запланированные перевозки</a></li>
     </ul>
 </div>

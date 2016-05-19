@@ -206,6 +206,18 @@ public class AgreementController {
         return new ModelAndView("Protected/AgreementListResult", "agreement", list);
     }
 
+    @RequestMapping(value = {"protected/planned-agreements"}, method = RequestMethod.GET)
+    public ModelAndView plannedAgreement(HttpServletRequest request, HttpServletResponse response) throws DBException, ParseException {
+        Company company = securityAssistant.getCurrentCompany();
+        java.util.Date startDate = dateAssistant.getCurrentSystemDateWithoutTimestamp();
+        java.util.Date endDate = dateAssistant.addDaysToDate(startDate, 360);
+        java.util.Date defaultDate = dateAssistant.stringToDate(DataValidateAssistant.DEFAULT_DATE);
+
+        request.setAttribute("defValues", dataValidateAssistant.getDefaultValuesMap());
+        List<Agreement> list = agreementDAO.getListByDateRange(startDate, endDate, defaultDate, company);
+        return new ModelAndView("Protected/AgreementListResult", "agreement", list);
+    }
+
     private Agreement toAgreementDomain(AgreementRequestBody agreementRB) throws ParseException, DBException {
         Employee employee = securityAssistant.getCurrentEmployee();
         Agreement agreement = new Agreement();

@@ -23,11 +23,6 @@ public class AgreementDAOImpl extends CommonMetodsDAOImpl<Agreement> implements 
 
     @Override
     public List<Agreement> getListByDateRange(Date startDate, Date endDate, Date defDate, Company company) {
-        /*List list = getCurrentSession().createCriteria(Agreement.class)
-                .add(Restrictions.eq("company", company))
-                .add(Restrictions.between("unloadingDate", startDate, endDate))
-                .list();*/
-
         Criteria criteria = getCurrentSession().createCriteria(Agreement.class);
         Criterion dateRange = Restrictions.and(Restrictions.eq("company", company), Restrictions.between("unloadingDate", startDate, endDate));
         Criterion defaultDate = Restrictions.and(Restrictions.eq("company", company), Restrictions.eq("unloadingDate", defDate));

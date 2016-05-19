@@ -114,12 +114,30 @@ function postAgreementAJAX(url) {
 
 function isDataValid() {
     var isValid = true;
+    var msg = "Проверьте данные";
     if (!isNumbersValid()) isValid = false;
     if (!isCharValid()) isValid = false;
-    if (!isValid) $("#result")
+    if (!canCalculatePaymentTerm()){
+        msg += ". Укажите срок оплаты и дату отправки счета или оставьте эти поля пустыми.";
+        isValid = false;
+    }
+    /*if (!isValid) $("#result")
         .css({"color": "#dc7700"})
-        .html("Проверьте данные");
+        .html(msg);*/
+    if (!isValid) alertMessage(msg);
     return isValid;
+}
+
+function canCalculatePaymentTerm() {
+    var invoiceSendDate = $("#invoice-send-date");
+    var paymentTerm = $("#payment-term");
+    if (invoiceSendDate.val() == "" && paymentTerm.val() != "") {
+        invoiceSendDate.css({"border-color": "#920007"});
+        paymentTerm.css({"border-color": "#920007"});
+        return false;
+    } else {
+        return true;
+    }
 }
 
 function isNumbersValid() {
@@ -142,6 +160,7 @@ function isNumbersValid() {
 
 function setDefaultBorderColor(object) {
     $(object).css({"border-color": "#666666"});
+    $("#invoice-send-date").css({"border-color": "#666666"});
 }
 
 function isInputEmpty(object) {
