@@ -31,10 +31,11 @@ public class AgreementDAOImpl extends CommonMetodsDAOImpl<Agreement> implements 
     }
 
     @Override
-    public List<Agreement> getUnpaidAgreements(Company company) {
+    public List<Agreement> getUnpaidAgreements(Company company, Date date) {
         List list = getCurrentSession().createCriteria(Agreement.class)
                 .add(Restrictions.eq("company", company))
                 .add(Restrictions.eq("paid", false))
+                .add(Restrictions.lt("unloadingDate", date))
                 .list();
         return list;
     }

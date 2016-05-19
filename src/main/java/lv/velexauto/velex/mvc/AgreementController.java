@@ -176,7 +176,7 @@ public class AgreementController {
     public ModelAndView unpaidAgreements(HttpServletRequest request, HttpServletResponse response) throws DBException {
         Company company = securityAssistant.getCurrentCompany();
         java.util.Date currentDate = dateAssistant.getCurrentSystemDateWithoutTimestamp();
-        List<Agreement> list = agreementDAO.getUnpaidAgreements(company);
+        List<Agreement> list = agreementDAO.getUnpaidAgreements(company, currentDate);
 
         for (int x = 0; x < list.size(); x++) {
             int compareArgument = currentDate.compareTo(list.get(x).getEstimatedDateOfPayment());
@@ -193,7 +193,7 @@ public class AgreementController {
     public ModelAndView latePaymentAgreements(HttpServletRequest request, HttpServletResponse response) throws DBException {
         Company company = securityAssistant.getCurrentCompany();
         java.util.Date currentDate = dateAssistant.getCurrentSystemDateWithoutTimestamp();
-        List<Agreement> list = agreementDAO.getUnpaidAgreements(company);
+        List<Agreement> list = agreementDAO.getUnpaidAgreements(company, currentDate);
 
         for (int x = 0; x < list.size(); x++) {
             int compareArgument = currentDate.compareTo(list.get(x).getEstimatedDateOfPayment());
