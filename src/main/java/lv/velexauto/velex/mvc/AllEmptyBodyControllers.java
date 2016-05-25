@@ -43,11 +43,6 @@ public class AllEmptyBodyControllers {
         return new ModelAndView("Protected/HomeProtected");
     }*/
 
-    @RequestMapping(value = {"testlocale"}, method = {RequestMethod.GET})
-    public ModelAndView testLocale(HttpServletRequest request, HttpServletResponse response) {
-        return new ModelAndView("ForTests/TestLocale");
-    }
-
     @RequestMapping(value = {"protected/agreement-form"}, method = RequestMethod.GET)
     public ModelAndView agreementForm(HttpServletRequest request, HttpServletResponse response) {
         return new ModelAndView("Protected/AgreementForm");

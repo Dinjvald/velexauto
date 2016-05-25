@@ -641,7 +641,7 @@
                     <c:set var="price" value="${agr.price}"/>
                     <c:if test="${price != defInt}">
                         <fmt:formatNumber var="pat" value="${price}" minFractionDigits="2" maxFractionDigits="2"
-                                          type="number"/>
+                                          type="number" groupingUsed="false"/>
                         ${fn:replace(pat, ",", ".")}
                     </c:if>
                 </td>

@@ -114,11 +114,15 @@ function postAgreementAJAX(url) {
 
 function isDataValid() {
     var isValid = true;
-    var msg = "Проверьте данные";
+    var msg = "Проверьте данные.";
     if (!isNumbersValid()) isValid = false;
     if (!isCharValid()) isValid = false;
+    if (isUnloadingDateEmpty()) {
+        msg += "<br>Дата разгрузки не может быть пустой. Укажите примерную дату, если не знаете точно.";
+        isValid = false;
+    }
     if (!canCalculatePaymentTerm()){
-        msg += ". Укажите срок оплаты и дату отправки счета или оставьте эти поля пустыми.";
+        msg += "<br>Укажите срок оплаты и дату отправки счета или оставьте эти поля пустыми.";
         isValid = false;
     }
     /*if (!isValid) $("#result")
@@ -126,6 +130,15 @@ function isDataValid() {
         .html(msg);*/
     if (!isValid) alertMessage(msg);
     return isValid;
+}
+
+function isUnloadingDateEmpty() {
+    var unloadingDate = $("#unloading-date");
+    if (unloadingDate.val() == ""){
+        unloadingDate.css({"border-color": "#920007"});
+        return true;
+    }
+    return false;
 }
 
 function canCalculatePaymentTerm() {

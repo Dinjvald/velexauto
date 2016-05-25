@@ -36,7 +36,7 @@ public class ProtectedStartPageController {
 
         Employee employee = securityAssistant.getCurrentEmployee();
         Company company = employee.getCompany();
-        List<Employee> list = employeeDAO.getAll();
+        List<Employee> list = employeeDAO.getCompaniesEmployees(company);
         request.setAttribute("currentEmployee", employee);
         request.setAttribute("currentCompany", company);
 
