@@ -23,7 +23,6 @@
             position: relative;
             left: 50%;
             transform: translate(-50%);
-            z-index: -1;
         }
 
         #company-info > div:nth-child(2) {

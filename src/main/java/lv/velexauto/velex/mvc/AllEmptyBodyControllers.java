@@ -52,4 +52,9 @@ public class AllEmptyBodyControllers {
     public ModelAndView agreementListRequest(HttpServletRequest request, HttpServletResponse response) {
         return new ModelAndView("Protected/AgreementListRequest");
     }
+
+    @RequestMapping(value = {"protected/in-development"}, method = RequestMethod.GET)
+    public ModelAndView inDevelopment(HttpServletRequest request, HttpServletResponse response) {
+        return new ModelAndView("InDevelopment");
+    }
 }

@@ -10,6 +10,7 @@ body {
     width: 1000px;
     margin: auto;
     padding: 5px;
+    z-index: -2;
 }
 
 input:not([type=radio]):not([type=checkbox]) {
@@ -141,6 +142,7 @@ ul#menu li ul {
     background-color: rgba(66, 66, 66, 0.90);
     border-top: solid 1px #dc7700;
     display: none;
+    z-index: 1;
 }
 
 ul#menu li ul li {

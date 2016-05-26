@@ -7,10 +7,9 @@
         <ul id="orders-submenu">
             <li><a href="agreement-form">Добавить</a></li>
             <li><a href="agreement-list-request">Список</a></li>
-            <li><a href="" onclick="return false">Что-то там</a></li>
         </ul>
     </li>
-    <li><a href="" onclick="return false"> Что-то там </a></li>
-    <li><a href="" onclick="return false"> Что-то там </a></li>
+    <li><a href="in-development">Экспедиция</a></li>
+    <%--<li><a href="" onclick="return false"> Что-то там </a></li>--%>
     <li><a href="../logout"> Logout </a></li>
 </ul>
