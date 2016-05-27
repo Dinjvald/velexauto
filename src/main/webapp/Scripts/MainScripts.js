@@ -174,6 +174,7 @@ function isNumbersValid() {
 function setDefaultBorderColor(object) {
     $(object).css({"border-color": "#666666"});
     $("#invoice-send-date").css({"border-color": "#666666"});
+    $("#unloading-date").css({"border-color": "#666666"});
 }
 
 function isInputEmpty(object) {
